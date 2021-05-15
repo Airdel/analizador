@@ -1,0 +1,8 @@
+inicar Programa:
+	cadena nombre = 'Daniel';
+
+	principal:
+		si(3>1):
+		fin	
+	fin
+fin
