@@ -1,8 +1,4 @@
-inicar Programa:
-	cadena nombre = 'Daniel';
-
-	principal:
-		si(3>1):
-		fin	
-	fin
+iniciar: 
+	programa
+	declaracion
 fin
