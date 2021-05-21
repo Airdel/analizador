@@ -60,6 +60,7 @@ public class Editor extends javax.swing.JFrame {
         txtErrores = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         editor = new javax.swing.JTextArea();
+        jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         miAbrir = new javax.swing.JMenuItem();
@@ -209,15 +210,15 @@ public class Editor extends javax.swing.JFrame {
         int resp = 0;
         String codigo = "";
         
-//        resp = jFileChooser1.showOpenDialog(this);
-//        if(resp == JFileChooser.APPROVE_OPTION){
-//            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
-//            if(linea.size()>0)
-//                for(int i = 0;i<linea.size();i++){
-//                    codigo = (String) linea.get(i);
-//                    jTextArea1.append(codigo+"\n");
-//                }
-//        }       
+        resp = jFileChooser1.showOpenDialog(this);
+        if(resp == JFileChooser.APPROVE_OPTION){
+            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
+            if(linea.size()>0)
+                for(int i = 0;i<linea.size();i++){
+                    codigo = (String) linea.get(i);
+                    editor.append(codigo+"\n");
+                }
+        }       
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
@@ -279,6 +280,7 @@ public class Editor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea editor;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -326,6 +328,7 @@ public class Editor extends javax.swing.JFrame {
                         text += "\nRevisado sin errores" ;
                     mensajes.setText(text);
                     txtErrores.setText(errores);
+                    errores_lexicos = false;
                     return;
                 }
                 

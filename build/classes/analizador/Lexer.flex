@@ -56,5 +56,5 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> (\-?{DIGITO})+((\.{DIGITO})+)?(e{DIGITO}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
 <YYINITIAL> {LETRA} ({LETRA}|{DIGITO})* {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
 <YYINITIAL> {DIGITO}({LETRA}|{DIGITO})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
-<YYINITIAL> {MAYUS}({LETRA}|{MAYUS})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
+<YYINITIAL> ({LETRA}|{MAYUS})+ {c.linea=yyline; lexeme=yytext(); return ERROR;}
  . {c.linea=yyline; lexeme=yytext(); return ERROR;}

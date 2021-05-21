@@ -33,6 +33,6 @@ public enum Tokens {
     NUMERO_DECIMAL,
     NUMERO_EXPONENTE,
     IDENTIFICADOR,
-    ERROR
-    
+    ERROR,
+    ERROR_MAYUS    
 }
