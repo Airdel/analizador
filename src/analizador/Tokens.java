@@ -29,6 +29,8 @@ public enum Tokens {
     RESERVADA_INICIAR,
     RESERVADA_FIN,
     NUMERO,
+    NUMERO_DECIMAL,
+    NUMERO_EXPONENTE,
     IDENTIFICADOR,
     ERROR
     

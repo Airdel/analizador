@@ -7,8 +7,10 @@ import static analizador.Tokens.*;
 %type Tokens
 %line
 %column
-D=[0-9]
-L=[a-z]
+D = [0-9]
+SIGNO = \+|\-
+ENTERO = D+
+L=[a-z]+
 CA="\""[^*]~"\"" + "\""
 ESPACIO=[ \t\r\n]
 
@@ -20,6 +22,7 @@ ESPACIO=[ \t\r\n]
 %%
 
 {ESPACIO} {/*Ignore*/}
+"--".* {/*Ignore*/}
 <YYINITIAL> "+" {c.linea=yyline; lexeme=yytext(); return MAS;}
 <YYINITIAL> "=" {c.linea=yyline; lexeme=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline; lexeme=yytext(); return IGUAL;}
@@ -46,6 +49,9 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> "para" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PARA;}
 <YYINITIAL> "booleano" {c.linea=yyline; lexeme=yytext(); return RESERVADA_BOOLEANO;}
 <YYINITIAL> "principal" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PRINCIPAL;}
-<YYINITIAL> {D}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
+<YYINITIAL> \-?{D}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
+<YYINITIAL> (\-?{D})+(\.{D})+ {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
+<YYINITIAL> (\-?{D})+((\.{D})+)?(e{D}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
 <YYINITIAL> {L} ({L}|{D})* {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
-. {c.linea=yyline; lexeme=yytext(); return ERROR;}
+<YYINITIAL> {D}({L}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
+ . {c.linea=yyline; lexeme=yytext(); return ERROR;}
