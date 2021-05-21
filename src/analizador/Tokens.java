@@ -2,6 +2,7 @@ package analizador;
 
 
 public enum Tokens {
+    ARROBA,
     MAS,
     MENOS,
     IGUAL,

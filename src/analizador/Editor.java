@@ -1,10 +1,5 @@
 package analizador;
 
-import analizador.Identificador;
-import analizador.InformacionAnalisis;
-import analizador.Lexer;
-import analizador.NumeroLinea;
-import analizador.Tokens;
 import tablas.TablaIdentificadores;
 import tablas.TablaIdentificadores;
 import tablas.TablaReservadas;
@@ -41,9 +36,12 @@ public class Editor extends javax.swing.JFrame {
     
     public Editor() {
         initComponents();
-        numeroLinea = new NumeroLinea(jTextArea1);
+        numeroLinea = new NumeroLinea(editor);
         jScrollPane1.setRowHeaderView(numeroLinea);
         //numLine.setText(numeroLinea.getTextLineNumber(PROPERTIES));
+        scrollMensajes.setLocation(400, 40);
+        scrollMensajes.setSize(10, 40);
+        mensajes.setSize(10, 40);
     }
 
     /**
@@ -55,13 +53,13 @@ public class Editor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jMenu4 = new javax.swing.JMenu();
+        scrollMensajes = new javax.swing.JScrollPane();
+        mensajes = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
-        jFileChooser1 = new javax.swing.JFileChooser();
+        txtErrores = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        editor = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         miAbrir = new javax.swing.JMenuItem();
@@ -73,23 +71,32 @@ public class Editor extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         miLexico = new javax.swing.JMenuItem();
 
+        jMenu4.setText("jMenu4");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        jTextArea1.setRows(2);
-        jTextArea1.setTabSize(4);
-        jScrollPane1.setViewportView(jTextArea1);
+        mensajes.setEditable(false);
+        mensajes.setColumns(20);
+        mensajes.setRows(5);
+        scrollMensajes.setViewportView(mensajes);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        txtErrores.setEditable(false);
+        txtErrores.setColumns(20);
+        txtErrores.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        txtErrores.setForeground(new java.awt.Color(255, 51, 51));
+        txtErrores.setRows(5);
+        jScrollPane3.setViewportView(txtErrores);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setFont(new java.awt.Font("Calibri", 0, 13)); // NOI18N
-        jTextArea3.setForeground(new java.awt.Color(255, 51, 51));
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        editor.setColumns(20);
+        editor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        editor.setRows(2);
+        editor.setTabSize(4);
+        editor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                editorKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(editor);
 
         jMenu2.setText("Archivo");
 
@@ -164,26 +171,23 @@ public class Editor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
+            .addComponent(jScrollPane3)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scrollMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        scrollMensajes.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -205,15 +209,15 @@ public class Editor extends javax.swing.JFrame {
         int resp = 0;
         String codigo = "";
         
-        resp = jFileChooser1.showOpenDialog(this);
-        if(resp == JFileChooser.APPROVE_OPTION){
-            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
-            if(linea.size()>0)
-                for(int i = 0;i<linea.size();i++){
-                    codigo = (String) linea.get(i);
-                    jTextArea1.append(codigo+"\n");
-                }
-        }       
+//        resp = jFileChooser1.showOpenDialog(this);
+//        if(resp == JFileChooser.APPROVE_OPTION){
+//            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
+//            if(linea.size()>0)
+//                for(int i = 0;i<linea.size();i++){
+//                    codigo = (String) linea.get(i);
+//                    jTextArea1.append(codigo+"\n");
+//                }
+//        }       
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
@@ -226,12 +230,16 @@ public class Editor extends javax.swing.JFrame {
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
         // TODO add your handling code here:
-        jTextArea2.setText("");
-        jTextArea3.setText("");
+        mensajes.setText("");
+        txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
         identificadores.toString();
     }//GEN-LAST:event_miLexicoActionPerformed
+
+    private void editorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editorKeyReleased
+   
+    }//GEN-LAST:event_editorKeyReleased
 
     /**
      * @param args the command line arguments
@@ -270,23 +278,23 @@ public class Editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JTextArea editor;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea mensajes;
     private javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miGuardarComo;
     private javax.swing.JMenuItem miLexico;
+    private javax.swing.JScrollPane scrollMensajes;
+    private javax.swing.JTextArea txtErrores;
     // End of variables declaration//GEN-END:variables
 
     private void probarLexer(){
@@ -297,7 +305,7 @@ public class Editor extends javax.swing.JFrame {
         
         try {
             writer = new PrintWriter(fichero);
-            writer.print(jTextArea1.getText());
+            writer.print(editor.getText());
             writer.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,8 +324,8 @@ public class Editor extends javax.swing.JFrame {
                         text += "\n¡¡¡ Terminado con errores !!! Revisar";
                     else 
                         text += "\nRevisado sin errores" ;
-                    jTextArea2.setText(text);
-                    jTextArea3.setText(errores);
+                    mensajes.setText(text);
+                    txtErrores.setText(errores);
                     return;
                 }
                 
