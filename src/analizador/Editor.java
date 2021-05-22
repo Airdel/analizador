@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -15,28 +16,27 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author teodoro
  */
 public class Editor extends javax.swing.JFrame {
 
-    
     NumeroLinea numeroLinea;
     private ArrayList<String> identificadores = new ArrayList<String>();
     private ArrayList<Identificador> ids = new ArrayList<Identificador>();
     private boolean errores_lexicos;
-    
+
     public Editor() {
         initComponents();
-        numeroLinea = new NumeroLinea(editor);
+        numeroLinea = new NumeroLinea(txtEditor);
         jScrollPane1.setRowHeaderView(numeroLinea);
         //numLine.setText(numeroLinea.getTextLineNumber(PROPERTIES));
         scrollMensajes.setLocation(400, 40);
@@ -59,10 +59,11 @@ public class Editor extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtErrores = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
-        editor = new javax.swing.JTextArea();
+        txtEditor = new javax.swing.JTextArea();
         jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
+        miNuevo = new javax.swing.JMenuItem();
         miAbrir = new javax.swing.JMenuItem();
         miGuardar = new javax.swing.JMenuItem();
         miGuardarComo = new javax.swing.JMenuItem();
@@ -75,6 +76,7 @@ public class Editor extends javax.swing.JFrame {
         jMenu4.setText("jMenu4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sin titulo");
 
         mensajes.setEditable(false);
         mensajes.setColumns(20);
@@ -88,18 +90,27 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setRows(5);
         jScrollPane3.setViewportView(txtErrores);
 
-        editor.setColumns(20);
-        editor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        editor.setRows(2);
-        editor.setTabSize(4);
-        editor.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtEditor.setColumns(20);
+        txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        txtEditor.setRows(2);
+        txtEditor.setTabSize(4);
+        txtEditor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                editorKeyReleased(evt);
+                txtEditorKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(editor);
+        jScrollPane1.setViewportView(txtEditor);
 
         jMenu2.setText("Archivo");
+
+        miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miNuevo.setText("Nuevo");
+        miNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miNuevo);
 
         miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miAbrir.setText("Abrir");
@@ -209,24 +220,31 @@ public class Editor extends javax.swing.JFrame {
         ArrayList<String> linea = null;
         int resp = 0;
         String codigo = "";
-        
+        txtEditor.setText("");
         resp = jFileChooser1.showOpenDialog(this);
-        if(resp == JFileChooser.APPROVE_OPTION){
+        if (resp == JFileChooser.APPROVE_OPTION) {
             linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
-            if(linea.size()>0)
-                for(int i = 0;i<linea.size();i++){
+            if (linea.size() > 0) {
+                for (int i = 0; i < linea.size(); i++) {
                     codigo = (String) linea.get(i);
-                    editor.append(codigo+"\n");
+                    txtEditor.append(codigo + "\n");
                 }
-        }       
+            }
+            guardarComo = false;
+        }
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
-        // TODO add your handling code here:
+        guardarComo();
     }//GEN-LAST:event_miGuardarComoActionPerformed
 
     private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
-        // TODO add your handling code here:
+        if (guardarComo) {
+            guardarComo();
+        } else {
+            guardar();
+        }
+
     }//GEN-LAST:event_miGuardarActionPerformed
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
@@ -238,9 +256,29 @@ public class Editor extends javax.swing.JFrame {
         identificadores.toString();
     }//GEN-LAST:event_miLexicoActionPerformed
 
-    private void editorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editorKeyReleased
-   
-    }//GEN-LAST:event_editorKeyReleased
+    private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
+
+    }//GEN-LAST:event_txtEditorKeyReleased
+
+    private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
+        int resp = JOptionPane.showConfirmDialog(null,
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if(resp == 0) {
+            miGuardar.doClick();
+            limpiar();
+        }
+        if(resp == 1){
+            limpiar();
+        }
+    }//GEN-LAST:event_miNuevoActionPerformed
+
+    private void limpiar() {
+        txtEditor.setText("");
+        mensajes.setText("");
+        txtErrores.setText("");
+        guardarComo = true;
+    }
 
     /**
      * @param args the command line arguments
@@ -278,8 +316,17 @@ public class Editor extends javax.swing.JFrame {
         });
     }
 
+    private File archivo;
+    private java.io.FileOutputStream out;
+    private java.io.FileInputStream in;
+    private java.io.DataOutputStream fdw;
+    private java.io.DataInputStream fdr;
+
+    private boolean guardarComo = true;
+    private boolean guardar = false;
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea editor;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -295,58 +342,61 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miGuardarComo;
     private javax.swing.JMenuItem miLexico;
+    private javax.swing.JMenuItem miNuevo;
     private javax.swing.JScrollPane scrollMensajes;
+    private javax.swing.JTextArea txtEditor;
     private javax.swing.JTextArea txtErrores;
     // End of variables declaration//GEN-END:variables
 
-    private void probarLexer(){
+    private void probarLexer() {
         InformacionAnalisis c = new InformacionAnalisis();
-        
-        File  fichero = new File("fichero.and");
+
+        File fichero = new File("fichero.and");
         PrintWriter writer;
-        
+
         try {
             writer = new PrintWriter(fichero);
-            writer.print(editor.getText());
+            writer.print(txtEditor.getText());
             writer.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Reader reader;
         try {
             reader = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(reader);
             String text = "";
             String errores = "";
-            while(true){
+            while (true) {
                 Tokens tokens = lexer.yylex();
-                if(tokens == null){
-                    if(errores_lexicos)
+                if (tokens == null) {
+                    if (errores_lexicos) {
                         text += "\n¡¡¡ Terminado con errores !!! Revisar";
-                    else 
-                        text += "\nRevisado sin errores" ;
+                    } else {
+                        text += "\nRevisado sin errores";
+                    }
                     mensajes.setText(text);
                     txtErrores.setText(errores);
                     errores_lexicos = false;
                     return;
                 }
-                
-                switch(tokens){
+
+                switch (tokens) {
                     case ERROR:
-                        errores = errores+"Error Lexico: "+lexer.lexeme+" "+" "
-                                +" Linea: "+(c.linea+1)+"\n";
+                        errores = errores + "Error Lexico: " + lexer.lexeme + " " + " "
+                                + " Linea: " + (c.linea + 1) + "\n";
                         errores_lexicos = true;
                         break;
                     case IDENTIFICADOR:
                         identificadores.add(lexer.lexeme);
-                        
-                        text = text+"Componente Lexico: "+tokens+" Lexema: "+ lexer.lexeme+"\n";
+
+                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexeme + "\n";
                         break;
                     default:
-                         text = text+"Componente Lexico: "+tokens+" Lexema : "+ lexer.lexeme+"\n";
+                        text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexeme + "\n";
                         break;
-                   
+
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -354,34 +404,74 @@ public class Editor extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
         }
-               
+
     }
-    
-    private ArrayList<String> leerArchivo(String file){
+
+    private ArrayList<String> leerArchivo(String file) {
         ArrayList<String> texto = null;
         FileReader fr = null;
         BufferedReader br = null;
-        File f = null;
         String line = "";
-        try{
+        try {
             texto = new ArrayList<String>();
-            f = new File(file);
-            
-            if(f.exists()){
-                if(f.isFile()){
-                    fr = new FileReader(f);
+            archivo = new File(file);
+            String nombre = archivo.getName();
+            setTitle(nombre);
+            if (archivo.exists()) {
+                if (archivo.isFile()) {
+                    fr = new FileReader(archivo);
                     br = new BufferedReader(fr);
                     line = br.readLine();
-                    while(line!=null){
-                        if(!line.equalsIgnoreCase(""))
+                    while (line != null) {
+                        if (!line.equalsIgnoreCase("")) {
                             texto.add(line);
+                        }
                         line = br.readLine();
                     }
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return texto;
     }
+
+    private void guardar() {
+        FileWriter save = null;
+        try {
+            save = new FileWriter(archivo.getAbsolutePath());
+            save.write(txtEditor.getText());
+            save.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                save.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void guardarComo() {
+        try {
+            JFileChooser file = new JFileChooser();
+            if (file.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                archivo = file.getSelectedFile();
+                if (archivo != null) {
+                    FileWriter save = new FileWriter(archivo.getAbsolutePath() + ".lya");
+                    String nombre = archivo.getName();
+                    setTitle(nombre);
+                    save.write(txtEditor.getText());
+                    save.close();
+                    guardarComo = false;
+                }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Su archivo no se ha guardado",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
 }
