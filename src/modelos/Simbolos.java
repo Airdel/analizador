@@ -5,7 +5,7 @@
  */
 package modelos;
 
-public class Simbolos {
+public class Simbolos implements Comparable<Simbolos> {
     
     private String componente;
     private String lexema;
@@ -45,4 +45,9 @@ public class Simbolos {
     public String toString() {
         return "Simbolos{" + "componente=" + componente + ", lexema=" + lexema + ", linea=" + linea + '}';
     }    
+
+    @Override
+    public int compareTo(Simbolos s) {
+       return lexema.compareTo(s.getLexema());
+    }
 }

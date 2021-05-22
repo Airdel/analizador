@@ -225,9 +225,13 @@ public class Editor extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        TablaIdentificadores ti = new TablaIdentificadores(identificadores);
 //        ti.setVisible(true);
-//        for (Simbolos sim : simbolos) {
-//            System.out.println(sim.toString());
-//        }
+        for (Simbolos sim : simbolos) {
+            System.out.println(sim.toString());
+        }
+        Collections.sort(simbolos);
+        for (Simbolos sim : simbolos) {
+            System.out.println(sim.toString());
+        } 
         TablaSimbolos ts = new TablaSimbolos(simbolos);
         ts.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
