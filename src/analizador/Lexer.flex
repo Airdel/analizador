@@ -10,6 +10,7 @@ import static analizador.Tokens.*;
 D = [0-9]
 SIGNO = \+|\-
 ENTERO = D+
+arroba = @
 iden=[a-z][a-z0-9_]{0,31}
 GUION = _
 L=[a-z]+
@@ -41,6 +42,7 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> ">" {c.linea=yyline; lexeme=yytext(); return MAYOR;}
 <YYINITIAL> "<" {c.linea=yyline; lexeme=yytext(); return MENOR;}
 <YYINITIAL> ":" {c.linea=yyline; lexeme=yytext(); return DOS_PUNTOS;}
+<YYINITIAL> "@" {c.linea=yyline; lexeme=yytext(); return ARROBA;}
 <YYINITIAL> "entero" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CADENA;}
 <YYINITIAL> "iniciar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_INICIAR;}
@@ -52,6 +54,44 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> "para" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PARA;}
 <YYINITIAL> "booleano" {c.linea=yyline; lexeme=yytext(); return RESERVADA_BOOLEANO;}
 <YYINITIAL> "principal" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PRINCIPAL;}
+<YYINITIAL> "abajo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ABAJO;}
+<YYINITIAL> "acelerar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ACELERAR;}
+<YYINITIAL> "adelante" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ADELANTE;}
+<YYINITIAL> "apagar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_APAGAR;}
+<YYINITIAL> "arreglo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ARREGLO;}
+<YYINITIAL> "arriba" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ARRIBA;}
+<YYINITIAL> "atras" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ATRAS;}
+<YYINITIAL> "calibrar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CALIBRAR;}
+<YYINITIAL> "captura" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CAPTURA;}
+<YYINITIAL> "caracter" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CARACTER;}
+<YYINITIAL> "cargar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CARGAR;}
+<YYINITIAL> "ciclo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CICLO;}
+<YYINITIAL> "corto" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CORTO;}
+<YYINITIAL> "decimal" {c.linea=yyline; lexeme=yytext(); return RESERVADA_DECIMAL;}
+<YYINITIAL> "declaracion" {c.linea=yyline; lexeme=yytext(); return RESERVADA_DECLARACION;}
+<YYINITIAL> "derecha" {c.linea=yyline; lexeme=yytext(); return RESERVADA_DERECHA;}
+<YYINITIAL> "detener" {c.linea=yyline; lexeme=yytext(); return RESERVADA_DETENER;}
+<YYINITIAL> "direccionar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_DIRECCIONAR;}
+<YYINITIAL> "ejecutar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_EJECUTAR;}
+<YYINITIAL> "encender" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ENCENDER;}
+<YYINITIAL> "esperar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ESPERAR;}
+<YYINITIAL> "fijo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_FIJO;}
+<YYINITIAL> "girar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_GIRAR;}
+<YYINITIAL> "haz" {c.linea=yyline; lexeme=yytext(); return RESERVADA_HAZ;}
+<YYINITIAL> "imprimir" {c.linea=yyline; lexeme=yytext(); return RESERVADA_IMPRIMIR;}
+<YYINITIAL> "izquierda" {c.linea=yyline; lexeme=yytext(); return RESERVADA_IZQUIERDA;}
+<YYINITIAL> "largo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_LARGO;}
+<YYINITIAL> "leer" {c.linea=yyline; lexeme=yytext(); return RESERVADA_LEER;}
+<YYINITIAL> "nulo" {c.linea=yyline; lexeme=yytext(); return RESERVADA_NULO;}
+<YYINITIAL> "parav" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PARAV;}
+<YYINITIAL> "pin" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PIN;}
+<YYINITIAL> "regresa" {c.linea=yyline; lexeme=yytext(); return RESERVADA_REGRESA;}
+<YYINITIAL> "retorno" {c.linea=yyline; lexeme=yytext(); return RESERVADA_RETORNO;}
+<YYINITIAL> "ruta" {c.linea=yyline; lexeme=yytext(); return RESERVADA_RUTA;}
+<YYINITIAL> "seguir" {c.linea=yyline; lexeme=yytext(); return RESERVADA_SEGUIR;}
+<YYINITIAL> "video" {c.linea=yyline; lexeme=yytext(); return RESERVADA_VIDEO;}
+<YYINITIAL> "falso" {c.linea=yyline; lexeme=yytext(); return RESERVADA_FALSO;}
+<YYINITIAL> "verdadero" {c.linea=yyline; lexeme=yytext(); return RESERVADA_VERDADERO;}
 <YYINITIAL> \-?{D}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
 <YYINITIAL> (\-?{D})+(\.{D})+ {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
 <YYINITIAL> (\-?{D})+((\.{D})+)?(e{D}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
