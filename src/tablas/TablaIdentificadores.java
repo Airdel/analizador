@@ -44,7 +44,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         panelREv = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Palabras Identificadores");
+        setTitle("Tabla de simbolos");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

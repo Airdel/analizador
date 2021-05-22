@@ -9,18 +9,18 @@ import static analizador.Tokens.*;
 %column
 D = [0-9]
 S = \+|\-
+L=[a-z]
+LE=[A-Za-z_]
+
+iden={ L } ( { L } | { D } | _ ){ 0 , 31 }
 
 num = {D}+
 enteros = {S}?{num}
 numDec =  {S}?{num}?\.{num}
-numExp =  {S}?{num}?(\.{num})e{ enteros }
+numExp =  {S}?{num}?(\.{num})?e{ enteros }
+invalido = ({LE}|{D})*
 
 arroba = @
-L=[a-z]
-iden={ L } ( { L } | { D } | _ ){ 0 , 31 }
-GUION = _
-LE=[A-Za-z_]
-CA="\""[^*]~"\"" + "\""
 ESPACIO=[ \t\r\n]
 
 %{
@@ -101,6 +101,5 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> {numDec} {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
 <YYINITIAL> {numExp} {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
 <YYINITIAL> {iden} {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
-<YYINITIAL> ({LE}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
-<YYINITIAL> {D}({L}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
+<YYINITIAL> {invalido} {c.linea=yyline; lexeme=yytext(); return ERROR;}
  . {c.linea=yyline; lexeme=yytext(); return ERROR;}

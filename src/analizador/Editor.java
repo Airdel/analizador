@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
+import tablas.TablaSimbolos;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,15 +37,15 @@ public class Editor extends javax.swing.JFrame {
     private ArrayList<String> identificadores = new ArrayList<String>();
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     private boolean errores_lexicos;
+    private DefaultTableModel m = new DefaultTableModel();
 
     public Editor() {
         initComponents();
+        setLocationRelativeTo(null);
+        m = (DefaultTableModel) tablaMensajes.getModel();
         numeroLinea = new NumeroLinea(txtEditor);
         jScrollPane1.setRowHeaderView(numeroLinea);
         //numLine.setText(numeroLinea.getTextLineNumber(PROPERTIES));
-        scrollMensajes.setLocation(400, 40);
-        scrollMensajes.setSize(10, 40);
-        mensajes.setSize(10, 40);
     }
 
     /**
@@ -55,13 +58,13 @@ public class Editor extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu4 = new javax.swing.JMenu();
-        scrollMensajes = new javax.swing.JScrollPane();
-        mensajes = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtErrores = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtEditor = new javax.swing.JTextArea();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaMensajes = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -69,8 +72,8 @@ public class Editor extends javax.swing.JFrame {
         miGuardar = new javax.swing.JMenuItem();
         miGuardarComo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        miReservadas = new javax.swing.JMenuItem();
+        miSimbolo = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         miLexico = new javax.swing.JMenuItem();
 
@@ -78,11 +81,6 @@ public class Editor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin titulo");
-
-        mensajes.setEditable(false);
-        mensajes.setColumns(20);
-        mensajes.setRows(5);
-        scrollMensajes.setViewportView(mensajes);
 
         txtErrores.setEditable(false);
         txtErrores.setColumns(20);
@@ -101,6 +99,16 @@ public class Editor extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(txtEditor);
+
+        tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Comp Lex", "Lexema", "Línea"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaMensajes);
 
         jMenu2.setText("Archivo");
 
@@ -144,23 +152,23 @@ public class Editor extends javax.swing.JFrame {
 
         jMenu3.setText("Tablas");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("Reservadas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miReservadas.setText("Reservadas");
+        miReservadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miReservadasActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
+        jMenu3.add(miReservadas);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem2.setText("Identificadores");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miSimbolo.setText("Simbolos");
+        miSimbolo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                miSimboloActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        jMenu3.add(miSimbolo);
 
         jMenuBar1.add(jMenu3);
 
@@ -184,40 +192,45 @@ public class Editor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
-            .addComponent(jScrollPane3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 924, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrollMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        scrollMensajes.getAccessibleContext().setAccessibleDescription("");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
         TablaReservadas tr = new TablaReservadas();
         tr.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_miReservadasActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
         // TODO add your handling code here:
-        TablaIdentificadores ti = new TablaIdentificadores(identificadores);
-        ti.setVisible(true);
-        for (Simbolos sim : simbolos) {
-            System.out.println(sim.toString());
-        }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+//        TablaIdentificadores ti = new TablaIdentificadores(identificadores);
+//        ti.setVisible(true);
+//        for (Simbolos sim : simbolos) {
+//            System.out.println(sim.toString());
+//        }
+        TablaSimbolos ts = new TablaSimbolos(simbolos);
+        ts.setVisible(true);
+    }//GEN-LAST:event_miSimboloActionPerformed
 
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
         // TODO add your handling code here:
@@ -253,7 +266,13 @@ public class Editor extends javax.swing.JFrame {
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
         // TODO add your handling code here:
-        mensajes.setText("");
+//        mensajes.setText("");
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+        simbolos.clear();
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
@@ -268,18 +287,18 @@ public class Editor extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(null,
                 "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
-        if(resp == 0) {
+        if (resp == 0) {
             miGuardar.doClick();
             limpiar();
         }
-        if(resp == 1){
+        if (resp == 1) {
             limpiar();
         }
     }//GEN-LAST:event_miNuevoActionPerformed
 
     private void limpiar() {
         txtEditor.setText("");
-        mensajes.setText("");
+//        mensajes.setText("");
         txtErrores.setText("");
         guardarComo = true;
     }
@@ -337,17 +356,17 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea mensajes;
     private javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miGuardarComo;
     private javax.swing.JMenuItem miLexico;
     private javax.swing.JMenuItem miNuevo;
-    private javax.swing.JScrollPane scrollMensajes;
+    private javax.swing.JMenuItem miReservadas;
+    private javax.swing.JMenuItem miSimbolo;
+    private javax.swing.JTable tablaMensajes;
     private javax.swing.JTextArea txtEditor;
     private javax.swing.JTextArea txtErrores;
     // End of variables declaration//GEN-END:variables
@@ -380,7 +399,10 @@ public class Editor extends javax.swing.JFrame {
                     } else {
                         text += "\nRevisado sin errores";
                     }
-                    mensajes.setText(text);
+                    for (Simbolos sim : simbolos) {
+                        m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
+                    }
+//                    mensajes.setText(text);
                     txtErrores.setText(errores);
                     errores_lexicos = false;
                     return;
@@ -399,7 +421,7 @@ public class Editor extends javax.swing.JFrame {
 //                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexeme + "\n";
 //                        break;
                     default:
-                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexeme,c.linea));
+                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexeme, (c.linea) + 1));
                         identificadores.add(lexer.lexeme);
                         text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexeme + "\n";
                         break;
