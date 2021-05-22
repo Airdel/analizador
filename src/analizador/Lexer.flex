@@ -7,11 +7,13 @@ import static analizador.Tokens.*;
 %type Tokens
 %line
 %column
-MAYUS = [A-Z]
-DIGITO = [0-9]
+D = [0-9]
 SIGNO = \+|\-
 ENTERO = D+
-LETRA=[a-z]+
+iden=[a-z][a-z0-9_]{0,9}
+GUION = _
+L=[a-z]+
+LE=[A-Za-z_]+
 CA="\""[^*]~"\"" + "\""
 ESPACIO=[ \t\r\n]
 
@@ -39,7 +41,6 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> ">" {c.linea=yyline; lexeme=yytext(); return MAYOR;}
 <YYINITIAL> "<" {c.linea=yyline; lexeme=yytext(); return MENOR;}
 <YYINITIAL> ":" {c.linea=yyline; lexeme=yytext(); return DOS_PUNTOS;}
-<YYINITIAL> "@" {c.linea=yyline; lexeme=yytext(); return ARROBA;}
 <YYINITIAL> "entero" {c.linea=yyline; lexeme=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline; lexeme=yytext(); return RESERVADA_CADENA;}
 <YYINITIAL> "iniciar" {c.linea=yyline; lexeme=yytext(); return RESERVADA_INICIAR;}
@@ -51,10 +52,10 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> "para" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PARA;}
 <YYINITIAL> "booleano" {c.linea=yyline; lexeme=yytext(); return RESERVADA_BOOLEANO;}
 <YYINITIAL> "principal" {c.linea=yyline; lexeme=yytext(); return RESERVADA_PRINCIPAL;}
-<YYINITIAL> \-?{DIGITO}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
-<YYINITIAL> (\-?{DIGITO})+(\.{DIGITO})+ {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
-<YYINITIAL> (\-?{DIGITO})+((\.{DIGITO})+)?(e{DIGITO}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
-<YYINITIAL> {LETRA} ({LETRA}|{DIGITO})* {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
-<YYINITIAL> {DIGITO}({LETRA}|{DIGITO})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
-<YYINITIAL> ({LETRA}|{MAYUS})+ {c.linea=yyline; lexeme=yytext(); return ERROR;}
+<YYINITIAL> \-?{D}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
+<YYINITIAL> (\-?{D})+(\.{D})+ {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
+<YYINITIAL> (\-?{D})+((\.{D})+)?(e{D}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
+<YYINITIAL> {iden} {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
+<YYINITIAL> ({LE}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
+<YYINITIAL> {D}({L}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
  . {c.linea=yyline; lexeme=yytext(); return ERROR;}
