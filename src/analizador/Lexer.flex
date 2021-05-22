@@ -8,13 +8,18 @@ import static analizador.Tokens.*;
 %line
 %column
 D = [0-9]
-SIGNO = \+|\-
-ENTERO = D+
+S = \+|\-
+
+num = {D}+
+enteros = {S}?{num}
+numDec =  {S}?{num}?\.{num}
+numExp =  {S}?{num}?(\.{num})e{ enteros }
+
 arroba = @
-iden=[a-z][a-z0-9_]{0,31}
+L=[a-z]
+iden={ L } ( { L } | { D } | _ ){ 0 , 31 }
 GUION = _
-L=[a-z]+
-LE=[A-Za-z_]+
+LE=[A-Za-z_]
 CA="\""[^*]~"\"" + "\""
 ESPACIO=[ \t\r\n]
 
@@ -92,9 +97,9 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> "video" {c.linea=yyline; lexeme=yytext(); return RESERVADA_VIDEO;}
 <YYINITIAL> "falso" {c.linea=yyline; lexeme=yytext(); return RESERVADA_FALSO;}
 <YYINITIAL> "verdadero" {c.linea=yyline; lexeme=yytext(); return RESERVADA_VERDADERO;}
-<YYINITIAL> \-?{D}+ {c.linea=yyline; lexeme=yytext(); return NUMERO;}
-<YYINITIAL> (\-?{D})+(\.{D})+ {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
-<YYINITIAL> (\-?{D})+((\.{D})+)?(e{D}+) {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
+<YYINITIAL> {enteros} {c.linea=yyline; lexeme=yytext(); return NUMERO;}
+<YYINITIAL> {numDec} {c.linea=yyline; lexeme=yytext(); return NUMERO_DECIMAL;}
+<YYINITIAL> {numExp} {c.linea=yyline; lexeme=yytext(); return NUMERO_EXPONENTE;}
 <YYINITIAL> {iden} {c.linea=yyline; lexeme=yytext(); return IDENTIFICADOR;}
 <YYINITIAL> ({LE}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
 <YYINITIAL> {D}({L}|{D})* {c.linea=yyline; lexeme=yytext(); return ERROR;}
