@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import modelos.Simbolos;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,7 +32,7 @@ public class Editor extends javax.swing.JFrame {
 
     NumeroLinea numeroLinea;
     private ArrayList<String> identificadores = new ArrayList<String>();
-    private ArrayList<Identificador> ids = new ArrayList<Identificador>();
+    private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     private boolean errores_lexicos;
 
     public Editor() {
@@ -213,6 +214,9 @@ public class Editor extends javax.swing.JFrame {
         // TODO add your handling code here:
         TablaIdentificadores ti = new TablaIdentificadores(identificadores);
         ti.setVisible(true);
+        for (Simbolos sim : simbolos) {
+            System.out.println(sim.toString());
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
@@ -388,12 +392,15 @@ public class Editor extends javax.swing.JFrame {
                                 + " Linea: " + (c.linea + 1) + "\n";
                         errores_lexicos = true;
                         break;
-                    case IDENTIFICADOR:
-                        identificadores.add(lexer.lexeme);
-
-                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexeme + "\n";
-                        break;
+//                    case IDENTIFICADOR:
+//                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexeme,c.linea));
+//                        identificadores.add(lexer.lexeme);
+//
+//                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexeme + "\n";
+//                        break;
                     default:
+                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexeme,c.linea));
+                        identificadores.add(lexer.lexeme);
                         text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexeme + "\n";
                         break;
 
