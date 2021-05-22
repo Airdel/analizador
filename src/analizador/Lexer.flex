@@ -10,7 +10,7 @@ import static analizador.Tokens.*;
 D = [0-9]
 SIGNO = \+|\-
 ENTERO = D+
-iden=[a-z][a-z0-9_]{0,9}
+iden=[a-z][a-z0-9_]{0,31}
 GUION = _
 L=[a-z]+
 LE=[A-Za-z_]+

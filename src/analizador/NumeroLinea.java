@@ -26,19 +26,16 @@ public class NumeroLinea extends JPanel
     private Color currentLineForeground;
     private float digitAlignment;
     private int minimumDisplayDigits;
-
     
     private int lastDigits;
     private int lastHeight;
     private int lastLine;
 
     private HashMap<String, FontMetrics> fonts;
-
     
     public NumeroLinea(JTextComponent component) {
         this(component, 3);
     }
-
     
     public NumeroLinea(JTextComponent component, int minimumDisplayDigits) {
         this.component = component;
@@ -59,17 +56,14 @@ public class NumeroLinea extends JPanel
     public boolean getUpdateFont() {
         return updateFont;
     }
-
     
     public void setUpdateFont(boolean updateFont) {
         this.updateFont = updateFont;
     }
-
     
     public int getBorderGap() {
         return borderGap;
     }
-
     
     public void setBorderGap(int borderGap) {
         this.borderGap = borderGap;
