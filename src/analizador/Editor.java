@@ -414,20 +414,20 @@ public class Editor extends javax.swing.JFrame {
 
                 switch (tokens) {
                     case ERROR:
-                        errores = errores + "Error Lexico: " + lexer.lexeme + " " + " "
+                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
                                 + " Linea: " + (c.linea + 1) + "\n";
                         errores_lexicos = true;
                         break;
 //                    case IDENTIFICADOR:
-//                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexeme,c.linea));
-//                        identificadores.add(lexer.lexeme);
+//                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexema,c.linea));
+//                        identificadores.add(lexer.lexema);
 //
-//                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexeme + "\n";
+//                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexema + "\n";
 //                        break;
                     default:
-                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexeme, (c.linea) + 1));
-                        identificadores.add(lexer.lexeme);
-                        text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexeme + "\n";
+                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
+                        identificadores.add(lexer.lexema);
+                        text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
                         break;
 
                 }

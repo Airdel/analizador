@@ -14,13 +14,13 @@ import javax.swing.JLabel;
 public class TablaReservadas extends javax.swing.JFrame {
 
     private String[] res= {
-                "abajo","acelerar","adelante","apagar","arreglo","atras",
-                "booleano","cadena","calibrar","caracter","cargar","ciclo",
+                "abajo","acelerar","adelante","apagar","arreglo","arriba","atras",
+                "booleano","cadena","calibrar","captura","caracter","cargar","ciclo",
                 "corto","decimal","declaracion","derecha","detener","direccionar",
                 "ejecutar","encender","entero","esperar","falso","fijo", 
-                "fin","funcion","girar ","haz","iniciar","imprimir","izquierda",
-                "largo","leer","mientras","no","nulo","pin","principal", 
-                "retorno","seguir","si","verdadero"
+                "fin","funcion","girar ","haz","imprimir","iniciar","izquierda",
+                "largo","leer","mientras","no","nulo","parav","pin","principal","regresar", 
+                "retorno","ruta","seguir","si","video","verdadero"
                 };
     
     public TablaReservadas() {
