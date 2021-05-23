@@ -9,16 +9,9 @@ public enum Tokens {
     OPERADOR_POR,
     OPERADOR_DIVISION,
     ASIGNACION,
-<<<<<<< HEAD
     OPERADOR_Y,
     OPERADOR_O,
     OPERADOR_MODULO,
-=======
-    Y,
-    O,
-    MODULO,
-    COMA,
->>>>>>> d9629d8f7455220dd36ed202d25a5d0a0dd5833f
     PUNTO_COMA,
     PARENTESIS_IZQ,
     PARENTESIS_DER,
