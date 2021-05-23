@@ -6,8 +6,11 @@
             <file>file:/C:/analizador/src/analizador/Lexer.flex</file>
             <file>file:/C:/analizador/src/tablas/TablaSimbolos.java</file>
             <file>file:/C:/analizador/src/analizador/PrincipalAnalizador.java</file>
+            <file>file:/C:/analizador/src/analizador/Lexer.java</file>
             <file>file:/C:/analizador/src/analizador/Editor.java</file>
             <file>file:/C:/analizador/src/modelos/Simbolos.java</file>
+            <file>file:/C:/analizador/src/analizador/Tokens.java</file>
+            <file>file:/C:/analizador/src/analizador/InformacionAnalisis.java</file>
         </group>
     </open-files>
 </project-private>

@@ -237,21 +237,18 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miSimboloActionPerformed
 
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> linea = null;
-        int resp = 0;
-        String codigo = "";
-        txtEditor.setText("");
-        resp = jFileChooser1.showOpenDialog(this);
-        if (resp == JFileChooser.APPROVE_OPTION) {
-            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
-            if (linea.size() > 0) {
-                for (int i = 0; i < linea.size(); i++) {
-                    codigo = (String) linea.get(i);
-                    txtEditor.append(codigo + "\n");
-                }
-            }
-            guardarComo = false;
+        // TODO add your handling code here:        
+        int resp = JOptionPane.showConfirmDialog(null,
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            miGuardar.doClick();
+            limpiar();
+            abrirArchivo();
+        }
+        if (resp == 1) {
+            limpiar();
+            abrirArchivo();
         }
     }//GEN-LAST:event_miAbrirActionPerformed
 
@@ -307,6 +304,23 @@ public class Editor extends javax.swing.JFrame {
         guardarComo = true;
     }
 
+    private void abrirArchivo(){
+        ArrayList<String> linea = null;
+        int resp = 0;
+        String codigo = "";
+        txtEditor.setText("");
+        resp = jFileChooser1.showOpenDialog(this);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
+            if (linea.size() > 0) {
+                for (int i = 0; i < linea.size(); i++) {
+                    codigo = (String) linea.get(i);
+                    txtEditor.append(codigo + "\n");
+                }
+            }
+            guardarComo = false;
+        }
+    }
     /**
      * @param args the command line arguments
      */

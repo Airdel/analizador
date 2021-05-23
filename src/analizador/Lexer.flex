@@ -18,7 +18,7 @@ num = {D}+
 enteros = {S}?{num}
 numDec =  {S}?{num}?\.{num}
 numExp =  {S}?{num}?(\.{num})?e{ enteros }
-invalido = ({LE}|{D})*
+invalido = ({LE}|{D})+
 
 ESPACIO=[ \t\r\n]
 
