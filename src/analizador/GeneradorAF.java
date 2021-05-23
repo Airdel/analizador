@@ -4,7 +4,7 @@ package analizador;
 import java.io.File;
 
 
-public class PrincipalAnalizador {
+public class GeneradorAF {
 
     public static void main(String[] args) {
         String path = "C:/analizador/src/analizador/Lexer.flex";

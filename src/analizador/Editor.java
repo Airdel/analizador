@@ -1,5 +1,6 @@
 package analizador;
 
+import modelos.InformacionLexema;
 import tablas.TablaIdentificadores;
 import tablas.TablaIdentificadores;
 import tablas.TablaReservadas;
@@ -45,7 +46,6 @@ public class Editor extends javax.swing.JFrame {
         m = (DefaultTableModel) tablaMensajes.getModel();
         numeroLinea = new NumeroLinea(txtEditor);
         jScrollPane1.setRowHeaderView(numeroLinea);
-        //numLine.setText(numeroLinea.getTextLineNumber(PROPERTIES));
     }
 
     /**
@@ -222,16 +222,7 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miReservadasActionPerformed
 
     private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
-        // TODO add your handling code here:
-//        TablaIdentificadores ti = new TablaIdentificadores(identificadores);
-//        ti.setVisible(true);
-        for (Simbolos sim : simbolos) {
-            System.out.println(sim.toString());
-        }
-        Collections.sort(simbolos);
-        for (Simbolos sim : simbolos) {
-            System.out.println(sim.toString());
-        } 
+        Collections.sort(simbolos);      
         TablaSimbolos ts = new TablaSimbolos(simbolos);
         ts.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
@@ -277,7 +268,6 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
-        identificadores.toString();
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -390,7 +380,7 @@ public class Editor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void probarLexer() {
-        InformacionAnalisis c = new InformacionAnalisis();
+        InformacionLexema c = new InformacionLexema();
 
         File fichero = new File("fichero.and");
         PrintWriter writer;
@@ -420,7 +410,6 @@ public class Editor extends javax.swing.JFrame {
                     for (Simbolos sim : simbolos) {
                         m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
                     }
-//                    mensajes.setText(text);
                     txtErrores.setText(errores);
                     errores_lexicos = false;
                     return;

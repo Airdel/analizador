@@ -23,7 +23,8 @@ public class TablaSimbolos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         m = (DefaultTableModel) jTable1.getModel();
-        for (Simbolos sim : simbolos) {
+        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
+        for (Simbolos sim : nuevo) {
             m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
         }
     }
@@ -105,6 +106,22 @@ public class TablaSimbolos extends javax.swing.JFrame {
                 new TablaSimbolos(simbolos).setVisible(true);
             }
         });
+    }
+    
+    private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array){
+        ArrayList<Simbolos> n_simbolos = new ArrayList<>();
+        for (Simbolos sim : array) {
+            boolean agregar = true;
+            if(sim.getComponente().equalsIgnoreCase("IDENTIFICADOR")){
+                for (int j = 0; j < n_simbolos.size(); j++) {
+                    if(sim.getLexema().equals(n_simbolos.get(j).getLexema()))
+                        agregar = false;
+                }
+            }
+            if(agregar)
+                n_simbolos.add(sim);
+        }
+        return n_simbolos;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

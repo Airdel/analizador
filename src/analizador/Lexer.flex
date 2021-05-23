@@ -24,7 +24,7 @@ ESPACIO=[ \t\r\n]
 
 %{
     public String lexema;
-    InformacionAnalisis c = new InformacionAnalisis();
+    modelos.InformacionLexema c = new modelos.InformacionLexema();
 %}
 
 %%

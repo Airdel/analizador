@@ -1,7 +1,7 @@
-package analizador;
+package modelos;
 
 
-public class InformacionAnalisis {
+public class InformacionLexema {
     
     public static int linea;
     public static String token;
