@@ -21,6 +21,7 @@ numExp =  {S}?{num}?(\.{num})?e{ enteros }
 invalido = ({LE}|{D})*
 
 arroba = @
+coma = ,
 ESPACIO=[ \t\r\n]
 
 %{
@@ -42,6 +43,7 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> "|" {c.linea=yyline; lexeme=yytext(); return O;}
 <YYINITIAL> "%" {c.linea=yyline; lexeme=yytext(); return MODULO;}
 <YYINITIAL> ";" {c.linea=yyline; lexeme=yytext(); return PUNTO_COMA;}
+<YYINITIAL> "," {c.linea=yyline; lexeme=yytext(); return COMA;}
 <YYINITIAL> "(" {c.linea=yyline; lexeme=yytext(); return PARENTESIS_IZQ;}
 <YYINITIAL> ")" {c.linea=yyline; lexeme=yytext(); return PARENTESIS_DER;}
 <YYINITIAL> ">" {c.linea=yyline; lexeme=yytext(); return MAYOR;}

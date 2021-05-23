@@ -12,6 +12,7 @@ public enum Tokens {
     Y,
     O,
     MODULO,
+    COMA,
     PUNTO_COMA,
     PARENTESIS_IZQ,
     PARENTESIS_DER,
