@@ -1,5 +1,6 @@
 package analizador;
 
+import java.awt.Toolkit;
 import modelos.InformacionLexema;
 import tablas.TablaIdentificadores;
 import tablas.TablaIdentificadores;
@@ -46,6 +47,7 @@ public class Editor extends javax.swing.JFrame {
         m = (DefaultTableModel) tablaMensajes.getModel();
         numeroLinea = new NumeroLinea(txtEditor);
         jScrollPane1.setRowHeaderView(numeroLinea);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
     }
 
     /**

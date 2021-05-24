@@ -20,7 +20,8 @@ numDec =  {S}?{num}?\.{num}
 numExp =  {S}?{num}?(\.{num})?e{ enteros }
 invalido = ({LE}|{D})+
 
-ESPACIO=[ \t\r\n]
+ESCAPE=[ \t\r\n]
+
 
 %{
     public String lexema;
@@ -29,8 +30,9 @@ ESPACIO=[ \t\r\n]
 
 %%
 
-{ESPACIO} {/*Ignore*/}
+{ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
+"---"~"---" { }
 <YYINITIAL> "+" {c.linea=yyline; lexema=yytext(); return OPERADOR_MAS;}
 <YYINITIAL> "=" {c.linea=yyline; lexema=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline; lexema=yytext(); return OPERADOR_IGUALDAD;}
@@ -48,6 +50,7 @@ ESPACIO=[ \t\r\n]
 <YYINITIAL> ">=" {c.linea=yyline; lexema=yytext(); return MAYOR_QUE;}
 <YYINITIAL> "<=" {c.linea=yyline; lexema=yytext(); return MENOR_QUE;}
 <YYINITIAL> ":" {c.linea=yyline; lexema=yytext(); return DOS_PUNTOS;}
+<YYINITIAL> "," {c.linea=yyline; lexema=yytext(); return COMA;}
 <YYINITIAL> "@" {c.linea=yyline; lexema=yytext(); return ARROBA;}
 <YYINITIAL> "entero" {c.linea=yyline; lexema=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline; lexema=yytext(); return RESERVADA_CADENA;}
