@@ -46,7 +46,7 @@ public class Editor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         m = (DefaultTableModel) tablaMensajes.getModel();
         numeroLinea = new NumeroLinea(txtEditor);
-        jScrollPane1.setRowHeaderView(numeroLinea);
+        scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
     }
 
@@ -60,10 +60,10 @@ public class Editor extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu4 = new javax.swing.JMenu();
+        scrollEditor = new javax.swing.JScrollPane();
+        txtEditor = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtErrores = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtEditor = new javax.swing.JTextArea();
         jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaMensajes = new javax.swing.JTable();
@@ -83,13 +83,7 @@ public class Editor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin titulo");
-
-        txtErrores.setEditable(false);
-        txtErrores.setColumns(20);
-        txtErrores.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        txtErrores.setForeground(new java.awt.Color(255, 51, 51));
-        txtErrores.setRows(5);
-        jScrollPane3.setViewportView(txtErrores);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtEditor.setColumns(20);
         txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -100,7 +94,19 @@ public class Editor extends javax.swing.JFrame {
                 txtEditorKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(txtEditor);
+        scrollEditor.setViewportView(txtEditor);
+
+        getContentPane().add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
+
+        txtErrores.setEditable(false);
+        txtErrores.setColumns(20);
+        txtErrores.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        txtErrores.setForeground(new java.awt.Color(255, 51, 51));
+        txtErrores.setRows(5);
+        jScrollPane3.setViewportView(txtErrores);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 395, 924, 159));
+        getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,6 +117,8 @@ public class Editor extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(tablaMensajes);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
 
         jMenu2.setText("Archivo");
 
@@ -189,32 +197,6 @@ public class Editor extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 924, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -261,6 +243,8 @@ public class Editor extends javax.swing.JFrame {
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
         // TODO add your handling code here:
 //        mensajes.setText("");
+        scrollEditor.setBounds(scrollEditor.getX(),scrollEditor.getY(),495,390);
+        txtEditor.setBounds(txtEditor.getX(),txtEditor.getY(),495,390);
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -291,9 +275,11 @@ public class Editor extends javax.swing.JFrame {
 
     private void limpiar() {
         txtEditor.setText("");
-//        mensajes.setText("");
         txtErrores.setText("");
-        guardarComo = true;
+        guardarComo = true; 
+        scrollEditor.setBounds(0,0,960,560);
+        txtEditor.setBounds(0,0,960,560);
+            
     }
 
     private void abrirArchivo(){
@@ -310,6 +296,9 @@ public class Editor extends javax.swing.JFrame {
                     txtEditor.append(codigo + "\n");
                 }
             }
+            scrollEditor.setBounds(0,0,960,560);
+            txtEditor.setBounds(0,0,960,560);
+            
             guardarComo = false;
         }
     }
@@ -366,7 +355,6 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuItem miAbrir;
@@ -376,6 +364,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem miNuevo;
     private javax.swing.JMenuItem miReservadas;
     private javax.swing.JMenuItem miSimbolo;
+    private javax.swing.JScrollPane scrollEditor;
     private javax.swing.JTable tablaMensajes;
     private javax.swing.JTextArea txtEditor;
     private javax.swing.JTextArea txtErrores;
