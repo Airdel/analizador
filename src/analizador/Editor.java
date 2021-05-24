@@ -409,7 +409,7 @@ public class Editor extends javax.swing.JFrame {
                 switch (tokens) {
                     case ERROR:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + "\n";
+                                + " Linea: " + (c.linea + 1) + " Columna: " + (c.columna + 1) + "\n";
                         errores_lexicos = true;
                         break;
 //                    case IDENTIFICADOR:
