@@ -13,6 +13,7 @@ public enum Tokens {
     OPERADOR_O,
     OPERADOR_MODULO,
     COMA,
+    COMILLA_SIMPLE,
     PUNTO_COMA,
     PARENTESIS_IZQ,
     PARENTESIS_DER,

@@ -88,7 +88,7 @@ public class Editor extends javax.swing.JFrame {
         txtEditor.setColumns(20);
         txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtEditor.setRows(2);
-        txtEditor.setTabSize(4);
+        txtEditor.setTabSize(3);
         txtEditor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEditorKeyReleased(evt);

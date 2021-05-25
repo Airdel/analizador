@@ -33,6 +33,7 @@ ESCAPE=[ \t\r\n]
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
 "---"~"---" { }
+"'"~"'" { }
 <YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MAS;}
 <YYINITIAL> "=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_IGUALDAD;}
@@ -52,6 +53,7 @@ ESCAPE=[ \t\r\n]
 <YYINITIAL> ":" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DOS_PUNTOS;}
 <YYINITIAL> "," {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMA;}
 <YYINITIAL> "@" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ARROBA;}
+<YYINITIAL> "'" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMILLA_SIMPLE;}
 <YYINITIAL> "entero" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_CADENA;}
 <YYINITIAL> "iniciar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_INICIAR;}
