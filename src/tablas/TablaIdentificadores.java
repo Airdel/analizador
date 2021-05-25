@@ -6,7 +6,8 @@
 package tablas;
 
 import java.util.ArrayList;
-import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+import modelos.Simbolos;
 
 /**
  *
@@ -14,21 +15,20 @@ import javax.swing.JLabel;
  */
 public class TablaIdentificadores extends javax.swing.JFrame {
     
-    private static ArrayList<String> identificadores = new ArrayList<String>();
+    private static ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+    private DefaultTableModel m = new DefaultTableModel();
     
-    public TablaIdentificadores(ArrayList<String> identificador) {
+    public TablaIdentificadores(ArrayList<Simbolos> simbolos) {
+        this.simbolos = simbolos;
         initComponents();
         setLocationRelativeTo(null);
-        int tam = identificador.size();
-        this.identificadores = identificador;
-        JLabel palabras[] = new JLabel[tam];
-        String tex = "";
-        for (int i = 0;i<tam;i++) {            
-            palabras[i] = new JLabel(identificador.get(i));
-            palabras[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            palabras[i].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));    
-            panelREv.add(palabras[i]);
-        }        
+        m = (DefaultTableModel) jTable1.getModel();
+        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
+        for (Simbolos sim : nuevo) {
+            if(!sim.getComponente().equals("IDENTIFICADOR"))
+                continue;
+            m.addRow(new Object[]{sim.getLinea(),sim.getComponente(), sim.getLexema()});
+        }
     }
 
     /**
@@ -40,43 +40,39 @@ public class TablaIdentificadores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        panelREv = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Tabla de simbolos");
+        setTitle("Tabla de Identificadores");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        panelREv.setBackground(new java.awt.Color(255, 255, 255));
-        panelREv.setLayout(new java.awt.GridLayout(5, 6));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelREv, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelREv, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+            },
+            new String [] {
+                "Línea", "Comp Lex", "Lexema"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,13 +109,29 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TablaIdentificadores(identificadores).setVisible(true);
+                new TablaIdentificadores(simbolos).setVisible(true);
             }
         });
     }
+    
+    private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array){
+        ArrayList<Simbolos> n_simbolos = new ArrayList<>();
+        for (Simbolos sim : array) {
+            boolean agregar = true;
+            if(sim.getComponente().equalsIgnoreCase("IDENTIFICADOR")){
+                for (int j = 0; j < n_simbolos.size(); j++) {
+                    if(sim.getLexema().equals(n_simbolos.get(j).getLexema()))
+                        agregar = false;
+                }
+            }
+            if(agregar)
+                n_simbolos.add(sim);
+        }
+        return n_simbolos;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel panelREv;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

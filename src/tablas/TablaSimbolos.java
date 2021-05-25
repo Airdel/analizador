@@ -25,7 +25,7 @@ public class TablaSimbolos extends javax.swing.JFrame {
         m = (DefaultTableModel) jTable1.getModel();
         ArrayList<Simbolos> nuevo = reorganizar(simbolos);
         for (Simbolos sim : nuevo) {
-            m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
+            m.addRow(new Object[]{sim.getLinea(),sim.getComponente(), sim.getLexema() });
         }
     }
 
@@ -49,10 +49,13 @@ public class TablaSimbolos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Comp Lex", "Lexema", "Línea"
+                "Línea", "Comp Lex", "Lexema"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

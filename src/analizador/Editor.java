@@ -74,6 +74,7 @@ public class Editor extends javax.swing.JFrame {
         miGuardar = new javax.swing.JMenuItem();
         miGuardarComo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        miIden = new javax.swing.JMenuItem();
         miReservadas = new javax.swing.JMenuItem();
         miSimbolo = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -117,6 +118,9 @@ public class Editor extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(tablaMensajes);
+        if (tablaMensajes.getColumnModel().getColumnCount() > 0) {
+            tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
+        }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
 
@@ -162,6 +166,15 @@ public class Editor extends javax.swing.JFrame {
 
         jMenu3.setText("Tablas");
 
+        miIden.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miIden.setText("Identificadores");
+        miIden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miIdenActionPerformed(evt);
+            }
+        });
+        jMenu3.add(miIden);
+
         miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miReservadas.setText("Reservadas");
         miReservadas.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +184,7 @@ public class Editor extends javax.swing.JFrame {
         });
         jMenu3.add(miReservadas);
 
-        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miSimbolo.setText("Simbolos");
         miSimbolo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,6 +286,13 @@ public class Editor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_miNuevoActionPerformed
 
+    private void miIdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIdenActionPerformed
+        // TODO add your handling code here:
+        Collections.sort(simbolos);      
+        TablaIdentificadores ts = new TablaIdentificadores(simbolos);
+        ts.setVisible(true);
+    }//GEN-LAST:event_miIdenActionPerformed
+
     private void limpiar() {
         txtEditor.setText("");
         txtErrores.setText("");
@@ -360,6 +380,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miGuardarComo;
+    private javax.swing.JMenuItem miIden;
     private javax.swing.JMenuItem miLexico;
     private javax.swing.JMenuItem miNuevo;
     private javax.swing.JMenuItem miReservadas;
@@ -409,15 +430,9 @@ public class Editor extends javax.swing.JFrame {
                 switch (tokens) {
                     case ERROR:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + " Columna: " + (c.columna + 1) + "\n";
+                                + " Linea: " + (c.linea + 1) + "\n";
                         errores_lexicos = true;
                         break;
-//                    case IDENTIFICADOR:
-//                        simbolos.add(new Simbolos(tokens.toString(),lexer.lexema,c.linea));
-//                        identificadores.add(lexer.lexema);
-//
-//                        text = text + "Componente Lexico: " + tokens + " Lexema: " + lexer.lexema + "\n";
-//                        break;
                     default:
                         simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
                         identificadores.add(lexer.lexema);

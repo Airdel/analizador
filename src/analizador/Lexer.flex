@@ -35,7 +35,7 @@ cadena = (\')~(\')
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
 "---"~"---" { }
-<YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MAS;}
+<YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MAS;}
 <YYINITIAL> "=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_IGUALDAD;}
 <YYINITIAL> "-" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MENOS;}
