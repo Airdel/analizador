@@ -1,13 +1,1 @@
-iniciar programa:
-	declaracion:
-		entero edad =21;
-	fin
-	principal
-		si (edad>=18):
-			imprimir 'Eres mayor de edad';
-		si no	
-			imprimir 'Eres menor de edad'
-		fin
-	fin
-fin
-	
+si (!a <> b)

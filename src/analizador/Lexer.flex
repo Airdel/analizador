@@ -22,6 +22,8 @@ invalido = ({LE}|{D})+
 
 ESCAPE=[ \t\r\n]
 
+cadena = (\')~(\')
+
 
 %{
     public String lexema;
@@ -33,7 +35,6 @@ ESCAPE=[ \t\r\n]
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
 "---"~"---" { }
-"'"~"'" { }
 <YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MAS;}
 <YYINITIAL> "=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_IGUALDAD;}
@@ -42,6 +43,7 @@ ESCAPE=[ \t\r\n]
 <YYINITIAL> "/" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_DIVISION;}
 <YYINITIAL> "&" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_Y;}
 <YYINITIAL> "|" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_O;}
+<YYINITIAL> "!" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_NEGACION;}
 <YYINITIAL> "%" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MODULO;}
 <YYINITIAL> ";" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return PUNTO_COMA;}
 <YYINITIAL> "(" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return PARENTESIS_IZQ;}
@@ -50,6 +52,7 @@ ESCAPE=[ \t\r\n]
 <YYINITIAL> "<" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MENOR;}
 <YYINITIAL> ">=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MAYOR_QUE;}
 <YYINITIAL> "<=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MENOR_QUE;}
+<YYINITIAL> "<>" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DESIGUAL;}
 <YYINITIAL> ":" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DOS_PUNTOS;}
 <YYINITIAL> "," {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMA;}
 <YYINITIAL> "@" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ARROBA;}
@@ -103,6 +106,7 @@ ESCAPE=[ \t\r\n]
 <YYINITIAL> "video" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_VIDEO;}
 <YYINITIAL> "falso" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_FALSO;}
 <YYINITIAL> "verdadero" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_VERDADERO;}
+<YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return CADENA_TEXTO;}
 <YYINITIAL> {enteros} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO;}
 <YYINITIAL> {numDec} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO_DECIMAL;}
 <YYINITIAL> {numExp} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO_EXPONENTE;}
