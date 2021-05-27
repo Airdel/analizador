@@ -24,7 +24,7 @@ ESCAPE=[ \t\r\n]
 
 cadena = (\')~(\')
 
-errorPuntos = ( {numDec}(\.{num})*) | ({LE}(\.{LE})*)
+errorPuntos = (\.)*{num}?((\.*)|({num}))*
 
 %{
     public String lexema;
