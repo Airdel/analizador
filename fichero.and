@@ -1,15 +1,1 @@
-inicia 1programa:
-	declaracion;
-		boolenao validacion == verdadero;
-	fin
-	principales
-		@calibra
-		si (validacion):
-			@ruta (3;45,6.3.3):
-			captura;
-		si no	
-			@detener;
-		fin.
-	fin
-final
-	
+a.aA
