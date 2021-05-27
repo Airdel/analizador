@@ -22,7 +22,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
-import tablas.TablaSimbolos;
+import tablas.TablaOperadores;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,6 +45,7 @@ public class Editor extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         m = (DefaultTableModel) tablaMensajes.getModel();
+        tablaMensajes.setAutoCreateRowSorter(true);
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
@@ -184,8 +185,8 @@ public class Editor extends javax.swing.JFrame {
         });
         jMenu3.add(miReservadas);
 
-        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        miSimbolo.setText("Simbolos");
+        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miSimbolo.setText("Operadores");
         miSimbolo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miSimboloActionPerformed(evt);
@@ -220,7 +221,7 @@ public class Editor extends javax.swing.JFrame {
 
     private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
         Collections.sort(simbolos);      
-        TablaSimbolos ts = new TablaSimbolos(simbolos);
+        TablaOperadores ts = new TablaOperadores();
         ts.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
 

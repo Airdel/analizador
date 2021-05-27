@@ -7,25 +7,24 @@ package tablas;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelos.Simbolos;
+import modelos.Operador;
 
 /**
  *
  * @author danyc
  */
-public class TablaSimbolos extends javax.swing.JFrame {
+public class TablaOperadores extends javax.swing.JFrame {
     
-    private static ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     private DefaultTableModel m = new DefaultTableModel();
     
-    public TablaSimbolos(ArrayList<Simbolos> simbolos) {
-        this.simbolos = simbolos;
+    public TablaOperadores() {
         initComponents();
         setLocationRelativeTo(null);
         m = (DefaultTableModel) jTable1.getModel();
-        ArrayList<Simbolos> nuevo = reorganizar(simbolos);
-        for (Simbolos sim : nuevo) {
-            m.addRow(new Object[]{sim.getLinea(),sim.getComponente(), sim.getLexema() });
+        jTable1.setAutoCreateRowSorter(true);
+        ArrayList<Operador> nuevo = llenarTabla();
+        for (Operador op : nuevo) {
+            m.addRow(new Object[]{op.getTipo(),op.getLexema() });
         }
     }
 
@@ -42,19 +41,31 @@ public class TablaSimbolos extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Tabla de Simbolos");
+        setTitle("Tabla de Operadores");
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Línea", "Comp Lex", "Lexema"
+                "Tipo de Operador", "Lexema"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(30);
+        jTable1.setRowMargin(2);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,38 +104,36 @@ public class TablaSimbolos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TablaSimbolos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaOperadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TablaSimbolos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaOperadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TablaSimbolos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaOperadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TablaSimbolos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaOperadores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TablaSimbolos(simbolos).setVisible(true);
+                new TablaOperadores().setVisible(true);
             }
         });
     }
     
-    private ArrayList<Simbolos> reorganizar(ArrayList<Simbolos> array){
-        ArrayList<Simbolos> n_simbolos = new ArrayList<>();
-        for (Simbolos sim : array) {
-            boolean agregar = true;
-            if(sim.getComponente().equalsIgnoreCase("IDENTIFICADOR")){
-                for (int j = 0; j < n_simbolos.size(); j++) {
-                    if(sim.getLexema().equals(n_simbolos.get(j).getLexema()))
-                        agregar = false;
-                }
-            }
-            if(agregar)
-                n_simbolos.add(sim);
-        }
-        return n_simbolos;
+    private ArrayList<Operador> llenarTabla(){
+        ArrayList<Operador> operadores = new ArrayList<>();
+        operadores.add(new Operador("Aritmético más","+"));
+        operadores.add(new Operador("Aritmético menos","-"));
+        operadores.add(new Operador("Aritmético multiplicars","*"));
+        operadores.add(new Operador("Aritmético división","/"));
+        operadores.add(new Operador("Lógico and","&"));
+        operadores.add(new Operador("Lógico or","|"));
+        operadores.add(new Operador("Lógico not","!"));
+                
+        return operadores;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

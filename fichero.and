@@ -1,13 +1,15 @@
-iniciar programa:
-	declaracion:
-		entero edad =21;
+inicia 1programa:
+	declaracion;
+		boolenao validacion == verdadero;
 	fin
-	principal
-		si (edad>=18):
-			imprimir 'Eres mayor de edad';
+	principales
+		@calibra
+		si (validacion):
+			@ruta (3;45,6.3.3):
+			captura;
 		si no	
-			iMprimir 'Eres menor de edad';
-		fin
+			@detener;
+		fin.
 	fin
-fin
+final
 	

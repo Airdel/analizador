@@ -22,6 +22,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         this.simbolos = simbolos;
         initComponents();
         setLocationRelativeTo(null);
+        jTable1.setAutoCreateRowSorter(true);
         m = (DefaultTableModel) jTable1.getModel();
         ArrayList<Simbolos> nuevo = reorganizar(simbolos);
         for (Simbolos sim : nuevo) {
