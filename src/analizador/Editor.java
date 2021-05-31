@@ -1,5 +1,6 @@
 package analizador;
 
+import controladores.ControladorEditor;
 import java.awt.Toolkit;
 import modelos.InformacionLexema;
 import tablas.TablaIdentificadores;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.ModeloEditor;
 import modelos.Simbolos;
 import tablas.TablaOperadores;
 
@@ -38,6 +40,7 @@ public class Editor extends javax.swing.JFrame {
     NumeroLinea numeroLinea;
     private ArrayList<String> identificadores = new ArrayList<String>();
     private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+
     private boolean errores_lexicos;
     private DefaultTableModel m = new DefaultTableModel();
 
@@ -145,38 +148,18 @@ public class Editor extends javax.swing.JFrame {
 
         miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miNuevo.setText("Nuevo");
-        miNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miNuevoActionPerformed(evt);
-            }
-        });
         jMenu2.add(miNuevo);
 
         miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miAbrir.setText("Abrir");
-        miAbrir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miAbrirActionPerformed(evt);
-            }
-        });
         jMenu2.add(miAbrir);
 
         miGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardar.setText("Guardar");
-        miGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miGuardarActionPerformed(evt);
-            }
-        });
         jMenu2.add(miGuardar);
 
         miGuardarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardarComo.setText("Guardar como");
-        miGuardarComo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miGuardarComoActionPerformed(evt);
-            }
-        });
         jMenu2.add(miGuardarComo);
 
         jMenuBar1.add(jMenu2);
@@ -194,20 +177,10 @@ public class Editor extends javax.swing.JFrame {
 
         miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miReservadas.setText("Reservadas");
-        miReservadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miReservadasActionPerformed(evt);
-            }
-        });
         jMenu3.add(miReservadas);
 
         miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miSimbolo.setText("Operadores");
-        miSimbolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSimboloActionPerformed(evt);
-            }
-        });
         jMenu3.add(miSimbolo);
 
         jMenuBar1.add(jMenu3);
@@ -230,46 +203,6 @@ public class Editor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
-        TablaReservadas tr = new TablaReservadas();
-        tr.setVisible(true);
-    }//GEN-LAST:event_miReservadasActionPerformed
-
-    private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
-        Collections.sort(simbolos);
-        TablaOperadores ts = new TablaOperadores();
-        ts.setVisible(true);
-    }//GEN-LAST:event_miSimboloActionPerformed
-
-    private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
-        // TODO add your handling code here:        
-        int resp = JOptionPane.showConfirmDialog(null,
-                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
-        if (resp == 0) {
-            miGuardar.doClick();
-            limpiar();
-            abrirArchivo();
-        }
-        if (resp == 1) {
-            limpiar();
-            abrirArchivo();
-        }
-    }//GEN-LAST:event_miAbrirActionPerformed
-
-    private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
-        guardarComo();
-    }//GEN-LAST:event_miGuardarComoActionPerformed
-
-    private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
-        if (guardarComo) {
-            guardarComo();
-        } else {
-            guardar();
-        }
-
-    }//GEN-LAST:event_miGuardarActionPerformed
-
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
 
         scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 390);
@@ -290,19 +223,6 @@ public class Editor extends javax.swing.JFrame {
         lbPalabras.setText(contarPal() + "");
     }//GEN-LAST:event_txtEditorKeyReleased
 
-    private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null,
-                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
-        if (resp == 0) {
-            miGuardar.doClick();
-            limpiar();
-        }
-        if (resp == 1) {
-            limpiar();
-        }
-    }//GEN-LAST:event_miNuevoActionPerformed
-
     private void miIdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIdenActionPerformed
         // TODO add your handling code here:
         Collections.sort(simbolos);
@@ -317,29 +237,6 @@ public class Editor extends javax.swing.JFrame {
         scrollEditor.setBounds(0, 0, 960, 560);
         txtEditor.setBounds(0, 0, 960, 560);
 
-    }
-
-    private void abrirArchivo() {
-        ArrayList<String> linea = null;
-        int resp = 0;
-        String codigo = "";
-        txtEditor.setText("");
-        resp = jFileChooser1.showOpenDialog(this);
-        if (resp == JFileChooser.APPROVE_OPTION) {
-            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
-            if (linea.size() > 0) {
-                for (int i = 0; i < linea.size(); i++) {
-                    codigo = (String) linea.get(i);
-                    txtEditor.append(codigo + "\n");
-
-                }
-            }
-            scrollEditor.setBounds(0, 0, 960, 560);
-            txtEditor.setBounds(0, 0, 960, 560);
-            lbCaracteres.setText(contarCar() + "");
-            lbPalabras.setText(contarPal() + "");
-            guardarComo = false;
-        }
     }
 
     /**
@@ -379,17 +276,13 @@ public class Editor extends javax.swing.JFrame {
     }
 
     private File archivo;
-    private java.io.FileOutputStream out;
-    private java.io.FileInputStream in;
-    private java.io.DataOutputStream fdw;
-    private java.io.DataInputStream fdr;
 
     private boolean guardarComo = true;
     private boolean guardar = false;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser jFileChooser1;
+    public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -399,20 +292,20 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lbCaracteres;
-    private javax.swing.JLabel lbPalabras;
-    private javax.swing.JMenuItem miAbrir;
-    private javax.swing.JMenuItem miGuardar;
-    private javax.swing.JMenuItem miGuardarComo;
-    private javax.swing.JMenuItem miIden;
+    public javax.swing.JLabel lbCaracteres;
+    public javax.swing.JLabel lbPalabras;
+    public javax.swing.JMenuItem miAbrir;
+    public javax.swing.JMenuItem miGuardar;
+    public javax.swing.JMenuItem miGuardarComo;
+    public javax.swing.JMenuItem miIden;
     private javax.swing.JMenuItem miLexico;
-    private javax.swing.JMenuItem miNuevo;
-    private javax.swing.JMenuItem miReservadas;
-    private javax.swing.JMenuItem miSimbolo;
-    private javax.swing.JScrollPane scrollEditor;
-    private javax.swing.JTable tablaMensajes;
-    private javax.swing.JTextArea txtEditor;
-    private javax.swing.JTextArea txtErrores;
+    public javax.swing.JMenuItem miNuevo;
+    public javax.swing.JMenuItem miReservadas;
+    public javax.swing.JMenuItem miSimbolo;
+    public javax.swing.JScrollPane scrollEditor;
+    public javax.swing.JTable tablaMensajes;
+    public javax.swing.JTextArea txtEditor;
+    public javax.swing.JTextArea txtErrores;
     // End of variables declaration//GEN-END:variables
 
     private void probarLexer() {
@@ -454,14 +347,16 @@ public class Editor extends javax.swing.JFrame {
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + ". Indentificador no puede comenzar con un dígito\n";;
+                                + " Linea: " + (c.linea + 1) + ". Indentificador no puede comenzar con un dígito\n";
+                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";;
+                                + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";
+                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
@@ -508,44 +403,6 @@ public class Editor extends javax.swing.JFrame {
             e.printStackTrace();
         }
         return texto;
-    }
-
-    private void guardar() {
-        FileWriter save = null;
-        try {
-            save = new FileWriter(archivo.getAbsolutePath());
-            save.write(txtEditor.getText());
-            save.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                save.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void guardarComo() {
-        try {
-            JFileChooser file = new JFileChooser();
-            if (file.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                archivo = file.getSelectedFile();
-                if (archivo != null) {
-                    FileWriter save = new FileWriter(archivo.getAbsolutePath() + ".lya");
-                    String nombre = archivo.getName();
-                    setTitle(nombre);
-                    save.write(txtEditor.getText());
-                    save.close();
-                    guardarComo = false;
-                }
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Su archivo no se ha guardado",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
     }
 
     private int contarCar() {
