@@ -68,6 +68,10 @@ public class Editor extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaMensajes = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        lbPalabras = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbCaracteres = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -124,6 +128,18 @@ public class Editor extends javax.swing.JFrame {
         }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
+
+        jLabel1.setText("Palabras: ");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+
+        lbPalabras.setText("---");
+        getContentPane().add(lbPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, -1, -1));
+
+        jLabel2.setText("Caracteres");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 560, -1, -1));
+
+        lbCaracteres.setText("---");
+        getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 560, -1, -1));
 
         jMenu2.setText("Archivo");
 
@@ -220,7 +236,7 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miReservadasActionPerformed
 
     private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
-        Collections.sort(simbolos);      
+        Collections.sort(simbolos);
         TablaOperadores ts = new TablaOperadores();
         ts.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
@@ -255,10 +271,9 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miGuardarActionPerformed
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
-        // TODO add your handling code here:
-//        mensajes.setText("");
-        scrollEditor.setBounds(scrollEditor.getX(),scrollEditor.getY(),495,390);
-        txtEditor.setBounds(txtEditor.getX(),txtEditor.getY(),495,390);
+
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 390);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 390);
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -271,7 +286,8 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
-
+        lbCaracteres.setText(contarCar() + "");
+        lbPalabras.setText(contarPal() + "");
     }//GEN-LAST:event_txtEditorKeyReleased
 
     private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
@@ -289,7 +305,7 @@ public class Editor extends javax.swing.JFrame {
 
     private void miIdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIdenActionPerformed
         // TODO add your handling code here:
-        Collections.sort(simbolos);      
+        Collections.sort(simbolos);
         TablaIdentificadores ts = new TablaIdentificadores(simbolos);
         ts.setVisible(true);
     }//GEN-LAST:event_miIdenActionPerformed
@@ -297,13 +313,13 @@ public class Editor extends javax.swing.JFrame {
     private void limpiar() {
         txtEditor.setText("");
         txtErrores.setText("");
-        guardarComo = true; 
-        scrollEditor.setBounds(0,0,960,560);
-        txtEditor.setBounds(0,0,960,560);
-            
+        guardarComo = true;
+        scrollEditor.setBounds(0, 0, 960, 560);
+        txtEditor.setBounds(0, 0, 960, 560);
+
     }
 
-    private void abrirArchivo(){
+    private void abrirArchivo() {
         ArrayList<String> linea = null;
         int resp = 0;
         String codigo = "";
@@ -315,14 +331,17 @@ public class Editor extends javax.swing.JFrame {
                 for (int i = 0; i < linea.size(); i++) {
                     codigo = (String) linea.get(i);
                     txtEditor.append(codigo + "\n");
+
                 }
             }
-            scrollEditor.setBounds(0,0,960,560);
-            txtEditor.setBounds(0,0,960,560);
-            
+            scrollEditor.setBounds(0, 0, 960, 560);
+            txtEditor.setBounds(0, 0, 960, 560);
+            lbCaracteres.setText(contarCar() + "");
+            lbPalabras.setText(contarPal() + "");
             guardarComo = false;
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -371,6 +390,8 @@ public class Editor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -378,6 +399,8 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbCaracteres;
+    private javax.swing.JLabel lbPalabras;
     private javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miGuardarComo;
@@ -410,21 +433,14 @@ public class Editor extends javax.swing.JFrame {
         try {
             reader = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(reader);
-            String text = "";
             String errores = "";
             while (true) {
                 Tokens tokens = lexer.yylex();
                 if (tokens == null) {
-                    if (errores_lexicos) {
-                        text += "\n¡¡¡ Terminado con errores !!! Revisar";
-                    } else {
-                        text += "\nRevisado sin errores";
-                    }
-                    for (Simbolos sim : simbolos) {
-                        m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
-                    }
+//                    for (Simbolos sim : simbolos) {
+//                        m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
+//                    }
                     txtErrores.setText(errores);
-                    errores_lexicos = false;
                     return;
                 }
 
@@ -433,13 +449,28 @@ public class Editor extends javax.swing.JFrame {
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
                                 + " Linea: " + (c.linea + 1) + "\n";
                         errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        break;
+                    case ERROR_ID_NUM:
+                    case ERROR_ARROBA_NUM:
+                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
+                                + " Linea: " + (c.linea + 1) + ". Indentificador no puede comenzar con un dígito\n";;
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        break;
+                    case ERROR_MAYUS:
+                    case ERROR_ARROBA_MAYUS:
+                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
+                                + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";;
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     default:
-                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
-                        identificadores.add(lexer.lexema);
-                        text = text + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
+//                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
+//                        identificadores.add(lexer.lexema);
+                        //errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
-
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -517,4 +548,21 @@ public class Editor extends javax.swing.JFrame {
         }
     }
 
+    private int contarCar() {
+        String cad = txtEditor.getText().replace("\n", "");
+        cad = cad.replace(" ", "");
+        return cad.length();
+    }
+
+    private int contarPal() {
+        String cad = txtEditor.getText().replace("\n", " ");
+        String A[] = cad.split(" ");
+        int p = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (!A[i].equals("")) {
+                p++;
+            }
+        }
+        return p;
+    }
 }
