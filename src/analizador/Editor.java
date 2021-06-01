@@ -1,6 +1,7 @@
 package analizador;
 
 import controladores.ControladorEditor;
+import java.awt.Color;
 import java.awt.Toolkit;
 import modelos.InformacionLexema;
 import tablas.TablaIdentificadores;
@@ -75,18 +76,22 @@ public class Editor extends javax.swing.JFrame {
         lbPalabras = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbCaracteres = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
+        JM_Principal = new javax.swing.JMenuBar();
+        JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
         miAbrir = new javax.swing.JMenuItem();
         miGuardar = new javax.swing.JMenuItem();
         miGuardarComo = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        JM_Tablas = new javax.swing.JMenu();
         miIden = new javax.swing.JMenuItem();
         miReservadas = new javax.swing.JMenuItem();
         miSimbolo = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        JM_Lexico = new javax.swing.JMenu();
         miLexico = new javax.swing.JMenuItem();
+        JM_Vista = new javax.swing.JMenu();
+        JM_Tema = new javax.swing.JMenu();
+        rbtn_Claro = new javax.swing.JRadioButtonMenuItem();
+        rbtn_Oscuro = new javax.swing.JRadioButtonMenuItem();
 
         jMenu4.setText("jMenu4");
 
@@ -98,6 +103,7 @@ public class Editor extends javax.swing.JFrame {
         txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtEditor.setRows(2);
         txtEditor.setTabSize(3);
+        txtEditor.setMaximumSize(new java.awt.Dimension(220, 38));
         txtEditor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEditorKeyReleased(evt);
@@ -144,27 +150,30 @@ public class Editor extends javax.swing.JFrame {
         lbCaracteres.setText("---");
         getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 560, -1, -1));
 
-        jMenu2.setText("Archivo");
+        JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
+        JM_Principal.setName("JM_Principal"); // NOI18N
+
+        JM_Archivo.setText("Archivo");
 
         miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miNuevo.setText("Nuevo");
-        jMenu2.add(miNuevo);
+        JM_Archivo.add(miNuevo);
 
         miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miAbrir.setText("Abrir");
-        jMenu2.add(miAbrir);
+        JM_Archivo.add(miAbrir);
 
         miGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardar.setText("Guardar");
-        jMenu2.add(miGuardar);
+        JM_Archivo.add(miGuardar);
 
         miGuardarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardarComo.setText("Guardar como");
-        jMenu2.add(miGuardarComo);
+        JM_Archivo.add(miGuardarComo);
 
-        jMenuBar1.add(jMenu2);
+        JM_Principal.add(JM_Archivo);
 
-        jMenu3.setText("Tablas");
+        JM_Tablas.setText("Tablas");
 
         miIden.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miIden.setText("Identificadores");
@@ -173,19 +182,19 @@ public class Editor extends javax.swing.JFrame {
                 miIdenActionPerformed(evt);
             }
         });
-        jMenu3.add(miIden);
+        JM_Tablas.add(miIden);
 
         miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miReservadas.setText("Reservadas");
-        jMenu3.add(miReservadas);
+        JM_Tablas.add(miReservadas);
 
         miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miSimbolo.setText("Operadores");
-        jMenu3.add(miSimbolo);
+        JM_Tablas.add(miSimbolo);
 
-        jMenuBar1.add(jMenu3);
+        JM_Principal.add(JM_Tablas);
 
-        jMenu1.setText("Lexico");
+        JM_Lexico.setText("Lexico");
 
         miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
         miLexico.setText("Analizar");
@@ -194,11 +203,46 @@ public class Editor extends javax.swing.JFrame {
                 miLexicoActionPerformed(evt);
             }
         });
-        jMenu1.add(miLexico);
+        JM_Lexico.add(miLexico);
 
-        jMenuBar1.add(jMenu1);
+        JM_Principal.add(JM_Lexico);
 
-        setJMenuBar(jMenuBar1);
+        JM_Vista.setText("Vista");
+
+        JM_Tema.setText("Tema");
+
+        rbtn_Claro.setText("Claro");
+        rbtn_Claro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtn_ClaroMouseClicked(evt);
+            }
+        });
+        rbtn_Claro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtn_ClaroActionPerformed(evt);
+            }
+        });
+        JM_Tema.add(rbtn_Claro);
+
+        rbtn_Oscuro.setText("Oscuro");
+        rbtn_Oscuro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtn_OscuroMouseClicked(evt);
+            }
+        });
+        rbtn_Oscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtn_OscuroActionPerformed(evt);
+            }
+        });
+        JM_Tema.add(rbtn_Oscuro);
+
+        JM_Vista.add(JM_Tema);
+
+        JM_Principal.add(JM_Vista);
+
+        setJMenuBar(JM_Principal);
+        JM_Principal.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -229,6 +273,70 @@ public class Editor extends javax.swing.JFrame {
         TablaIdentificadores ts = new TablaIdentificadores(simbolos);
         ts.setVisible(true);
     }//GEN-LAST:event_miIdenActionPerformed
+
+    private void rbtn_ClaroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_ClaroActionPerformed
+        if(rbtn_Claro.isSelected()){
+            //---------------------------------
+            rbtn_Claro.setEnabled(false);
+            rbtn_Oscuro.setEnabled(true);
+            rbtn_Oscuro.setSelected(false);
+            System.out.print("Tema Claro aplicado! ");
+            //---------------------------------
+            
+            txtEditor.setBackground(Color.white);
+            txtEditor.setForeground(Color.black);
+            
+            JM_Archivo.setBackground(Color.white);
+            JM_Archivo.setForeground(Color.black);
+            
+            
+        }
+        if(rbtn_Claro.isSelected()==false){
+            System.out.print("Invalido");
+        }
+    }//GEN-LAST:event_rbtn_ClaroActionPerformed
+
+    private void rbtn_ClaroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_ClaroMouseClicked
+        
+    }//GEN-LAST:event_rbtn_ClaroMouseClicked
+
+    private void rbtn_OscuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_OscuroMouseClicked
+        
+    }//GEN-LAST:event_rbtn_OscuroMouseClicked
+    
+
+    
+    private void rbtn_OscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_OscuroActionPerformed
+        if(rbtn_Oscuro.isSelected()){
+            rbtn_Oscuro.setEnabled(false);
+            
+            rbtn_Claro.setEnabled(true);
+            rbtn_Claro.setSelected(false);
+            System.out.print("Tema Oscuro aplicado! ");
+            //--------------------------------------------
+            txtEditor.setBackground(Color.black);
+            txtEditor.setForeground(Color.white);
+            txtErrores.setBackground(Color.black);
+            txtErrores.setForeground(Color.white);
+            
+            
+            JM_Principal.setBackground(Color.black);
+            JM_Principal.setForeground(Color.white);
+            JM_Archivo.setBackground(Color.black);
+            JM_Archivo.setForeground(Color.white);
+            JM_Lexico.setBackground(Color.black);
+            JM_Lexico.setForeground(Color.white);
+            JM_Tablas.setBackground(Color.black);
+            JM_Tablas.setForeground(Color.white);
+            JM_Tema.setBackground(Color.black);
+            JM_Tema.setForeground(Color.white);
+            JM_Vista.setBackground(Color.black);
+            JM_Vista.setForeground(Color.white);
+        }
+        if(rbtn_Claro.isSelected()==false){
+            System.out.print("Invalido");
+        }
+    }//GEN-LAST:event_rbtn_OscuroActionPerformed
 
     private void limpiar() {
         txtEditor.setText("");
@@ -282,14 +390,16 @@ public class Editor extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu JM_Archivo;
+    private javax.swing.JMenu JM_Lexico;
+    private javax.swing.JMenuBar JM_Principal;
+    private javax.swing.JMenu JM_Tablas;
+    private javax.swing.JMenu JM_Tema;
+    private javax.swing.JMenu JM_Vista;
     public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JLabel lbCaracteres;
@@ -302,6 +412,8 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JMenuItem miNuevo;
     public javax.swing.JMenuItem miReservadas;
     public javax.swing.JMenuItem miSimbolo;
+    private javax.swing.JRadioButtonMenuItem rbtn_Claro;
+    private javax.swing.JRadioButtonMenuItem rbtn_Oscuro;
     public javax.swing.JScrollPane scrollEditor;
     public javax.swing.JTable tablaMensajes;
     public javax.swing.JTextArea txtEditor;
