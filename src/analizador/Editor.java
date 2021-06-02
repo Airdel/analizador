@@ -286,8 +286,42 @@ public class Editor extends javax.swing.JFrame {
             txtEditor.setBackground(Color.white);
             txtEditor.setForeground(Color.black);
             
+            JM_Principal.setBackground(Color.white);
+            JM_Principal.setForeground(Color.black);
             JM_Archivo.setBackground(Color.white);
             JM_Archivo.setForeground(Color.black);
+            JM_Lexico.setBackground(Color.white);
+            JM_Lexico.setForeground(Color.black);
+            JM_Tablas.setBackground(Color.white);
+            JM_Tablas.setForeground(Color.black);
+            JM_Tema.setBackground(Color.white);
+            JM_Tema.setForeground(Color.black);
+            JM_Vista.setBackground(Color.white);
+            JM_Vista.setForeground(Color.black);
+            
+            
+            miAbrir.setBackground(Color.white);
+            miAbrir.setForeground(Color.black);
+            miGuardar.setBackground(Color.white);
+            miGuardar.setForeground(Color.black);
+            miGuardarComo.setBackground(Color.white);
+            miGuardarComo.setForeground(Color.black);
+            miIden.setBackground(Color.white);
+            miIden.setForeground(Color.black);
+            miLexico.setBackground(Color.white);
+            miLexico.setForeground(Color.black);
+            miNuevo.setBackground(Color.white);
+            miNuevo.setForeground(Color.black);
+            miReservadas.setBackground(Color.white);
+            miReservadas.setForeground(Color.black);
+            miSimbolo.setBackground(Color.white);
+            miSimbolo.setForeground(Color.black);
+            rbtn_Claro.setBackground(Color.white);
+            rbtn_Claro.setForeground(Color.black);
+            rbtn_Oscuro.setBackground(Color.white);
+            rbtn_Oscuro.setForeground(Color.black);
+            tablaMensajes.setBackground(Color.white);
+            tablaMensajes.setForeground(Color.black);
             
             
         }
@@ -297,11 +331,10 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtn_ClaroActionPerformed
 
     private void rbtn_ClaroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_ClaroMouseClicked
-        
     }//GEN-LAST:event_rbtn_ClaroMouseClicked
 
     private void rbtn_OscuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_OscuroMouseClicked
-        
+
     }//GEN-LAST:event_rbtn_OscuroMouseClicked
     
 
@@ -332,6 +365,29 @@ public class Editor extends javax.swing.JFrame {
             JM_Tema.setForeground(Color.white);
             JM_Vista.setBackground(Color.black);
             JM_Vista.setForeground(Color.white);
+            
+            miAbrir.setBackground(Color.black);
+            miAbrir.setForeground(Color.white);
+            miGuardar.setBackground(Color.black);
+            miGuardar.setForeground(Color.white);
+            miGuardarComo.setBackground(Color.black);
+            miGuardarComo.setForeground(Color.white);
+            miIden.setBackground(Color.black);
+            miIden.setForeground(Color.white);
+            miLexico.setBackground(Color.black);
+            miLexico.setForeground(Color.white);
+            miNuevo.setBackground(Color.black);
+            miNuevo.setForeground(Color.white);
+            miReservadas.setBackground(Color.black);
+            miReservadas.setForeground(Color.white);
+            miSimbolo.setBackground(Color.black);
+            miSimbolo.setForeground(Color.white);
+            rbtn_Claro.setBackground(Color.black);
+            rbtn_Claro.setForeground(Color.white);            
+            rbtn_Oscuro.setBackground(Color.black);
+            rbtn_Oscuro.setForeground(Color.white);
+            tablaMensajes.setBackground(Color.black);
+            tablaMensajes.setForeground(Color.white);
         }
         if(rbtn_Claro.isSelected()==false){
             System.out.print("Invalido");
