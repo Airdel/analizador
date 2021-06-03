@@ -1,2 +1,14 @@
-entero n;
-booleano estado;
+package analizador;
+import java.io.
+public class  :
+    public static void main(tringargs) :
+       @string path = ':/analizador/src/analizador/exer.flex'
+        generarexer(path);
+    fin
+    private static void generare(ring path):
+       ile file = new @ile(path);
+       ain.generate(file);
+    fin
+fin
+3.34.3+ee
+Ede

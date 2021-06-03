@@ -264,7 +264,6 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
-        System.out.println(txtEditor.getSize().width + "-" + txtEditor.getSize().height);
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -557,6 +556,20 @@ public class Editor extends javax.swing.JFrame {
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
+                    case ERROR_PUNTOS:
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
+                                ". El punto esta mal posicionado\n";
+                        ;
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        break;                         
+                    case ERROR_ARROBA:
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
+                                ". La cadena '"+lexer.lexema+"' no está definida\n";
+                        ;
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        break;    
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "

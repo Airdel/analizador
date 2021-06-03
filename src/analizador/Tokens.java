@@ -11,6 +11,7 @@ public enum Tokens {
     DOS_PUNTOS,
     ERROR,
     ERROR_ARROBA,
+    ERROR_ARROBA_INV,
     ERROR_ARROBA_MAYUS,
     ERROR_ARROBA_NUM,
     ERROR_MAYUS,
