@@ -108,6 +108,9 @@ public class Editor extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEditorKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEditorKeyTyped(evt);
+            }
         });
         scrollEditor.setViewportView(txtEditor);
 
@@ -260,11 +263,13 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
+        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
-        lbCaracteres.setText(contarCar() + "");
-        lbPalabras.setText(contarPal() + "");
+//        lbCaracteres.setText(contarCar() + "");
+//        lbPalabras.setText(contarPal() + "");
+//        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
     }//GEN-LAST:event_txtEditorKeyReleased
 
     private void miIdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miIdenActionPerformed
@@ -337,6 +342,12 @@ public class Editor extends javax.swing.JFrame {
             System.out.print("Invalido");
         }
     }//GEN-LAST:event_rbtn_OscuroActionPerformed
+
+    private void txtEditorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyTyped
+//        lbCaracteres.setText(contarCar() + "");
+//        lbPalabras.setText(contarPal() + "");
+//        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
+    }//GEN-LAST:event_txtEditorKeyTyped
 
     private void limpiar() {
         txtEditor.setText("");
