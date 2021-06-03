@@ -11,8 +11,11 @@ D = [0-9]
 S = \+|\-
 L=[a-z]
 LE=[A-Za-z_]
+SIMBOLOS_ESP  =[(\)\=\+\-\>\<\.\*\\\|\&\^\@\%\’\_]
 
 iden={ L } ( { L } | { D } | _ ){ 0 , 31 }
+
+alfabeto = (~{SIMBOLOS_ESP}|~{D}|~{L})
 
 num = {D}+
 enteros = {S}?{num}

@@ -53,6 +53,7 @@ public class Editor extends javax.swing.JFrame {
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
+        txtEditor.getCursor();
     }
 
     /**
@@ -263,7 +264,7 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
-        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
+        System.out.println(txtEditor.getSize().width + "-" + txtEditor.getSize().height);
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -280,17 +281,17 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miIdenActionPerformed
 
     private void rbtn_ClaroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_ClaroActionPerformed
-        if(rbtn_Claro.isSelected()){
+        if (rbtn_Claro.isSelected()) {
             //---------------------------------
             rbtn_Claro.setEnabled(false);
             rbtn_Oscuro.setEnabled(true);
             rbtn_Oscuro.setSelected(false);
             System.out.print("Tema Claro aplicado! ");
             //---------------------------------
-            
+
             txtEditor.setBackground(Color.white);
             txtEditor.setForeground(Color.black);
-            
+
             JM_Principal.setBackground(Color.white);
             JM_Principal.setForeground(Color.black);
             JM_Archivo.setBackground(Color.white);
@@ -303,8 +304,7 @@ public class Editor extends javax.swing.JFrame {
             JM_Tema.setForeground(Color.black);
             JM_Vista.setBackground(Color.white);
             JM_Vista.setForeground(Color.black);
-            
-            
+
             miAbrir.setBackground(Color.white);
             miAbrir.setForeground(Color.black);
             miGuardar.setBackground(Color.white);
@@ -327,10 +327,9 @@ public class Editor extends javax.swing.JFrame {
             rbtn_Oscuro.setForeground(Color.black);
             tablaMensajes.setBackground(Color.white);
             tablaMensajes.setForeground(Color.black);
-            
-            
+
         }
-        if(rbtn_Claro.isSelected()==false){
+        if (rbtn_Claro.isSelected() == false) {
             System.out.print("Invalido");
         }
     }//GEN-LAST:event_rbtn_ClaroActionPerformed
@@ -341,13 +340,12 @@ public class Editor extends javax.swing.JFrame {
     private void rbtn_OscuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_OscuroMouseClicked
 
     }//GEN-LAST:event_rbtn_OscuroMouseClicked
-    
 
-    
+
     private void rbtn_OscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_OscuroActionPerformed
-        if(rbtn_Oscuro.isSelected()){
+        if (rbtn_Oscuro.isSelected()) {
             rbtn_Oscuro.setEnabled(false);
-            
+
             rbtn_Claro.setEnabled(true);
             rbtn_Claro.setSelected(false);
             System.out.print("Tema Oscuro aplicado! ");
@@ -356,8 +354,7 @@ public class Editor extends javax.swing.JFrame {
             txtEditor.setForeground(Color.white);
             txtErrores.setBackground(Color.black);
             txtErrores.setForeground(Color.white);
-            
-            
+
             JM_Principal.setBackground(Color.black);
             JM_Principal.setForeground(Color.white);
             JM_Archivo.setBackground(Color.black);
@@ -370,7 +367,7 @@ public class Editor extends javax.swing.JFrame {
             JM_Tema.setForeground(Color.white);
             JM_Vista.setBackground(Color.black);
             JM_Vista.setForeground(Color.white);
-            
+
             miAbrir.setBackground(Color.black);
             miAbrir.setForeground(Color.white);
             miGuardar.setBackground(Color.black);
@@ -388,13 +385,13 @@ public class Editor extends javax.swing.JFrame {
             miSimbolo.setBackground(Color.black);
             miSimbolo.setForeground(Color.white);
             rbtn_Claro.setBackground(Color.black);
-            rbtn_Claro.setForeground(Color.white);            
+            rbtn_Claro.setForeground(Color.white);
             rbtn_Oscuro.setBackground(Color.black);
             rbtn_Oscuro.setForeground(Color.white);
             tablaMensajes.setBackground(Color.black);
             tablaMensajes.setForeground(Color.white);
         }
-        if(rbtn_Claro.isSelected()==false){
+        if (rbtn_Claro.isSelected() == false) {
             System.out.print("Invalido");
         }
     }//GEN-LAST:event_rbtn_OscuroActionPerformed
@@ -503,7 +500,7 @@ public class Editor extends javax.swing.JFrame {
 
         Reader reader;
         try {
-            reader = new BufferedReader(new FileReader("fichero.and"));
+                reader = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(reader);
             String errores = "";
             while (true) {
@@ -517,9 +514,38 @@ public class Editor extends javax.swing.JFrame {
                 }
 
                 switch (tokens) {
+                    case RESERVADA_SI:
+                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_NO:
+                         m.addRow(new Object[]{"Empieza condicional no", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_PARA:
+                        m.addRow(new Object[]{"Empieza ciclo para", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_MIENTRAS:
+                        m.addRow(new Object[]{"Empieza ciclo mientras", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_ENTERO:
+                         m.addRow(new Object[]{"Declara variable tipo Entero", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_CADENA:
+                         m.addRow(new Object[]{"Declara variable tipo Cadena", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_BOOLEANO:
+                         m.addRow(new Object[]{"Declara variable tipo booleana", lexer.lexema, (c.linea) + 1});
+                         break;
+                    case RESERVADA_INICIAR:
+                        m.addRow(new Object[]{"Iniciar programa", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case DOS_PUNTOS:
+                        m.addRow(new Object[]{"Simbolo de inicio : ", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case PUNTO_COMA:
+                        m.addRow(new Object[]{"Simbolo de fin de sentenia ; ", lexer.lexema, (c.linea) + 1});
+                        break;
                     case ERROR:
-                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + "\n";
+                        errores = errores + "Error Lexicoen linea: " + (c.linea + 1) + ". El símbolo '" + lexer.lexema + "' no pertenece al lenguaje\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
@@ -540,9 +566,9 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     default:
-//                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
-//                        identificadores.add(lexer.lexema);
-                        //errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
+                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
+                        identificadores.add(lexer.lexema);
+//                        errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                 }
