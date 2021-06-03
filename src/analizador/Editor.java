@@ -541,10 +541,11 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Simbolo de inicio : ", lexer.lexema, (c.linea) + 1});
                         break;
                     case PUNTO_COMA:
-                        m.addRow(new Object[]{"Simbolo de fin de sentenia ; ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Simbolo de fin de sentencia ; ", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR:
-                        errores = errores + "Error Lexicoen linea: " + (c.linea + 1) + ". El símbolo '" + lexer.lexema + "' no pertenece al lenguaje\n";
+                        errores = errores + "Error Lexico en linea: " + (c.linea + 1) + 
+                                ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
@@ -572,7 +573,7 @@ public class Editor extends javax.swing.JFrame {
                         break;    
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
-                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
+                        errores = errores + "Error Lexico: " + lexer.lexema
                                 + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";
                         ;
                         errores_lexicos = true;
