@@ -865,8 +865,8 @@ public class Editor extends javax.swing.JFrame {
 
                 }
             }
-            scrollEditor.setBounds(0, 0, 960, 560);
-            txtEditor.setBounds(0, 0, 960, 560);
+            scrollEditor.setBounds(0, 0, 960, 580);
+            txtEditor.setBounds(0, 0, 960, 580);
             lbCaracteres.setText(contarCar() + "");
             lbPalabras.setText(contarPal() + "");
             guardarComo = false;
