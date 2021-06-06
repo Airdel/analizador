@@ -28,7 +28,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         for (Simbolos sim : nuevo) {
             if(!sim.getComponente().equals("IDENTIFICADOR"))
                 continue;
-            m.addRow(new Object[]{sim.getLinea(),sim.getComponente(), sim.getLexema()});
+            m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "",""});
         }
     }
 
@@ -52,7 +52,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Línea", "Comp Lex", "Lexema"
+                "Línea", "Lexema", "Tipo", "Valor"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

@@ -53,7 +53,8 @@ public class Editor extends javax.swing.JFrame {
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
-        txtEditor.getCursor();
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 650, 400);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 650, 400);
     }
 
     /**
@@ -66,17 +67,18 @@ public class Editor extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu4 = new javax.swing.JMenu();
-        scrollEditor = new javax.swing.JScrollPane();
-        txtEditor = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtErrores = new javax.swing.JTextArea();
-        jFileChooser1 = new javax.swing.JFileChooser();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaMensajes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lbPalabras = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbCaracteres = new javax.swing.JLabel();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jPanel1 = new javax.swing.JPanel();
+        scrollEditor = new javax.swing.JScrollPane();
+        txtEditor = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaMensajes = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtErrores = new javax.swing.JTextArea();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -100,6 +102,21 @@ public class Editor extends javax.swing.JFrame {
         setTitle("Sin titulo");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setText("Palabras: ");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+
+        lbPalabras.setText("---");
+        getContentPane().add(lbPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, -1, -1));
+
+        jLabel2.setText("Caracteres");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 560, -1, -1));
+
+        lbCaracteres.setText("---");
+        getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 560, -1, -1));
+        getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         txtEditor.setColumns(20);
         txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         txtEditor.setRows(2);
@@ -115,17 +132,7 @@ public class Editor extends javax.swing.JFrame {
         });
         scrollEditor.setViewportView(txtEditor);
 
-        getContentPane().add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
-
-        txtErrores.setEditable(false);
-        txtErrores.setColumns(20);
-        txtErrores.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        txtErrores.setForeground(new java.awt.Color(255, 51, 51));
-        txtErrores.setRows(5);
-        jScrollPane3.setViewportView(txtErrores);
-
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 395, 924, 159));
-        getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 540));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,20 +147,20 @@ public class Editor extends javax.swing.JFrame {
             tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
 
-        jLabel1.setText("Palabras: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+        txtErrores.setEditable(false);
+        txtErrores.setColumns(20);
+        txtErrores.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        txtErrores.setForeground(new java.awt.Color(255, 51, 51));
+        txtErrores.setRows(5);
+        jScrollPane3.setViewportView(txtErrores);
 
-        lbPalabras.setText("---");
-        getContentPane().add(lbPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, -1, -1));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 395, 950, 150));
 
-        jLabel2.setText("Caracteres");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 560, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, -1, -1));
 
-        lbCaracteres.setText("---");
-        getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 560, -1, -1));
-
+        JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
         JM_Principal.setName("JM_Principal"); // NOI18N
 
@@ -267,8 +274,8 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
-//        lbCaracteres.setText(contarCar() + "");
-//        lbPalabras.setText(contarPal() + "");
+        lbCaracteres.setText(contarCar() + "");
+        lbPalabras.setText(contarPal() + "");
 //        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
     }//GEN-LAST:event_txtEditorKeyReleased
 
@@ -463,6 +470,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JLabel lbCaracteres;
@@ -513,6 +521,27 @@ public class Editor extends javax.swing.JFrame {
                 }
 
                 switch (tokens) {
+//                    case ARROBA:
+//                         m.addRow(new Object[]{"Símbolo de arroba", lexer.lexema, (c.linea) + 1});
+//                        break;
+                    case ASIGNACION:
+                         m.addRow(new Object[]{"Símbolo de asiganción", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case CADENA_TEXTO:
+                         m.addRow(new Object[]{"Constante de caracter", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case COMA:
+                         m.addRow(new Object[]{"Símbolo de coma ", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case COMILLA_SIMPLE:
+                         m.addRow(new Object[]{"Símbolo de comilla simple ", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case DESIGUAL:
+                         m.addRow(new Object[]{"Símbolo de ", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case DOS_PUNTOS:
+                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        break;
                     case RESERVADA_SI:
                          m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
                         break;
@@ -537,9 +566,6 @@ public class Editor extends javax.swing.JFrame {
                     case RESERVADA_INICIAR:
                         m.addRow(new Object[]{"Iniciar programa", lexer.lexema, (c.linea) + 1});
                         break;
-                    case DOS_PUNTOS:
-                        m.addRow(new Object[]{"Simbolo de inicio : ", lexer.lexema, (c.linea) + 1});
-                        break;
                     case PUNTO_COMA:
                         m.addRow(new Object[]{"Simbolo de fin de sentencia ; ", lexer.lexema, (c.linea) + 1});
                         break;
@@ -553,21 +579,18 @@ public class Editor extends javax.swing.JFrame {
                     case ERROR_ARROBA_NUM:
                         errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
                                 + " Linea: " + (c.linea + 1) + ". Indentificador no puede comenzar con un dígito\n";
-                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
                         errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
                                 ". El punto esta mal posicionado\n";
-                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;                         
                     case ERROR_ARROBA:
                         errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
                                 ". La cadena '"+lexer.lexema+"' no está definida\n";
-                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;    
@@ -575,12 +598,11 @@ public class Editor extends javax.swing.JFrame {
                     case ERROR_ARROBA_MAYUS:
                         errores = errores + "Error Lexico: " + lexer.lexema
                                 + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";
-                        ;
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     default:
-                        simbolos.add(new Simbolos(tokens.toString(), lexer.lexema, (c.linea) + 1));
+                        simbolos.add(new Simbolos(tokens.toString(),(c.linea) + 1, lexer.lexema,"",""));
                         identificadores.add(lexer.lexema);
 //                        errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});

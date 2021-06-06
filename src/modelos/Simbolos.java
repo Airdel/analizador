@@ -8,13 +8,17 @@ package modelos;
 public class Simbolos implements Comparable<Simbolos> {
     
     private String componente;
-    private String lexema;
     private int linea;
+    private String lexema;
+    private String tipo;
+    private String valor;
 
-    public Simbolos(String componente, String lexema, int linea) {
+    public Simbolos(String componente, int linea, String lexema, String tipo, String valor) {
         this.componente = componente;
-        this.lexema = lexema;
         this.linea = linea;
+        this.lexema = lexema;
+        this.tipo = tipo;
+        this.valor = valor;
     }
 
     public String getComponente() {
@@ -23,6 +27,14 @@ public class Simbolos implements Comparable<Simbolos> {
 
     public void setComponente(String componente) {
         this.componente = componente;
+    }    
+    
+    public int getLinea() {
+        return linea;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
     }
 
     public String getLexema() {
@@ -33,19 +45,22 @@ public class Simbolos implements Comparable<Simbolos> {
         this.lexema = lexema;
     }
 
-    public int getLinea() {
-        return linea;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setLinea(int linea) {
-        this.linea = linea;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    @Override
-    public String toString() {
-        return "Simbolos{" + "componente=" + componente + ", lexema=" + lexema + ", linea=" + linea + '}';
-    }    
+    public String getValor() {
+        return valor;
+    }
 
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+    
     @Override
     public int compareTo(Simbolos s) {
        return lexema.compareTo(s.getLexema());

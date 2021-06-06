@@ -109,11 +109,11 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "@video" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_VIDEO;}
 <YYINITIAL> "falso" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_FALSO;}
 <YYINITIAL> "verdadero" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_VERDADERO;}
-<YYINITIAL> {errorPuntos} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_PUNTOS;}
 <YYINITIAL> {cadena} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return CADENA_TEXTO;}
 <YYINITIAL> {enteros} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO;}
 <YYINITIAL> {numDec} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO_DECIMAL;}
 <YYINITIAL> {numExp} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO_EXPONENTE;}
+<YYINITIAL> {errorPuntos} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_PUNTOS;}
 <YYINITIAL> {iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return IDENTIFICADOR;}
 <YYINITIAL> [\@]{iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA;}
 <YYINITIAL> [\@]{ideConMayus} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA_MAYUS;}
