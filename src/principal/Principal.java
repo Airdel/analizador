@@ -16,10 +16,10 @@ import modelos.ModeloEditor;
 public class Principal {
 
     public static void main(String[] args) {
-        Editor vista = new Editor();
-        ModeloEditor modelo = new ModeloEditor();
-        ControladorEditor controlador;
-        controlador = new ControladorEditor(vista, modelo);
-        vista.setVisible(true);
+//        Editor vista = new Editor();
+//        ModeloEditor modelo = new ModeloEditor();
+//        ControladorEditor controlador;
+//        controlador = new ControladorEditor(vista, modelo);
+//        vista.setVisible(true);
     }
 }

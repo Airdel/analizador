@@ -53,8 +53,6 @@ public class Editor extends javax.swing.JFrame {
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 650, 400);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 650, 400);
     }
 
     /**
@@ -79,6 +77,13 @@ public class Editor extends javax.swing.JFrame {
         tablaMensajes = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtErrores = new javax.swing.JTextArea();
+        icon_open = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        icon_save_as = new javax.swing.JLabel();
+        icon_new = new javax.swing.JLabel();
+        icon_save = new javax.swing.JLabel();
+        icon_lexico = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -103,16 +108,16 @@ public class Editor extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Palabras: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, -1, -1));
 
         lbPalabras.setText("---");
-        getContentPane().add(lbPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, -1, -1));
+        getContentPane().add(lbPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 590, -1, -1));
 
         jLabel2.setText("Caracteres");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 560, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 590, -1, -1));
 
         lbCaracteres.setText("---");
-        getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 560, -1, -1));
+        getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, -1, -1));
         getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,7 +137,7 @@ public class Editor extends javax.swing.JFrame {
         });
         scrollEditor.setViewportView(txtEditor);
 
-        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 540));
+        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 940, 530));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,7 +152,7 @@ public class Editor extends javax.swing.JFrame {
             tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 389));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 440, 350));
 
         txtErrores.setEditable(false);
         txtErrores.setColumns(20);
@@ -156,9 +161,60 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setRows(5);
         jScrollPane3.setViewportView(txtErrores);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 395, 950, 150));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 940, 180));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, -1, -1));
+        icon_open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
+        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_open.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_openMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_open, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 20, -1));
+
+        icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_save_asMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_save_as, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 30, 30));
+
+        icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_newMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_new, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
+
+        icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_saveMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 30, 30));
+
+        icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_lexicoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_lexico, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, 30));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 20, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, -1, 580));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
@@ -167,19 +223,43 @@ public class Editor extends javax.swing.JFrame {
         JM_Archivo.setText("Archivo");
 
         miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         miNuevo.setText("Nuevo");
+        miNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevoActionPerformed(evt);
+            }
+        });
         JM_Archivo.add(miNuevo);
 
         miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
         miAbrir.setText("Abrir");
+        miAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAbrirActionPerformed(evt);
+            }
+        });
         JM_Archivo.add(miAbrir);
 
         miGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         miGuardar.setText("Guardar");
+        miGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miGuardarActionPerformed(evt);
+            }
+        });
         JM_Archivo.add(miGuardar);
 
         miGuardarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miGuardarComo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
         miGuardarComo.setText("Guardar como");
+        miGuardarComo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miGuardarComoActionPerformed(evt);
+            }
+        });
         JM_Archivo.add(miGuardarComo);
 
         JM_Principal.add(JM_Archivo);
@@ -197,10 +277,20 @@ public class Editor extends javax.swing.JFrame {
 
         miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miReservadas.setText("Reservadas");
+        miReservadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miReservadasActionPerformed(evt);
+            }
+        });
         JM_Tablas.add(miReservadas);
 
         miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miSimbolo.setText("Operadores");
+        miSimbolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSimboloActionPerformed(evt);
+            }
+        });
         JM_Tablas.add(miSimbolo);
 
         JM_Principal.add(JM_Tablas);
@@ -208,6 +298,7 @@ public class Editor extends javax.swing.JFrame {
         JM_Lexico.setText("Lexico");
 
         miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        miLexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         miLexico.setText("Analizar");
         miLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,8 +351,8 @@ public class Editor extends javax.swing.JFrame {
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
 
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 390);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 390);
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 350);
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -408,6 +499,112 @@ public class Editor extends javax.swing.JFrame {
 //        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
     }//GEN-LAST:event_txtEditorKeyTyped
 
+    private void icon_lexicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_lexicoMouseClicked
+        // TODO add your handling code here:
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 350);
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+        simbolos.clear();
+        txtErrores.setText("");
+        identificadores.removeAll(identificadores);
+        probarLexer();
+    }//GEN-LAST:event_icon_lexicoMouseClicked
+
+    private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
+        int resp = JOptionPane.showConfirmDialog(null,
+                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (resp == 0) {
+                miGuardar.doClick();
+                limpiar();
+                abrirArchivo();
+            }
+            if (resp == 1) {
+                limpiar();
+                abrirArchivo();
+            }    
+    }//GEN-LAST:event_icon_openMouseClicked
+
+    private void icon_newMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_newMouseClicked
+        int resp = JOptionPane.showConfirmDialog(null,
+                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (resp == 0) {
+                miGuardar.doClick();
+                limpiar();
+            }
+            if (resp == 1) {
+                limpiar();
+            }
+    }//GEN-LAST:event_icon_newMouseClicked
+
+    private void icon_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_saveMouseClicked
+        if (guardarComo) {
+                guardarComo();
+            } else {
+                guardar();
+            }
+    }//GEN-LAST:event_icon_saveMouseClicked
+
+    private void icon_save_asMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_save_asMouseClicked
+          guardarComo();
+    }//GEN-LAST:event_icon_save_asMouseClicked
+
+    private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
+       int resp = JOptionPane.showConfirmDialog(null,
+                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (resp == 0) {
+                miGuardar.doClick();
+                limpiar();
+            }
+            if (resp == 1) {
+                limpiar();
+            }
+    }//GEN-LAST:event_miNuevoActionPerformed
+
+    private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
+        int resp = JOptionPane.showConfirmDialog(null,
+                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (resp == 0) {
+                miGuardar.doClick();
+                limpiar();
+                abrirArchivo();
+            }
+            if (resp == 1) {
+                limpiar();
+                abrirArchivo();
+            }
+    }//GEN-LAST:event_miAbrirActionPerformed
+
+    private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
+        if (guardarComo) {
+                guardarComo();
+            } else {
+                guardar();
+            }
+    }//GEN-LAST:event_miGuardarActionPerformed
+
+    private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
+          guardarComo();
+    }//GEN-LAST:event_miGuardarComoActionPerformed
+
+    private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
+         Collections.sort(simbolos);
+            TablaOperadores ts = new TablaOperadores();
+            ts.setVisible(true);
+    }//GEN-LAST:event_miReservadasActionPerformed
+
+    private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
+       TablaReservadas tr = new TablaReservadas();
+            tr.setVisible(true);
+    }//GEN-LAST:event_miSimboloActionPerformed
+
     private void limpiar() {
         txtEditor.setText("");
         txtErrores.setText("");
@@ -466,9 +663,16 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu JM_Tablas;
     private javax.swing.JMenu JM_Tema;
     private javax.swing.JMenu JM_Vista;
+    private javax.swing.JLabel icon_lexico;
+    public javax.swing.JLabel icon_new;
+    public javax.swing.JLabel icon_open;
+    public javax.swing.JLabel icon_save;
+    public javax.swing.JLabel icon_save_as;
     public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -646,6 +850,29 @@ public class Editor extends javax.swing.JFrame {
         return texto;
     }
 
+     public void abrirArchivo() {
+        ArrayList<String> linea = null;
+        int resp = 0;
+        String codigo = "";
+        txtEditor.setText("");
+        resp = jFileChooser1.showOpenDialog(this);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            linea = leerArchivo(jFileChooser1.getSelectedFile().toString());
+            if (linea.size() > 0) {
+                for (int i = 0; i < linea.size(); i++) {
+                    codigo = (String) linea.get(i);
+                    txtEditor.append(codigo + "\n");
+
+                }
+            }
+            scrollEditor.setBounds(0, 0, 960, 560);
+            txtEditor.setBounds(0, 0, 960, 560);
+            lbCaracteres.setText(contarCar() + "");
+            lbPalabras.setText(contarPal() + "");
+            guardarComo = false;
+        }
+    }
+
     private int contarCar() {
         String cad = txtEditor.getText().replace("\n", "");
         cad = cad.replace(" ", "");
@@ -663,4 +890,43 @@ public class Editor extends javax.swing.JFrame {
         }
         return p;
     }
+
+    private void guardar() {
+        FileWriter save = null;
+        try {
+            save = new FileWriter(archivo.getAbsolutePath());
+            save.write(txtEditor.getText());
+            save.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                save.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void guardarComo() {
+        try {
+            JFileChooser file = new JFileChooser();
+            if (file.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                archivo = file.getSelectedFile();
+                if (archivo != null) {
+                    FileWriter save = new FileWriter(archivo.getAbsolutePath() + ".lya");
+                    String nombre = archivo.getName();
+                    setTitle(nombre);
+                    save.write(txtEditor.getText());
+                    save.close();
+                    guardarComo = false;
+                }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Su archivo no se ha guardado",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
 }
