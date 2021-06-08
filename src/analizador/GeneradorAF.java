@@ -14,6 +14,5 @@ public class GeneradorAF {
     private static void generarLexer(String path) {
         File file = new File(path);
         JFlex.Main.generate(file);
-    }
-        
+    }        
 }

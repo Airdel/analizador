@@ -1,12 +1,9 @@
 package analizador;
 
-import controladores.ControladorEditor;
 import java.awt.Color;
 import java.awt.Toolkit;
 import modelos.InformacionLexema;
 import tablas.TablaIdentificadores;
-import tablas.TablaIdentificadores;
-import tablas.TablaReservadas;
 import tablas.TablaReservadas;
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,7 +20,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelos.ModeloEditor;
 import modelos.Simbolos;
 import tablas.TablaOperadores;
 
@@ -105,6 +101,7 @@ public class Editor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin titulo");
+        setPreferredSize(new java.awt.Dimension(1200, 680));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Palabras: ");
@@ -120,6 +117,7 @@ public class Editor extends javax.swing.JFrame {
         getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, -1, -1));
         getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtEditor.setColumns(20);
@@ -137,7 +135,7 @@ public class Editor extends javax.swing.JFrame {
         });
         scrollEditor.setViewportView(txtEditor);
 
-        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 940, 530));
+        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1190, 530));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,7 +150,7 @@ public class Editor extends javax.swing.JFrame {
             tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 440, 350));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 620, 350));
 
         txtErrores.setEditable(false);
         txtErrores.setColumns(20);
@@ -161,9 +159,10 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setRows(5);
         jScrollPane3.setViewportView(txtErrores);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 940, 180));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 1190, 180));
 
         icon_open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
+        icon_open.setToolTipText("Abrir");
         icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_open.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -173,9 +172,10 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_open, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 20, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 14, 20, -1));
 
         icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
+        icon_save_as.setToolTipText("Guardar Como");
         icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -185,7 +185,9 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_save_as, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 30, 30));
 
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
+        icon_new.setToolTipText("Nuevo");
         icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_new.setName(""); // NOI18N
         icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_newMouseClicked(evt);
@@ -194,6 +196,7 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_new, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
+        icon_save.setToolTipText("Guardar");
         icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -203,6 +206,7 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 30, 30));
 
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_lexico.setToolTipText("Corre Léxico");
         icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -212,9 +216,9 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_lexico, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 20, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 14, 20, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, -1, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, 1200, 580));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
@@ -347,12 +351,13 @@ public class Editor extends javax.swing.JFrame {
         JM_Principal.getAccessibleContext().setAccessibleName("");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
 
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 350);
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -437,8 +442,6 @@ public class Editor extends javax.swing.JFrame {
     private void rbtn_OscuroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtn_OscuroMouseClicked
 
     }//GEN-LAST:event_rbtn_OscuroMouseClicked
-
-
     private void rbtn_OscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_OscuroActionPerformed
         if (rbtn_Oscuro.isSelected()) {
             rbtn_Oscuro.setEnabled(false);
@@ -501,8 +504,8 @@ public class Editor extends javax.swing.JFrame {
 
     private void icon_lexicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_lexicoMouseClicked
         // TODO add your handling code here:
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 495, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 495, 350);
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -516,102 +519,106 @@ public class Editor extends javax.swing.JFrame {
 
     private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
         int resp = JOptionPane.showConfirmDialog(null,
-                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE);
-            if (resp == 0) {
-                miGuardar.doClick();
-                limpiar();
-                abrirArchivo();
-            }
-            if (resp == 1) {
-                limpiar();
-                abrirArchivo();
-            }    
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            miGuardar.doClick();
+            limpiar();
+            abrirArchivo();
+        }
+        if (resp == 1) {
+            limpiar();
+            abrirArchivo();
+        }
     }//GEN-LAST:event_icon_openMouseClicked
 
     private void icon_newMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_newMouseClicked
         int resp = JOptionPane.showConfirmDialog(null,
-                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE);
-            if (resp == 0) {
-                miGuardar.doClick();
-                limpiar();
-            }
-            if (resp == 1) {
-                limpiar();
-            }
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            miGuardar.doClick();
+            limpiar();
+        }
+        if (resp == 1) {
+            limpiar();
+        }
     }//GEN-LAST:event_icon_newMouseClicked
 
     private void icon_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_saveMouseClicked
         if (guardarComo) {
-                guardarComo();
-            } else {
-                guardar();
-            }
+            guardarComo();
+        } else {
+            guardar();
+        }
     }//GEN-LAST:event_icon_saveMouseClicked
 
     private void icon_save_asMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_save_asMouseClicked
-          guardarComo();
+        guardarComo();
     }//GEN-LAST:event_icon_save_asMouseClicked
 
     private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
-       int resp = JOptionPane.showConfirmDialog(null,
-                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE);
-            if (resp == 0) {
-                miGuardar.doClick();
-                limpiar();
-            }
-            if (resp == 1) {
-                limpiar();
-            }
+        int resp = JOptionPane.showConfirmDialog(null,
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            miGuardar.doClick();
+            limpiar();
+        }
+        if (resp == 1) {
+            limpiar();
+        }
     }//GEN-LAST:event_miNuevoActionPerformed
 
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
         int resp = JOptionPane.showConfirmDialog(null,
-                    "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE);
-            if (resp == 0) {
-                miGuardar.doClick();
-                limpiar();
-                abrirArchivo();
-            }
-            if (resp == 1) {
-                limpiar();
-                abrirArchivo();
-            }
+                "¿Desea guardar el Archivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        if (resp == 0) {
+            miGuardar.doClick();
+            abrirArchivo();
+            limpiar();
+        }
+        if (resp == 1) {
+            abrirArchivo();
+            limpiar();
+        }
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
         if (guardarComo) {
-                guardarComo();
-            } else {
-                guardar();
-            }
+            guardarComo();
+        } else {
+            guardar();
+        }
     }//GEN-LAST:event_miGuardarActionPerformed
 
     private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
-          guardarComo();
+        guardarComo();
     }//GEN-LAST:event_miGuardarComoActionPerformed
 
     private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
-         Collections.sort(simbolos);
-            TablaOperadores ts = new TablaOperadores();
-            ts.setVisible(true);
+        Collections.sort(simbolos);
+        TablaOperadores ts = new TablaOperadores();
+        ts.setVisible(true);
     }//GEN-LAST:event_miReservadasActionPerformed
 
     private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
-       TablaReservadas tr = new TablaReservadas();
-            tr.setVisible(true);
+        TablaReservadas tr = new TablaReservadas();
+        tr.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
 
     private void limpiar() {
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
         txtEditor.setText("");
         txtErrores.setText("");
         guardarComo = true;
-        scrollEditor.setBounds(0, 0, 960, 560);
-        txtEditor.setBounds(0, 0, 960, 560);
-
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
     }
 
     /**
@@ -711,7 +718,7 @@ public class Editor extends javax.swing.JFrame {
 
         Reader reader;
         try {
-                reader = new BufferedReader(new FileReader("fichero.and"));
+            reader = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(reader);
             String errores = "";
             while (true) {
@@ -725,32 +732,32 @@ public class Editor extends javax.swing.JFrame {
                 }
 
                 switch (tokens) {
-//                    case ARROBA:
-//                         m.addRow(new Object[]{"Símbolo de arroba", lexer.lexema, (c.linea) + 1});
-//                        break;
+                    case ARROBA:
+                        m.addRow(new Object[]{" arroba", lexer.lexema, (c.linea) + 1});
+                        break;
                     case ASIGNACION:
-                         m.addRow(new Object[]{"Símbolo de asiganción", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de asiganción", lexer.lexema, (c.linea) + 1});
                         break;
                     case CADENA_TEXTO:
-                         m.addRow(new Object[]{"Constante de caracter", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Constante de caracter", lexer.lexema, (c.linea) + 1});
                         break;
                     case COMA:
-                         m.addRow(new Object[]{"Símbolo de coma ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de coma ", lexer.lexema, (c.linea) + 1});
                         break;
                     case COMILLA_SIMPLE:
-                         m.addRow(new Object[]{"Símbolo de comilla simple ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de comilla simple ", lexer.lexema, (c.linea) + 1});
                         break;
                     case DESIGUAL:
-                         m.addRow(new Object[]{"Símbolo de ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de ", lexer.lexema, (c.linea) + 1});
                         break;
                     case DOS_PUNTOS:
-                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_SI:
-                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_NO:
-                         m.addRow(new Object[]{"Empieza condicional no", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Empieza condicional no", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_PARA:
                         m.addRow(new Object[]{"Empieza ciclo para", lexer.lexema, (c.linea) + 1});
@@ -759,54 +766,60 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Empieza ciclo mientras", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_ENTERO:
-                         m.addRow(new Object[]{"Declara variable tipo Entero", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Declara variable tipo Entero", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_CADENA:
-                         m.addRow(new Object[]{"Declara variable tipo Cadena", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Declara variable tipo Cadena", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_BOOLEANO:
-                         m.addRow(new Object[]{"Declara variable tipo booleana", lexer.lexema, (c.linea) + 1});
-                         break;
+                        m.addRow(new Object[]{"Declara variable tipo booleana", lexer.lexema, (c.linea) + 1});
+                        break;
                     case RESERVADA_INICIAR:
                         m.addRow(new Object[]{"Iniciar programa", lexer.lexema, (c.linea) + 1});
                         break;
                     case PUNTO_COMA:
-                        m.addRow(new Object[]{"Simbolo de fin de sentencia ; ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Simbolo de fin de sentencia ", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case IDENTIFICADOR_ARREGLO:
+                        m.addRow(new Object[]{"Arreglo.", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR:
-                        errores = errores + "Error Lexico en linea: " + (c.linea + 1) + 
-                                ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                                + ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
-                        errores = errores + "Error Lexico: " + lexer.lexema + " " + " "
-                                + " Linea: " + (c.linea + 1) + ". Indentificador no puede comenzar con un dígito\n";
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) +
+                                ". "+lexer.lexema
+                                + ". Indentificador no puede comenzar con un dígito\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
-                                ". El punto esta mal posicionado\n";
-                        errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
-                        break;                         
-                    case ERROR_ARROBA:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) + 
-                                ". La cadena '"+lexer.lexema+"' no está definida\n";
-                        errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
-                        break;    
-                    case ERROR_MAYUS:
-                    case ERROR_ARROBA_MAYUS:
-                        errores = errores + "Error Lexico: " + lexer.lexema
-                                + " Linea: " + (c.linea + 1) + ". Las mayúsculas no están permitidas\n";
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                                + ". El punto esta mal posicionado\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
+                    case ERROR_ARROBA:
+                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                                + ". La cadena '" + lexer.lexema + "' no está definida\n";
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        break;
+                    case ERROR_MAYUS:
+                    case ERROR_ARROBA_MAYUS:
+                        errores = errores + "Error Lexico. "
+                                + "Linea: " + (c.linea + 1) + 
+                                ". Las mayúsculas no están permitidas '"+
+                                lexer.lexema + "'.\n";
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{"Error Lexico: las mayúsculas no están permitidas", lexer.lexema, (c.linea) + 1});
+                        break;
                     default:
-                        simbolos.add(new Simbolos(tokens.toString(),(c.linea) + 1, lexer.lexema,"",""));
+                        simbolos.add(new Simbolos(tokens.toString(), (c.linea) + 1, lexer.lexema, "", ""));
                         identificadores.add(lexer.lexema);
 //                        errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
@@ -850,7 +863,7 @@ public class Editor extends javax.swing.JFrame {
         return texto;
     }
 
-     public void abrirArchivo() {
+    public void abrirArchivo() {
         ArrayList<String> linea = null;
         int resp = 0;
         String codigo = "";
@@ -865,8 +878,8 @@ public class Editor extends javax.swing.JFrame {
 
                 }
             }
-            scrollEditor.setBounds(0, 0, 960, 580);
-            txtEditor.setBounds(0, 0, 960, 580);
+            scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+            txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
             lbCaracteres.setText(contarCar() + "");
             lbPalabras.setText(contarPal() + "");
             guardarComo = false;

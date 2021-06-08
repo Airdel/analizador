@@ -115,6 +115,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> {numExp} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return NUMERO_EXPONENTE;}
 <YYINITIAL> {errorPuntos} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_PUNTOS;}
 <YYINITIAL> {iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return IDENTIFICADOR;}
+<YYINITIAL> {iden}[\(][\)] {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return IDENTIFICADOR_ARREGLO;}
 <YYINITIAL> [\@]{iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA;}
 <YYINITIAL> [\@]{ideConMayus} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA_MAYUS;}
 <YYINITIAL> [\@]{ideEmpNum} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA_NUM;}

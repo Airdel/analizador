@@ -17,6 +17,7 @@ public enum Tokens {
     ERROR_MAYUS,
     ERROR_PUNTOS,
     IDENTIFICADOR,
+    IDENTIFICADOR_ARREGLO,
     ERROR_ID_NUM,
     MAYOR,
     MAYOR_QUE,
