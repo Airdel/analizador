@@ -60,6 +60,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> ":" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DOS_PUNTOS;}
 <YYINITIAL> "," {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMA;}
 <YYINITIAL> "'" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMILLA_SIMPLE;}
+<YYINITIAL> "@" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ARROBA;}
 <YYINITIAL> "entero" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_CADENA;}
 <YYINITIAL> "iniciar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_INICIAR;}

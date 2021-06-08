@@ -117,6 +117,7 @@ public class Editor extends javax.swing.JFrame {
         getContentPane().add(lbCaracteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, -1, -1));
         getContentPane().add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -523,12 +524,12 @@ public class Editor extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
         if (resp == 0) {
             miGuardar.doClick();
-            limpiar();
             abrirArchivo();
+            limpiar();
         }
         if (resp == 1) {
-            limpiar();
             abrirArchivo();
+            limpiar();
         }
     }//GEN-LAST:event_icon_openMouseClicked
 
@@ -733,7 +734,11 @@ public class Editor extends javax.swing.JFrame {
 
                 switch (tokens) {
                     case ARROBA:
-                        m.addRow(new Object[]{" arroba", lexer.lexema, (c.linea) + 1});
+                        errores = errores + "Cadena no válida. "
+                                + "Linea: " + (c.linea + 1) + 
+                                ". El arroba '@' no puede estár solo\n";
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{"Cadena no valida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ASIGNACION:
                         m.addRow(new Object[]{"Símbolo de asiganción", lexer.lexema, (c.linea) + 1});
@@ -784,39 +789,39 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Arreglo.", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
                         errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1) +
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1) +
                                 ". "+lexer.lexema
                                 + ". Indentificador no puede comenzar con un dígito\n";
                         errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". El punto esta mal posicionado\n";
                         errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ARROBA:
-                        errores = errores + "Error Lexico. Linea: " + (c.linea + 1)
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". La cadena '" + lexer.lexema + "' no está definida\n";
                         errores_lexicos = true;
-                        m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
-                        errores = errores + "Error Lexico. "
+                        errores = errores + "Cadena no válida. "
                                 + "Linea: " + (c.linea + 1) + 
                                 ". Las mayúsculas no están permitidas '"+
                                 lexer.lexema + "'.\n";
                         errores_lexicos = true;
-                        m.addRow(new Object[]{"Error Lexico: las mayúsculas no están permitidas", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     default:
                         simbolos.add(new Simbolos(tokens.toString(), (c.linea) + 1, lexer.lexema, "", ""));
