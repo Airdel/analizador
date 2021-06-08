@@ -6,33 +6,33 @@
 package tablas;
 
 import javax.swing.JLabel;
-
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author danyc
  */
 public class TablaReservadas extends javax.swing.JFrame {
-
+    /*Crear tabla con modelo*/
+    private DefaultTableModel m = new DefaultTableModel();
     private String[] res= {
-                "abajo","acelerar","adelante","apagar","arreglo","arriba","atras",
-                "booleano","cadena","calibrar","captura","caracter","cargar","ciclo",
-                "corto","decimal","declaracion","derecha","detener","direccionar",
-                "ejecutar","encender","entero","esperar","falso","fijo", 
-                "fin","funcion","girar ","haz","imprimir","iniciar","izquierda",
-                "largo","leer","mientras","no","nulo","parav","pin","principal","regresar", 
-                "retorno","ruta","seguir","si","video","verdadero"
+                "@abajo","@acelerar","@adelante","@apagar","arreglo","@arriba","@atras",
+                "booleano","cadena","@calibrar","@captura","caracter","@cargar","ciclo",
+                "corto","decimal","declaracion","@derecha","@detener","@direccionar",
+                "@ejecutar","@encender","entero","@esperar","falso","@fijo", 
+                "fin","funcion","@girar ","@haz","@imprimir","iniciar","@izquierda",
+                "@largo","@leer","mientras","no","nulo","@parav","@pin","principal","@regresa", 
+                "@retorno","@ruta","@seguir","si","@video","verdadero"
                 };
     
     public TablaReservadas() {
         initComponents();
         setLocationRelativeTo(null);
-        JLabel palabras[] = new JLabel[res.length];
-               
+        m = (DefaultTableModel) Palabras.getModel();               
+        /*JLabel palabras[] = new JLabel[res.length];*/        
+        /*Poner numero filas*/       
         for (int i = 0;i<res.length;i++) {
-            palabras[i] = new JLabel(res[i]);
-            palabras[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            palabras[i].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));       
-            panelREv.add(palabras[i]);
+            m.addRow(new Object[]{res[i]});            
         }
         
     }
@@ -46,43 +46,56 @@ public class TablaReservadas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        panelREv = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Palabras = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Palabras Reservadas");
+        setPreferredSize(new java.awt.Dimension(696, 402));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        Palabras.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        panelREv.setBackground(new java.awt.Color(255, 255, 255));
-        panelREv.setLayout(new java.awt.GridLayout(5, 6));
+            },
+            new String [] {
+                "Palabra Reservada"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelREv, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelREv, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(Palabras);
+        if (Palabras.getColumnModel().getColumnCount() > 0) {
+            Palabras.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,7 +137,7 @@ public class TablaReservadas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel panelREv;
+    private javax.swing.JTable Palabras;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
