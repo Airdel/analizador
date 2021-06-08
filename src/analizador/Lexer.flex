@@ -54,8 +54,8 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> ")" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return PARENTESIS_DER;}
 <YYINITIAL> ">" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MAYOR;}
 <YYINITIAL> "<" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MENOR;}
-<YYINITIAL> ">=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MAYOR_QUE;}
-<YYINITIAL> "<=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MENOR_QUE;}
+<YYINITIAL> ">=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MAYOR_IGUAL;}
+<YYINITIAL> "<=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return MENOR_IGUAL;}
 <YYINITIAL> "<>" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DESIGUAL;}
 <YYINITIAL> ":" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return DOS_PUNTOS;}
 <YYINITIAL> "," {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMA;}

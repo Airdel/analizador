@@ -227,7 +227,7 @@ public class Editor extends javax.swing.JFrame {
 
         JM_Archivo.setText("Archivo");
 
-        miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        miNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         miNuevo.setText("Nuevo");
         miNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +237,7 @@ public class Editor extends javax.swing.JFrame {
         });
         JM_Archivo.add(miNuevo);
 
-        miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        miAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
         miAbrir.setText("Abrir");
         miAbrir.addActionListener(new java.awt.event.ActionListener() {
@@ -247,7 +247,7 @@ public class Editor extends javax.swing.JFrame {
         });
         JM_Archivo.add(miAbrir);
 
-        miGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        miGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         miGuardar.setText("Guardar");
         miGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +257,7 @@ public class Editor extends javax.swing.JFrame {
         });
         JM_Archivo.add(miGuardar);
 
-        miGuardarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        miGuardarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miGuardarComo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
         miGuardarComo.setText("Guardar como");
         miGuardarComo.addActionListener(new java.awt.event.ActionListener() {
@@ -271,7 +271,7 @@ public class Editor extends javax.swing.JFrame {
 
         JM_Tablas.setText("Tablas");
 
-        miIden.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        miIden.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miIden.setText("Identificadores");
         miIden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,7 +280,7 @@ public class Editor extends javax.swing.JFrame {
         });
         JM_Tablas.add(miIden);
 
-        miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        miReservadas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miReservadas.setText("Reservadas");
         miReservadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,7 +289,7 @@ public class Editor extends javax.swing.JFrame {
         });
         JM_Tablas.add(miReservadas);
 
-        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        miSimbolo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         miSimbolo.setText("Operadores");
         miSimbolo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +302,7 @@ public class Editor extends javax.swing.JFrame {
 
         JM_Lexico.setText("Lexico");
 
-        miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
         miLexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         miLexico.setText("Analizar");
         miLexico.addActionListener(new java.awt.event.ActionListener() {
@@ -524,12 +524,14 @@ public class Editor extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
         if (resp == 0) {
             miGuardar.doClick();
-            abrirArchivo();
             limpiar();
+            abrirArchivo();
+            reacomodar();
         }
         if (resp == 1) {
-            abrirArchivo();
             limpiar();
+            abrirArchivo();
+            reacomodar();
         }
     }//GEN-LAST:event_icon_openMouseClicked
 
@@ -577,12 +579,14 @@ public class Editor extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
         if (resp == 0) {
             miGuardar.doClick();
-            abrirArchivo();
             limpiar();
+            abrirArchivo();
+            reacomodar();
         }
         if (resp == 1) {
-            abrirArchivo();
             limpiar();
+            abrirArchivo();
+            reacomodar();
         }
     }//GEN-LAST:event_miAbrirActionPerformed
 
@@ -619,8 +623,11 @@ public class Editor extends javax.swing.JFrame {
         txtEditor.setText("");
         txtErrores.setText("");
         guardarComo = true;
+    }
+    
+    private void reacomodar(){
         scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);    
     }
 
     /**
@@ -754,10 +761,22 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Símbolo de comilla simple ", lexer.lexema, (c.linea) + 1});
                         break;
                     case DESIGUAL:
-                        m.addRow(new Object[]{"Símbolo de ", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de desigualdas", lexer.lexema, (c.linea) + 1});
                         break;
                     case DOS_PUNTOS:
                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case MAYOR:
+                        m.addRow(new Object[]{"Símbolo de mayor que", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case MAYOR_IGUAL:
+                        m.addRow(new Object[]{"Símbolo de mayor igaul que", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case MENOR:
+                        m.addRow(new Object[]{"Símbolo de menor que", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case MENOR_IGUAL:
+                        m.addRow(new Object[]{"Símbolo de menor igual que", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_SI:
                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
@@ -947,5 +966,4 @@ public class Editor extends javax.swing.JFrame {
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
-
 }

@@ -1,2 +1,1 @@
-
-<YYINITIAL> "'" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMILLA_SIMPLE;}
+ + - * / & % 4 # " # ! ()?¡*¨[]
