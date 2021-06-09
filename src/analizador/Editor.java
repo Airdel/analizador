@@ -778,6 +778,39 @@ public class Editor extends javax.swing.JFrame {
                     case MENOR_IGUAL:
                         m.addRow(new Object[]{"Símbolo de menor igual que", lexer.lexema, (c.linea) + 1});
                         break;
+                    case OPERADOR_MAS:
+                        m.addRow(new Object[]{"Símbolo de operador de suma", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_MENOS:
+                        m.addRow(new Object[]{"Símbolo de operador de resta", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_IGUALDAD:
+                        m.addRow(new Object[]{"Símbolo de igualdad", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_POR:
+                        m.addRow(new Object[]{"Símbolo de operador de multiplicación", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_DIVISION:
+                        m.addRow(new Object[]{"Símbolo de operador de división", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_Y:
+                        m.addRow(new Object[]{"Símbolo relacional 'Y'", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_O:
+                        m.addRow(new Object[]{"Símbolo relacional 'O'", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_NEGACION:
+                        m.addRow(new Object[]{"Símbolo de negación", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case OPERADOR_MODULO:
+                        m.addRow(new Object[]{"Símbolo de operador de módulo", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case PARENTESIS_IZQ:
+                        m.addRow(new Object[]{"Simbolo de paréntesis Izquierdo", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case PARENTESIS_DER:
+                        m.addRow(new Object[]{"Simbolo de paréntesis Derecho", lexer.lexema, (c.linea) + 1});
+                        break;
                     case RESERVADA_SI:
                         m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
                         break;
