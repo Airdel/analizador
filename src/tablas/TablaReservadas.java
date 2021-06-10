@@ -25,7 +25,22 @@ public class TablaReservadas extends javax.swing.JFrame {
                 "@largo","@leer","mientras","no","nulo","@parav","@pin","principal","@regresa", 
                 "@retorno","@ruta","@seguir","si","@video","verdadero"
                 };
+    private String[] desc={
+      "Desciende altitud del dron","Aumenta o Disminuye la velocidad","Mueve el dron a su frente","Detiene las helices del dron", 
+        "Declara arreglos","Aumenta altitud del dron","Mueve el dron a su reverso","Define variable Booleana",
+        "Define variable de Cadena","Calibra funcionamiento de helices","Tomar fotografia","Define variable de caracter","Implementa librerias","Implementa for",
+        "Define variable numerico corto","Define variable punto flotante corto","Define lista de variables","Mueve el dron a su derecha","Detiene y Descende el dron",
+        "Mueve el dron en direccion elegible","Llama y ejecuta a una funcion","Enciende helices","Define variable numerica entera",
+        "Hace el dron esperar en milisegundos","Valor Booleano Falso","Suspende dron en ubicacion actual","Final de ciclo si/si no",
+        "Define una funcion de usuario","Inclina el dron en grados","Ejecuta un mientras 1 o mas veces","Imprime el valor de una variable en consola",
+        "Inicia seccion cargar librerias","Mueve el dron a su izquierda","Define variable numerica larga","Lee valores de una terminal a variable",
+        "Ciclo que corre en base a condicion","Combinado con si para condicion opuesta","Define un valor nulo","Detiene grabacion video",
+        "Se comunica con un pin microcontrolador","Define seccion de logica","Regresa el dron a punto origen","Retorna valor de variable",
+        "Define una navegacion en base a coordenadas","Dron continua en direccion dada por tiempo dado","Definir ciclo condicional",
+        "Empieza grabacion video","Valor verdadero booleano"
+        
     
+    };
     public TablaReservadas() {
         initComponents();
         setIconImage(new ImageIcon("C:\\analizador\\src\\img\\icono.png").getImage());
@@ -34,7 +49,7 @@ public class TablaReservadas extends javax.swing.JFrame {
         /*JLabel palabras[] = new JLabel[res.length];*/        
         /*Poner numero filas*/       
         for (int i = 0;i<res.length;i++) {
-            m.addRow(new Object[]{res[i]});            
+            m.addRow(new Object[]{res[i],desc[i]});            
         }
         
     }
@@ -62,14 +77,14 @@ public class TablaReservadas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Palabra Reservada"
+                "Palabra Reservada", "Funcion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -83,6 +98,7 @@ public class TablaReservadas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Palabras);
         if (Palabras.getColumnModel().getColumnCount() > 0) {
             Palabras.getColumnModel().getColumn(0).setResizable(false);
+            Palabras.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jPanel2.setBackground(new java.awt.Color(102, 153, 255));
