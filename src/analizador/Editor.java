@@ -103,7 +103,7 @@ public class Editor extends javax.swing.JFrame {
         jMenu4.setText("jMenu4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sin titulo");
+        setTitle("LYADRONE");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Palabras: ");
@@ -166,7 +166,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
         icon_open.setToolTipText("Abrir");
-        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_open.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_openMouseClicked(evt);
@@ -179,7 +179,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_tabla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
         icon_tabla.setToolTipText("Tabla Simbolos");
-        icon_tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_tablaMouseClicked(evt);
@@ -189,7 +189,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         icon_new.setToolTipText("Nuevo");
-        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_new.setName(""); // NOI18N
         icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,7 +200,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_saveMouseClicked(evt);
@@ -210,7 +210,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_lexico.setToolTipText("Corre Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_lexicoMouseClicked(evt);

@@ -5,18 +5,24 @@
  */
 package tablas;
 
+import java.awt.image.*;
+import javax.imageio.*;
+import java.io.*;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author danyc
+ * @author Airdel
  */
+
 public class TablaAfabetos extends javax.swing.JFrame {
 
     
     private DefaultTableModel mLetras = new DefaultTableModel();
     public TablaAfabetos() {
         initComponents();
+        setIconImage(new ImageIcon("C:\\analizador\\src\\img\\icono.png").getImage());
         mLetras = (DefaultTableModel) tblLetras.getModel();
         char c = 97;
         for(int i = 0;i<26;i++)
@@ -36,6 +42,8 @@ public class TablaAfabetos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        lbl_Icono = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLetras = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -54,6 +62,30 @@ public class TablaAfabetos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Alfabeto");
+        jLabel1.setName("lbl_Titulo"); // NOI18N
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbl_Icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icono_65.png"))); // NOI18N
+        lbl_Icono.setText("___");
+        lbl_Icono.setName("lbl_Icono"); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Icono, javax.swing.GroupLayout.PREFERRED_SIZE, 64, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Icono, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -62,14 +94,18 @@ public class TablaAfabetos extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         tblLetras.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -96,10 +132,10 @@ public class TablaAfabetos extends javax.swing.JFrame {
                 {".", "Punto"},
                 {"*", "Signo de multiplicación"},
                 {".", "Coma"},
-                {"|", "Simbolo de O"},
-                {"&", "Simbolo de Y"},
+                {"|", "Simbolo de O (OR)"},
+                {"&", "Simbolo de Y (AND)"},
                 {"^", "Simbolo de O exclusivo"},
-                {"@", "Simbolo de arriba"},
+                {"@", "Simbolo de arroba"},
                 {"%", "Signo de módulo"},
                 {"'", "Comilla simple"},
                 {"_", "Guión Bajo"}
@@ -110,9 +146,6 @@ public class TablaAfabetos extends javax.swing.JFrame {
         ));
         tblLetras1.setRowHeight(25);
         jScrollPane2.setViewportView(tblLetras1);
-        if (tblLetras1.getColumnModel().getColumnCount() > 0) {
-            tblLetras1.getColumnModel().getColumn(1).setHeaderValue("Descripción");
-        }
 
         tblLetras2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblLetras2.setModel(new javax.swing.table.DefaultTableModel(
@@ -139,15 +172,15 @@ public class TablaAfabetos extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,10 +189,10 @@ public class TablaAfabetos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -218,9 +251,11 @@ public class TablaAfabetos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbl_Icono;
     private javax.swing.JTable tblLetras;
     private javax.swing.JTable tblLetras1;
     private javax.swing.JTable tblLetras2;
