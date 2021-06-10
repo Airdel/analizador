@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
+import tablas.TablaAfabetos;
 import tablas.TablaOperadores;
 
 /*
@@ -90,6 +91,7 @@ public class Editor extends javax.swing.JFrame {
         miIden = new javax.swing.JMenuItem();
         miReservadas = new javax.swing.JMenuItem();
         miSimbolo = new javax.swing.JMenuItem();
+        miAlfabeto = new javax.swing.JMenuItem();
         JM_Lexico = new javax.swing.JMenu();
         miLexico = new javax.swing.JMenuItem();
         JM_Vista = new javax.swing.JMenu();
@@ -136,7 +138,7 @@ public class Editor extends javax.swing.JFrame {
         });
         scrollEditor.setViewportView(txtEditor);
 
-        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1190, 530));
+        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1200, 530));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,7 +153,7 @@ public class Editor extends javax.swing.JFrame {
             tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 620, 350));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 630, 350));
 
         txtErrores.setEditable(false);
         txtErrores.setColumns(20);
@@ -164,7 +166,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
         icon_open.setToolTipText("Abrir");
-        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_open.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_openMouseClicked(evt);
@@ -177,7 +179,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
         icon_save_as.setToolTipText("Guardar Como");
-        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_save_asMouseClicked(evt);
@@ -187,7 +189,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         icon_new.setToolTipText("Nuevo");
-        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_new.setName(""); // NOI18N
         icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -198,7 +200,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_saveMouseClicked(evt);
@@ -208,7 +210,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_lexico.setToolTipText("Corre Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_lexicoMouseClicked(evt);
@@ -219,7 +221,7 @@ public class Editor extends javax.swing.JFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 14, 20, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, 1200, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
@@ -297,6 +299,15 @@ public class Editor extends javax.swing.JFrame {
             }
         });
         JM_Tablas.add(miSimbolo);
+
+        miAlfabeto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miAlfabeto.setText("Alfabeto");
+        miAlfabeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAlfabetoActionPerformed(evt);
+            }
+        });
+        JM_Tablas.add(miAlfabeto);
 
         JM_Principal.add(JM_Tablas);
 
@@ -603,16 +614,21 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_miGuardarComoActionPerformed
 
     private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
-        Collections.sort(simbolos); 
+        Collections.sort(simbolos);
         TablaReservadas tr = new TablaReservadas();
         tr.setVisible(true);
-        
+
     }//GEN-LAST:event_miReservadasActionPerformed
 
     private void miSimboloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSimboloActionPerformed
-       TablaOperadores ts = new TablaOperadores();
+        TablaOperadores ts = new TablaOperadores();
         ts.setVisible(true);
     }//GEN-LAST:event_miSimboloActionPerformed
+
+    private void miAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAlfabetoActionPerformed
+        TablaAfabetos ta = new TablaAfabetos();
+        ta.setVisible(true);
+    }//GEN-LAST:event_miAlfabetoActionPerformed
 
     private void limpiar() {
         int rowCount = m.getRowCount();
@@ -624,10 +640,10 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         guardarComo = true;
     }
-    
-    private void reacomodar(){
+
+    private void reacomodar() {
         scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);    
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
     }
 
     /**
@@ -670,7 +686,7 @@ public class Editor extends javax.swing.JFrame {
 
     private boolean guardarComo = true;
     private boolean guardar = false;
-
+    private boolean mostrar = true;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu JM_Archivo;
@@ -696,6 +712,7 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JLabel lbCaracteres;
     public javax.swing.JLabel lbPalabras;
     public javax.swing.JMenuItem miAbrir;
+    private javax.swing.JMenuItem miAlfabeto;
     public javax.swing.JMenuItem miGuardar;
     public javax.swing.JMenuItem miGuardarComo;
     public javax.swing.JMenuItem miIden;
@@ -743,8 +760,8 @@ public class Editor extends javax.swing.JFrame {
                 switch (tokens) {
                     case ARROBA:
                         errores = errores + "Cadena no válida. "
-                                + "Linea: " + (c.linea + 1) + 
-                                ". El arroba '@' no puede estár solo\n";
+                                + "Linea: " + (c.linea + 1)
+                                + ". El arroba '@' no puede estár solo\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no valida", lexer.lexema, (c.linea) + 1});
                         break;
@@ -841,6 +858,14 @@ public class Editor extends javax.swing.JFrame {
                     case IDENTIFICADOR_ARREGLO:
                         m.addRow(new Object[]{"Arreglo.", lexer.lexema, (c.linea) + 1});
                         break;
+                    case ID_CON_SIMBOLOS:
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                                + ". El identificador contiene un símbolo que no pertenece al lenguaje '"
+                                +lexer.lexema+ "'\n";
+                        errores_lexicos = true;
+                        m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case SNP:
                     case ERROR:
                         errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
@@ -849,15 +874,15 @@ public class Editor extends javax.swing.JFrame {
                         break;
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1) +
-                                ". "+lexer.lexema
+                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                                + ". " + lexer.lexema
                                 + ". Indentificador no puede comenzar con un dígito\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
                         errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". El punto esta mal posicionado\n";
+                                + ". El punto esta mal posicionado '"+lexer.lexema+"'\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
@@ -870,9 +895,9 @@ public class Editor extends javax.swing.JFrame {
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
                         errores = errores + "Cadena no válida. "
-                                + "Linea: " + (c.linea + 1) + 
-                                ". Las mayúsculas no están permitidas '"+
-                                lexer.lexema + "'.\n";
+                                + "Linea: " + (c.linea + 1)
+                                + ". Las mayúsculas no están permitidas '"
+                                + lexer.lexema + "'.\n";
                         errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;

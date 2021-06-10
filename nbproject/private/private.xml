@@ -6,6 +6,8 @@
             <file>file:/C:/analizador/src/analizador/Lexer.flex</file>
             <file>file:/C:/analizador/src/analizador/GeneradorAF.java</file>
             <file>file:/C:/analizador/src/analizador/Editor.java</file>
+            <file>file:/C:/analizador/src/tablas/TablaAfabetos.java</file>
+            <file>file:/C:/analizador/src/analizador/Tokens.java</file>
         </group>
     </open-files>
 </project-private>

@@ -10,13 +10,15 @@ import static analizador.Tokens.*;
 D = [0-9]
 S = \+|\-
 L=[a-z]
-LE=[A-Za-z_]
-SIMBOLOS_ESP  =[(\)\=\+\-\>\<\.\*\\\|\&\^\@\%\’\_]
+LE=[A-Za-z]
+SE  =[(\)\=\+\-\>\<\.\*\\\|\&\^\@\%\’\_]
+Snp  =[\"\#\$\&\¿\?\¨\[\]\{\}\`\~]
 
 iden={ L } ( { L } | { D } | _ ){ 0 , 31 }
 
 alfabeto = (~{SIMBOLOS_ESP}|~{D}|~{L})
 
+idSimbolo = ({L}|{Snp})+
 num = {D}+
 enteros = {S}?{num}
 numDec =  {S}?{num}?\.{num}
@@ -61,6 +63,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "," {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMA;}
 <YYINITIAL> "'" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return COMILLA_SIMPLE;}
 <YYINITIAL> "@" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ARROBA;}
+
 <YYINITIAL> "entero" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ENTERO;}
 <YYINITIAL> "cadena" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_CADENA;}
 <YYINITIAL> "iniciar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_INICIAR;}
@@ -117,7 +120,9 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> {errorPuntos} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_PUNTOS;}
 <YYINITIAL> {iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return IDENTIFICADOR;}
 <YYINITIAL> {iden}[\(][\)] {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return IDENTIFICADOR_ARREGLO;}
+<YYINITIAL> {Snp}+ {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return SNP;}
 <YYINITIAL> [\@]{iden} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA;}
+<YYINITIAL> {idSimbolo} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ID_CON_SIMBOLOS;}
 <YYINITIAL> [\@]{ideConMayus} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA_MAYUS;}
 <YYINITIAL> [\@]{ideEmpNum} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_ARROBA_NUM;}
 <YYINITIAL> {ideConMayus} {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ERROR_MAYUS;}
