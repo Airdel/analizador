@@ -76,11 +76,12 @@ public class Editor extends javax.swing.JFrame {
         txtErrores = new javax.swing.JTextArea();
         icon_open = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        icon_save_as = new javax.swing.JLabel();
+        icon_tabla = new javax.swing.JLabel();
         icon_new = new javax.swing.JLabel();
         icon_save = new javax.swing.JLabel();
         icon_lexico = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -103,7 +104,6 @@ public class Editor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin titulo");
-        setPreferredSize(new java.awt.Dimension(1200, 680));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Palabras: ");
@@ -175,17 +175,17 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_open, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 30, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 14, 20, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 14, 20, -1));
 
-        icon_save_as.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-as.png"))); // NOI18N
-        icon_save_as.setToolTipText("Guardar Como");
-        icon_save_as.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        icon_save_as.addMouseListener(new java.awt.event.MouseAdapter() {
+        icon_tabla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
+        icon_tabla.setToolTipText("Tabla Simbolos");
+        icon_tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                icon_save_asMouseClicked(evt);
+                icon_tablaMouseClicked(evt);
             }
         });
-        jPanel1.add(icon_save_as, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 30, 30));
+        jPanel1.add(icon_tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 30, 30));
 
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         icon_new.setToolTipText("Nuevo");
@@ -220,6 +220,9 @@ public class Editor extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 14, 20, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 14, 20, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
 
@@ -567,9 +570,9 @@ public class Editor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_icon_saveMouseClicked
 
-    private void icon_save_asMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_save_asMouseClicked
-        guardarComo();
-    }//GEN-LAST:event_icon_save_asMouseClicked
+    private void icon_tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_tablaMouseClicked
+        miSimbolo.doClick();    
+    }//GEN-LAST:event_icon_tablaMouseClicked
 
     private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
         int resp = JOptionPane.showConfirmDialog(null,
@@ -699,11 +702,12 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JLabel icon_new;
     public javax.swing.JLabel icon_open;
     public javax.swing.JLabel icon_save;
-    public javax.swing.JLabel icon_save_as;
+    public javax.swing.JLabel icon_tabla;
     public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;

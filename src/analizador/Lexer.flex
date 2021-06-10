@@ -49,6 +49,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "/" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_DIVISION;}
 <YYINITIAL> "&" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_Y;}
 <YYINITIAL> "|" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_O;}
+<YYINITIAL> "^" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_OR;}
 <YYINITIAL> "!" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_NEGACION;}
 <YYINITIAL> "%" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MODULO;}
 <YYINITIAL> ";" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return PUNTO_COMA;}
