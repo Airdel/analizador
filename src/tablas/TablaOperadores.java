@@ -127,12 +127,12 @@ public class TablaOperadores extends javax.swing.JFrame {
         ArrayList<Operador> operadores = new ArrayList<>();
         operadores.add(new Operador("Aritmético más","+"));
         operadores.add(new Operador("Aritmético menos","-"));
-        operadores.add(new Operador("Aritmético multiplicars","*"));
+        operadores.add(new Operador("Aritmético multiplicar","*"));
         operadores.add(new Operador("Aritmético división","/"));
         operadores.add(new Operador("Lógico Y","&"));
         operadores.add(new Operador("Lógico O","|"));
         operadores.add(new Operador("Lógico O exclusivo","^"));
-        operadores.add(new Operador("Lógico negaciónt","!"));                
+        operadores.add(new Operador("Lógico negación","!"));                
         return operadores;
     }
 

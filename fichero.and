@@ -1,0 +1,18 @@
+public class Editor extends javax.swing.JFrame {
+
+    NumeroLinea numeroLinea;
+    private ArrayList<String> identificadores = new ArrayList<String>();
+    private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
+
+    private boolean errores_lexicos;
+    private DefaultTableModel m = new DefaultTableModel();
+
+    public Editor() { entero
+        initComponents();
+        setLocationRelativeTo(null);
+        m = (DefaultTableModel) tablaMensajes.getModel();
+        tablaMensajes.setAutoCreateRowSorter(true);
+        numeroLinea = new NumeroLinea(txtEditor);
+        scrollEditor.setRowHeaderView(numeroLinea);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
+    }
