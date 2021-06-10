@@ -1,18 +1,17 @@
-public class Editor extends javax.swing.JFrame {
-
-    NumeroLinea numeroLinea;
-    private ArrayList<String> identificadores = new ArrayList<String>();
-    private ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
-
-    private boolean errores_lexicos;
-    private DefaultTableModel m = new DefaultTableModel();
-
-    public Editor() { entero
-        initComponents();
-        setLocationRelativeTo(null);
-        m = (DefaultTableModel) tablaMensajes.getModel();
-        tablaMensajes.setAutoCreateRowSorter(true);
-        numeroLinea = new NumeroLinea(txtEditor);
-        scrollEditor.setRowHeaderView(numeroLinea);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
-    }
+iniciar ejemplo2
+	principal:
+		@encender
+		@calibrar
+		@direccionar @arriba 10
+		@video
+			@seguir 10000
+			@girar 90
+			@seguir	10000
+			@girar 135
+			@seguir 15000
+		@parav
+		@detene
+		@apagar	
+	fin
+fin
+	

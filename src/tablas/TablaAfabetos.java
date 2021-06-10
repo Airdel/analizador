@@ -43,7 +43,7 @@ public class TablaAfabetos extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblLetras2 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alfabeto");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
