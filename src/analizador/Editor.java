@@ -571,7 +571,7 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_icon_saveMouseClicked
 
     private void icon_tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_tablaMouseClicked
-        miSimbolo.doClick();    
+        miIden.doClick();    
     }//GEN-LAST:event_icon_tablaMouseClicked
 
     private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
