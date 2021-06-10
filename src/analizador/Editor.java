@@ -166,7 +166,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_open.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/open.png"))); // NOI18N
         icon_open.setToolTipText("Abrir");
-        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_open.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_open.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_openMouseClicked(evt);
@@ -179,7 +179,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_tabla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/table.png"))); // NOI18N
         icon_tabla.setToolTipText("Tabla Simbolos");
-        icon_tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_tablaMouseClicked(evt);
@@ -189,7 +189,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new_file.png"))); // NOI18N
         icon_new.setToolTipText("Nuevo");
-        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_new.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_new.setName(""); // NOI18N
         icon_new.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,7 +200,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         icon_save.setToolTipText("Guardar");
-        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_save.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_saveMouseClicked(evt);
@@ -210,7 +210,7 @@ public class Editor extends javax.swing.JFrame {
 
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
         icon_lexico.setToolTipText("Corre Léxico");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 icon_lexicoMouseClicked(evt);
@@ -782,10 +782,10 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Símbolo de comilla simple ", lexer.lexema, (c.linea) + 1});
                         break;
                     case DESIGUAL:
-                        m.addRow(new Object[]{"Símbolo de desigualdas", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Símbolo de desigualdad", lexer.lexema, (c.linea) + 1});
                         break;
                     case DOS_PUNTOS:
-                        m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"Simbolo para empezar bloque", lexer.lexema, (c.linea) + 1});
                         break;
                     case MAYOR:
                         m.addRow(new Object[]{"Símbolo de mayor que", lexer.lexema, (c.linea) + 1});
@@ -833,28 +833,52 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Simbolo de paréntesis Derecho", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_SI:
-                        m.addRow(new Object[]{"Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Empieza condicional si", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case    RESERVADA_CICLO:
+                        m.addRow(new Object[]{"RESERVADA. Empieza ciclo", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case  RESERVADA_CORTO:
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo corto", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_DECIMAL:
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo decimal", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_DECLARACION:
+                        m.addRow(new Object[]{"RESERVADA. Empieza declaracion de variables", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_PRINCIPAL:
+                        m.addRow(new Object[]{"RESERVADA. Empieza bloque principal", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_NO:
-                        m.addRow(new Object[]{"Empieza condicional no", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Empieza condicional no", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_PARA:
-                        m.addRow(new Object[]{"Empieza ciclo para", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Empieza ciclo para", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_LARGO:
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo largo", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_LEER:
+                        m.addRow(new Object[]{"RESERVADA. Lee entrada de texto", lexer.lexema, (c.linea) + 1});
+                        break;
+                    case RESERVADA_NULO:
+                        m.addRow(new Object[]{"RESERVADA. Asigna valor nulo a variable", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_MIENTRAS:
-                        m.addRow(new Object[]{"Empieza ciclo mientras", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Empieza ciclo mientras", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_ENTERO:
-                        m.addRow(new Object[]{"Declara variable tipo Entero", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo Entero", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_CADENA:
-                        m.addRow(new Object[]{"Declara variable tipo Cadena", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo Cadena", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_BOOLEANO:
-                        m.addRow(new Object[]{"Declara variable tipo booleana", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Declara variable tipo booleana", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_INICIAR:
-                        m.addRow(new Object[]{"Iniciar programa", lexer.lexema, (c.linea) + 1});
+                        m.addRow(new Object[]{"RESERVADA. Iniciar programa", lexer.lexema, (c.linea) + 1});
                         break;
                     case PUNTO_COMA:
                         m.addRow(new Object[]{"Simbolo de fin de sentencia ", lexer.lexema, (c.linea) + 1});

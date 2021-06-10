@@ -1,17 +1,26 @@
 iniciar ejemplo2
+	declaracion:
+		entero distancia = 10000;
+		decimal giro1 = 67.8;
+		entero giro2 = 90;
+		cadena nombre = '':
+		boleano salir = falso;
+		entero subir = 10;
 	principal:
 		@encender
 		@calibrar
-		@direccionar @arriba 10
+		@direccionar @arriba subir
 		@video
 			@seguir 10000
-			@girar 90
-			@seguir	10000
-			@girar 135
+			@girar giro1
+			@seguir	distancia
+			@girar giro2
 			@seguir 15000
 		@parav
 		@detene
 		@apagar	
 	fin
 fin
+
+
 	
