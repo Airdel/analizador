@@ -224,7 +224,7 @@
                       <Data value="&lt;"/>
                       <Data value="."/>
                       <Data value="*"/>
-                      <Data value="."/>
+                      <Data value=","/>
                       <Data value="|"/>
                       <Data value="&amp;"/>
                       <Data value="^"/>

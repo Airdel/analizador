@@ -1,26 +1,37 @@
-iniciar ejemplo2
+iniciar ejemplo3
 	declaracion:
-		entero distancia = 10000;
-		decimal giro1 = 67.8;
-		entero giro2 = 90;
-		cadena nombre = '':
-		boleano salir = falso;
-		entero subir = 10;
+		entero direccion=0;
+		entero vueltas=0;
+	fin	
 	principal:
-		@encender
-		@calibrar
-		@direccionar @arriba subir
-		@video
-			@seguir 10000
-			@girar giro1
-			@seguir	distancia
-			@girar giro2
-			@seguir 15000
-		@parav
-		@detene
-		@apagar	
+		@encender;
+		@calibrar;
+		mientras(vueltas <= 100)
+			llama direccionamiento;
+		fin
+		@detener;
+		@apagar;
+	fin
+	funcion elegir direccionamiento:
+		si(direccion==1):
+			@direccionar @arriba 10;
+			vueltas = vueltas + 1;
+		si no:
+			si(direccion==2):
+				@direccionar @derecha 10;
+				vueltas = vueltas + 1
+			si no:
+				si(direccion==3):
+					@direccionar @abajo 10;
+					vueltas= vueltas + 1
+				si no:
+					si(direccion==4):
+						@direccionar @izquierda 10;
+					si no:
+						@fijo;
+						vueltas = vueltas + 1
+				fin
+			fin
+		fin
 	fin
 fin
-
-
-	

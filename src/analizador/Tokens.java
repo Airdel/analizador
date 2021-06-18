@@ -90,5 +90,6 @@ public enum Tokens {
     RESERVADA_FALSO,
     RESERVADA_VERDADERO,
     SIMBOLO_ESPECIAL,
-    SNP
+    SNP,
+    SALTO_LINEA
 }

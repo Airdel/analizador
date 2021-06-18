@@ -25,7 +25,7 @@ numDec =  {S}?{num}?\.{num}
 numExp =  {S}?{num}?(\.{num})?e{ enteros }
 ideConMayus = ({LE}|D)+
 ideEmpNum = {D}({LE}|{D})+
-ESCAPE=[ \t\r\n]
+ESCAPE=[ \t\r]
 
 cadena = (\')~(\')
 
@@ -41,6 +41,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
 "---"~"---" { }
+<YYINITIAL> "\n" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return SALTO_LINEA;}
 <YYINITIAL> "+" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_MAS;}
 <YYINITIAL> "=" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return ASIGNACION;}
 <YYINITIAL> "==" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return OPERADOR_IGUALDAD;}
@@ -94,7 +95,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "@derecha" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_DERECHA;}
 <YYINITIAL> "@detener" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_DETENER;}
 <YYINITIAL> "@direccionar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_DIRECCIONAR;}
-<YYINITIAL> "@ejecutar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_EJECUTAR;}
+<YYINITIAL> "ejecutar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_EJECUTAR;}
 <YYINITIAL> "@encender" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ENCENDER;}
 <YYINITIAL> "@esperar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ESPERAR;}
 <YYINITIAL> "@fijo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_FIJO;}

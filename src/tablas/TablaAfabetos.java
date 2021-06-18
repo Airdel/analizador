@@ -131,7 +131,7 @@ public class TablaAfabetos extends javax.swing.JFrame {
                 {"<", "Simbolo menor que"},
                 {".", "Punto"},
                 {"*", "Signo de multiplicación"},
-                {".", "Coma"},
+                {",", "Coma"},
                 {"|", "Simbolo de O (OR)"},
                 {"&", "Simbolo de Y (AND)"},
                 {"^", "Simbolo de O exclusivo"},

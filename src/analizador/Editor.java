@@ -784,6 +784,9 @@ public class Editor extends javax.swing.JFrame {
                     case DESIGUAL:
                         m.addRow(new Object[]{"Símbolo de desigualdad", lexer.lexema, (c.linea) + 1});
                         break;
+                    case RESERVADA_EJECUTAR:
+                        m.addRow(new Object[]{"RESERVADA. Manda a llamar una función", lexer.lexema, (c.linea) + 1});
+                        break;
                     case DOS_PUNTOS:
                         m.addRow(new Object[]{"Simbolo para empezar bloque", lexer.lexema, (c.linea) + 1});
                         break;

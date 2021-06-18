@@ -168,7 +168,12 @@ public class TablaOperadores extends javax.swing.JFrame {
         operadores.add(new Operador("Lógico Y","&"));
         operadores.add(new Operador("Lógico O","|"));
         operadores.add(new Operador("Lógico O exclusivo","^"));
-        operadores.add(new Operador("Lógico negación","!"));                
+        operadores.add(new Operador("Lógico negación","!"));   
+        operadores.add(new Operador("Comparación mayor",">"));                
+        operadores.add(new Operador("Comparación mayor igual",">="));                
+        operadores.add(new Operador("Comparación menor","<"));                
+        operadores.add(new Operador("Comparación menor igual","<="));        
+        operadores.add(new Operador("Comparación igualdad","=="));                
         return operadores;
     }
 
