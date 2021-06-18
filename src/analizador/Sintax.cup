@@ -1,4 +1,4 @@
-package codigo;
+package analizador;
 
 import java_cup.runtime.Symbol;
 
@@ -14,6 +14,8 @@ parser code
         return this.s;
 }
 :};
+   
+
 
 terminal     ASIGNACION,    CADENA_TEXTO,    COMA,    COMILLA_SIMPLE,    DESIGUAL,    DOS_PUNTOS,
     ERROR,     IDENTIFICADOR,    IDENTIFICADOR_ARREGLO,    MAYOR,
@@ -24,6 +26,7 @@ terminal     ASIGNACION,    CADENA_TEXTO,    COMA,    COMILLA_SIMPLE,    DESIGUA
 
 non terminal inicio, sentencia, declaracion, declaracion_para, si, si_no,
     mientras, haz, para, sentencia_booleana, sentencia_para;
+
 
 start with inicio;
 
