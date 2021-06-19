@@ -1,5 +1,4 @@
 package analizador;
-import java.io.*;
 import java_cup.runtime.Symbol;
 %%
 %class LexerCup
@@ -7,7 +6,7 @@ import java_cup.runtime.Symbol;
 %cup
 %full
 %line
-%column
+%char
 D = [0-9]
 S = \+|\-
 L=[a-z]
@@ -26,7 +25,7 @@ numDec =  {S}?{num}?\.{num}
 numExp =  {S}?{num}?(\.{num})?e{ enteros }
 ideConMayus = ({LE}|D)+
 ideEmpNum = {D}({LE}|{D})+
-ESCAPE=[ \t\r\n]
+ESCAPE=[ \t\r\n]+
 
 cadena = (\')~(\')
 
@@ -46,11 +45,17 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
-"---"~"---" { }
 
-("+") {return new Symbol(sym.OPERADOR_MAS,yychar,yyline,yytext());}
-("=") {return new Symbol(sym.ASIGNACION, yychar, yyline, yytext());}
-("==") {return new Symbol(sym.OPERADOR_IGUALDAD, yychar, yyline, yytext());}
+("=")       {return new Symbol(sym.ASIGNACION,        yychar, yyline, yytext());}
+("cadena")  {return new Symbol(sym.RESERVADA_CADENA,  yychar, yyline, yytext());}
+("iniciar") {return new Symbol(sym.RESERVADA_INICIAR, yychar, yyline, yytext());}
+("fin")     {return new Symbol(sym.RESERVADA_FIN,     yychar, yyline, yytext());}
+(":")       {return new Symbol(sym.DOS_PUNTOS,        yychar, yyline, yytext());}
+(";")       {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
+({enteros}) {return new Symbol(sym.NUMERO,            yychar, yyline, yytext());}
+({iden})    {return new Symbol(sym.IDENTIFICADOR,     yychar, yyline, yytext());}
+
+/*("==") {return new Symbol(sym.OPERADOR_IGUALDAD, yychar, yyline, yytext());}
 ("-") {return new Symbol(sym.OPERADOR_MENOS, yychar, yyline, yytext());}
 ("*") {return new Symbol(sym.OPERADOR_POR, yychar, yyline, yytext());}
 ("/") {return new Symbol(sym.OPERADOR_DIVISION, yychar, yyline, yytext());}
@@ -59,7 +64,6 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("^") {return new Symbol(sym.OPERADOR_OR, yychar, yyline, yytext());}
 ("!") {return new Symbol(sym.OPERADOR_NEGACION, yychar, yyline, yytext());}
 ("%") {return new Symbol(sym.OPERADOR_MODULO, yychar, yyline, yytext());}
-(";") {return new Symbol(sym.PUNTO_COMA, yychar, yyline, yytext());}
 ("(") {return new Symbol(sym.PARENTESIS_IZQ, yychar, yyline, yytext());}
 (")") {return new Symbol(sym.PARENTESIS_DER, yychar, yyline, yytext());}
 (">") {return new Symbol(sym.MAYOR, yychar, yyline, yytext());}
@@ -67,7 +71,6 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 (">=") {return new Symbol(sym.MAYOR_IGUAL, yychar, yyline, yytext());}
 ("<=") {return new Symbol(sym.MENOR_IGUAL, yychar, yyline, yytext());}
 ("<>") {return new Symbol(sym.DESIGUAL, yychar, yyline, yytext());}
-(":") {return new Symbol(sym.DOS_PUNTOS, yychar, yyline, yytext());}
 (",") {return new Symbol(sym.COMA, yychar, yyline, yytext());}
 ("'") {return new Symbol(sym.COMILLA_SIMPLE, yychar, yyline, yytext());}
 
@@ -88,7 +91,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("@apagar") {return new Symbol(sym.RESERVADA_APAGAR, yychar, yyline, yytext());}
 ("arreglo") {return new Symbol(sym.RESERVADA_ARREGLO, yychar, yyline, yytext());}
 ("@arriba") {return new Symbol(sym.RESERVADA_ARRIBA, yychar, yyline, yytext());}
-("@atras") {return n)ew Symbol(sym.RESERVADA_ATRAS, yychar, yyline, yytext());}
+("@atras") {return new Symbol(sym.RESERVADA_ATRAS, yychar, yyline, yytext());}
 ("@calibrar") {return new Symbol(sym.RESERVADA_CALIBRAR, yychar, yyline, yytext());}
 ("@captura") {return new Symbol(sym.RESERVADA_CAPTURA, yychar, yyline, yytext());}
 ("caracter") {return new Symbol(sym.RESERVADA_CARACTER, yychar, yyline, yytext());}
@@ -124,15 +127,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ({enteros}) {return new Symbol(sym.NUMERO, yychar, yyline, yytext());}
 ({numDec}) {return new Symbol(sym.NUMERO_DECIMAL, yychar, yyline, yytext());}
 ({numExp}) {return new Symbol(sym.NUMERO_EXPONENTE, yychar, yyline, yytext());}
-({errorPuntos}) {return new Symbol(sym.ERROR_PUNTOS, yychar, yyline, yytext());}
 ({iden}) {return new Symbol(sym.IDENTIFICADOR, yychar, yyline, yytext());}
-({iden}[\(][\)]) {return new Symbol(sym.IDENTIFICADOR_ARREGLO, yychar, yyline, yytext());}
-({Snp}+) {return new Symbol(sym.SNP, yychar, yyline, yytext());}
-([\@]{iden}) {return new Symbol(sym.ERROR_ARROBA, yychar, yyline, yytext());}
-({idSimbolo}) {return new Symbol(sym.ID_CON_SIMBOLOS, yychar, yyline, yytext());}
-([\@]{ideConMayus}) {return new Symbol(sym.ERROR_ARROBA_MAYUS, yychar, yyline, yytext());}
-([\@]{ideEmpNum}) {return new Symbol(sym.ERROR_ARROBA_NUM, yychar, yyline, yytext());}
-({ideConMayus}) {return new Symbol(sym.ERROR_MAYUS, yychar, yyline, yytext());}
-({ideEmpNum}) {return new Symbol(sym.ERROR_ID_NUM, yychar, yyline, yytext());}
+({iden}[\(][\)]) {return new Symbol(sym.IDENTIFICADOR_ARREGLO, yychar, yyline, yytext());}*/
 
  . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}

@@ -15,31 +15,20 @@ parser code
 }
 :};
    
-
-
-terminal     ASIGNACION,    CADENA_TEXTO,    COMA,    COMILLA_SIMPLE,    DESIGUAL,    DOS_PUNTOS,
-    ERROR,     IDENTIFICADOR,    IDENTIFICADOR_ARREGLO,    MAYOR,
-    MAYOR_IGUAL,    MENOR,    MENOR_IGUAL,    NUMERO,    NUMERO_DECIMAL,    NUMERO_EXPONENTE,    OPERADOR_MAS,
-    OPERADOR_MENOS,    OPERADOR_IGUALDAD,    OPERADOR_POR,    OPERADOR_DIVISION,    OPERADOR_Y,    OPERADOR_O,
-    OPERADOR_OR,    OPERADOR_NEGACION,    OPERADOR_MODULO,    PARENTESIS_IZQ,    PARENTESIS_DER,    PUNTO_COMA,
-    SIMBOLO_ESPECIAL,    SALTO_LINEA;
+terminal IDENTIFICADOR, RESERVADA_INICIAR, RESERVADA_FIN, DOS_PUNTOS, ERROR, RESERVADA_CADENA, 
+        ASIGNACION, NUMERO, PUNTO_COMA;
 
 non terminal inicio, sentencia, declaracion, declaracion_para, si, si_no,
     mientras, haz, para, sentencia_booleana, sentencia_para;
-
 
 start with inicio;
 
 inicio ::= 
     RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
-        sentencia 
-    RESERVADA_FIN |
-    RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
-        RESERVADA_DECLARACION DOS_PUNTOS
-            declaracion 
-        RESERVADA_FIN
-        RESERVADA_PRINCIPAL
-            sentencia 
-        RESERVADA_FIN
-    RESERVADA_FIN 
+        declaracion        
+    RESERVADA_FIN
+;
+
+declaracion ::=
+    RESERVADA_CADENA IDENTIFICADOR ASIGNACION NUMERO PUNTO_COMA
 ;

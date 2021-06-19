@@ -10,8 +10,8 @@ import java.nio.file.Paths;
 public class GeneradorAF {
 
     public static void main(String[] args) throws Exception {
-        String lexer = "C:/analizador/src/analizador/Lexer.flex";
-        String cup = "C:/analizador/src/analizador/LexerCup.flex";
+        String lexer                         = "C:/analizador/src/analizador/Lexer.flex";
+        String cup                           = "C:/analizador/src/analizador/LexerCup.flex";
         String[] rutaS = {"-parser", "Sintax", "C:/analizador/src/analizador/Sintax.cup"};
         generar(lexer, cup, rutaS);
     }

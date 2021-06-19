@@ -13,10 +13,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java_cup.runtime.Symbol;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -82,6 +84,7 @@ public class Editor extends javax.swing.JFrame {
         icon_lexico = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        icon_sintactico = new javax.swing.JLabel();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -124,7 +127,7 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtEditor.setColumns(20);
-        txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtEditor.setRows(2);
         txtEditor.setTabSize(3);
         txtEditor.setMaximumSize(new java.awt.Dimension(220, 38));
@@ -223,6 +226,16 @@ public class Editor extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 14, 20, -1));
+
+        icon_sintactico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        icon_sintactico.setToolTipText("Corre Léxico");
+        icon_sintactico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        icon_sintactico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon_sintacticoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(icon_sintactico, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
 
@@ -633,6 +646,23 @@ public class Editor extends javax.swing.JFrame {
         ta.setVisible(true);
     }//GEN-LAST:event_miAlfabetoActionPerformed
 
+    private void icon_sintacticoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_sintacticoMouseClicked
+        // TODO add your handling code here:
+        reacomodar();
+        String ST = txtEditor.getText();
+        Sintax s = new Sintax(new analizador.LexerCup(new StringReader(ST)));
+        
+        try {
+            s.parse();
+            txtErrores.setText("Analisis realizado correctamente");
+            txtErrores.setForeground(new Color(25, 111, 61));
+        } catch (Exception ex) {
+            Symbol sym = s.getS();
+            txtErrores.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+            txtErrores.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_icon_sintacticoMouseClicked
+
     private void limpiar() {
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
@@ -702,6 +732,7 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JLabel icon_new;
     public javax.swing.JLabel icon_open;
     public javax.swing.JLabel icon_save;
+    private javax.swing.JLabel icon_sintactico;
     public javax.swing.JLabel icon_tabla;
     public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
