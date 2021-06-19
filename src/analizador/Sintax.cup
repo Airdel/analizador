@@ -1,9 +1,32 @@
 package analizador;
 
+import java.util.*;
+import java.io.*;
 import java_cup.runtime.Symbol;
 
+action code
+    {:
+        Hashtable table = new Hashtable();
+    :};
 parser code
 {:
+   /* private Lexer lexer;
+    private File file;
+    public Sintax( File file ) {
+        this();
+        this.file = file;
+        try {
+            lexer = new Lexer( new FileReader( file ) );
+        }
+        catch ( IOException exception ) {
+            throw new Error( "Unable to open file \"" + file + "\"" );
+        }
+    }
+
+    public Lexer getLexer(){
+        return this.lexer;
+    }
+*/
     private Symbol s;
     
     public void syntax_error(Symbol s){
@@ -12,23 +35,116 @@ parser code
 
     public Symbol getS(){
         return this.s;
-}
+    }   
 :};
    
-terminal IDENTIFICADOR, RESERVADA_INICIAR, RESERVADA_FIN, DOS_PUNTOS, ERROR, RESERVADA_CADENA, 
-        ASIGNACION, NUMERO, PUNTO_COMA;
+terminal ASIGNACION,
+        CADENA_TEXTO,
+        DOS_PUNTOS, 
+        ERROR, 
+        IDENTIFICADOR,       
+        NUMERO, 
+        NUMERO_DECIMAL,
+        NUMERO_EXPONENTE,
+        OP_ARITMETICO1,
+        OP_ARITMETICO2,
+        OP_LOGICO,
+        OP_RELACIONAL,
+        PARENTESIS_DER,
+        PARENTESIS_IZQ,
+        PUNTO_COMA,
+        RESERVADA_BOOLEANO,          
+        RESERVADA_CADENA,          
+        RESERVADA_CORTO,          
+        RESERVADA_DECIMAL,   
+        RESERVADA_DECLARACION,       
+        RESERVADA_ENTERO,          
+        RESERVADA_FIN,          
+        RESERVADA_FALSO,
+        RESERVADA_INICIAR,    
+        RESERVADA_MIENTRAS,
+        RESERVADA_PRINCIPAL,
+        RESERVADA_SI,        
+        RESERVADA_VERDADERO;
+/* 
 
-non terminal inicio, sentencia, declaracion, declaracion_para, si, si_no,
-    mientras, haz, para, sentencia_booleana, sentencia_para;
+*/
 
+non terminal asignacion, inicio, declaracion ,parte_declaracion,  
+    expresion, factor, si, 
+   parte_principal,expresion_booleana,  termino;
+    /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no, sentencia */
 start with inicio;
 
 inicio ::= 
     RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
-        declaracion        
+        RESERVADA_DECLARACION DOS_PUNTOS 
+            parte_declaracion 
+        RESERVADA_FIN
+        RESERVADA_PRINCIPAL DOS_PUNTOS 
+            parte_principal
+        RESERVADA_FIN
+    RESERVADA_FIN |
+    RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
+        RESERVADA_PRINCIPAL DOS_PUNTOS 
+            parte_principal
+        RESERVADA_FIN
     RESERVADA_FIN
 ;
 
-declaracion ::=
-    RESERVADA_CADENA IDENTIFICADOR ASIGNACION NUMERO PUNTO_COMA
+parte_declaracion ::=
+    parte_declaracion declaracion |
+    declaracion 
 ;
+declaracion ::=
+    RESERVADA_BOOLEANO IDENTIFICADOR ASIGNACION RESERVADA_FALSO     PUNTO_COMA |
+    RESERVADA_BOOLEANO IDENTIFICADOR ASIGNACION RESERVADA_VERDADERO PUNTO_COMA |
+    RESERVADA_CADENA   IDENTIFICADOR ASIGNACION CADENA_TEXTO        PUNTO_COMA |
+    RESERVADA_CORTO    IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA |
+    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA |
+    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO_DECIMAL      PUNTO_COMA |
+    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO_EXPONENTE    PUNTO_COMA |
+    RESERVADA_ENTERO   IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA
+;
+
+parte_principal ::=
+    si 
+;
+    
+si ::=    
+    RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
+        asignacion
+    RESERVADA_FIN
+;
+
+asignacion ::=
+     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA
+;
+expresion ::=
+    expresion OP_ARITMETICO1 termino | 
+    termino
+;
+
+termino ::=
+    factor OP_ARITMETICO2 factor | 
+    factor
+;
+
+factor ::=
+    //expresion |
+    IDENTIFICADOR |
+    NUMERO |
+    NUMERO_DECIMAL |
+    NUMERO_EXPONENTE 
+;
+/*
+*/
+expresion_booleana ::=
+    OP_LOGICO |
+    IDENTIFICADOR OP_RELACIONAL OP_LOGICO |
+    IDENTIFICADOR OP_RELACIONAL IDENTIFICADOR |
+    IDENTIFICADOR OP_RELACIONAL NUMERO |
+    NUMERO OP_RELACIONAL IDENTIFICADOR |
+    NUMERO OP_RELACIONAL NUMERO 
+;
+

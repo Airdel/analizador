@@ -46,14 +46,36 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 {ESCAPE} {/*Ignore*/}
 "--".* {/*Ignore*/}
 
-("=")       {return new Symbol(sym.ASIGNACION,        yychar, yyline, yytext());}
-("cadena")  {return new Symbol(sym.RESERVADA_CADENA,  yychar, yyline, yytext());}
-("iniciar") {return new Symbol(sym.RESERVADA_INICIAR, yychar, yyline, yytext());}
-("fin")     {return new Symbol(sym.RESERVADA_FIN,     yychar, yyline, yytext());}
-(":")       {return new Symbol(sym.DOS_PUNTOS,        yychar, yyline, yytext());}
-(";")       {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
-({enteros}) {return new Symbol(sym.NUMERO,            yychar, yyline, yytext());}
-({iden})    {return new Symbol(sym.IDENTIFICADOR,     yychar, yyline, yytext());}
+"booleano"       {return new Symbol(sym.RESERVADA_BOOLEANO, yychar, yyline, yytext());}
+("=")            {return new Symbol(sym.ASIGNACION,         yychar, yyline, yytext());}
+(">" | "<" | ">="| "<="| "<>" | "==")
+                 {return new Symbol(sym.OP_RELACIONAL,     yychar, yyline, yytext());}
+("+" | "-" )     {return new Symbol(sym.OP_ARITMETICO1,  yychar, yyline, yytext());}
+("*" | "/" | "%" )
+                 {return new Symbol(sym.OP_ARITMETICO2,  yychar, yyline, yytext());}
+("&" | "|" | "^" | "!" | "&" )
+                 {return new Symbol(sym.OP_LOGICO,         yychar, yyline, yytext());}
+("cadena")       {return new Symbol(sym.RESERVADA_CADENA,  yychar, yyline, yytext());}
+("corto")        {return new Symbol(sym.RESERVADA_CORTO,   yychar, yyline, yytext());}
+("decimal")      {return new Symbol(sym.RESERVADA_DECIMAL, yychar, yyline, yytext());}
+("entero")       {return new Symbol(sym.RESERVADA_ENTERO,  yychar, yyline, yytext());}
+("iniciar")      {return new Symbol(sym.RESERVADA_INICIAR, yychar, yyline, yytext());}
+("fin")          {return new Symbol(sym.RESERVADA_FIN,     yychar, yyline, yytext());}
+("si")           {return new Symbol(sym.RESERVADA_SI,     yychar, yyline, yytext());}
+("principal")    {return new Symbol(sym.RESERVADA_PRINCIPAL, yychar, yyline, yytext());}
+("mientras")     {return new Symbol(sym.RESERVADA_MIENTRAS,     yychar, yyline, yytext());}
+("declaracion")  {return new Symbol(sym.RESERVADA_DECLARACION, yychar, yyline, yytext());}
+("falso")        {return new Symbol(sym.RESERVADA_FALSO, yychar, yyline, yytext());}
+("verdadero")    {return new Symbol(sym.RESERVADA_VERDADERO, yychar, yyline, yytext());}
+(":")            {return new Symbol(sym.DOS_PUNTOS,        yychar, yyline, yytext());}
+(";")            {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
+("(")            {return new Symbol(sym.PARENTESIS_IZQ, yychar, yyline, yytext());}
+(")")            {return new Symbol(sym.PARENTESIS_DER, yychar, yyline, yytext());}
+({enteros})      {return new Symbol(sym.NUMERO,            yychar, yyline, yytext());}
+({cadena})       {return new Symbol(sym.CADENA_TEXTO,      yychar, yyline, yytext());}
+({iden})         {return new Symbol(sym.IDENTIFICADOR,     yychar, yyline, yytext());}
+({numDec})       {return new Symbol(sym.NUMERO_DECIMAL, yychar, yyline, yytext());}
+({numExp})       {return new Symbol(sym.NUMERO_EXPONENTE, yychar, yyline, yytext());}
 
 /*("==") {return new Symbol(sym.OPERADOR_IGUALDAD, yychar, yyline, yytext());}
 ("-") {return new Symbol(sym.OPERADOR_MENOS, yychar, yyline, yytext());}

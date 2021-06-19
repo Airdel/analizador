@@ -1,3 +1,11 @@
 iniciar programa:
-	cadena var = 3;
+	declaracion:
+		booleano e = falso;
+	fin
+
+	principal:
+		si ( 7 <= 3 ):
+			an = 4 +  3 * 0;
+		fin		
+	fin
 fin

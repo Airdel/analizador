@@ -395,6 +395,7 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
+        analisisSintactico();
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -648,19 +649,7 @@ public class Editor extends javax.swing.JFrame {
 
     private void icon_sintacticoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_sintacticoMouseClicked
         // TODO add your handling code here:
-        reacomodar();
-        String ST = txtEditor.getText();
-        Sintax s = new Sintax(new analizador.LexerCup(new StringReader(ST)));
-        
-        try {
-            s.parse();
-            txtErrores.setText("Analisis realizado correctamente");
-            txtErrores.setForeground(new Color(25, 111, 61));
-        } catch (Exception ex) {
-            Symbol sym = s.getS();
-            txtErrores.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
-            txtErrores.setForeground(Color.red);
-        }
+       analisisSintactico();
     }//GEN-LAST:event_icon_sintacticoMouseClicked
 
     private void limpiar() {
@@ -1084,6 +1073,23 @@ public class Editor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,
                     "Su archivo no se ha guardado",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void analisisSintactico() {
+       reacomodar();
+        String ST = txtEditor.getText();
+        Sintax s = new Sintax(new analizador.LexerCup(new StringReader(ST)));
+        
+        try {
+            s.parse();
+           // System.out.println(s.getLexer().yytext()+"");
+            txtErrores.setText("Analisis realizado correctamente");
+            txtErrores.setForeground(new Color(25, 111, 61));
+        } catch (Exception ex) {
+            Symbol sym = s.getS();
+            txtErrores.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+            txtErrores.setForeground(Color.red);
         }
     }
 }
