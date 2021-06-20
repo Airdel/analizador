@@ -1,11 +1,5 @@
 iniciar programa:
 	declaracion:
-		booleano e = falso;
-	fin
-
-	principal:
-		si ( 7 <= 3 ):
-			an = 4 +  3 * 0;
-		fin		
+		entero num = 3;
 	fin
 fin

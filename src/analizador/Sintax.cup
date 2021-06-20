@@ -3,6 +3,8 @@ package analizador;
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.Symbol;
+import java.util.logging.Level;
+import java.util.Stack;
 
 action code
     {:
@@ -27,6 +29,18 @@ parser code
         return this.lexer;
     }
 */
+
+        static TablaSimbolos tablaSimbolos = new TablaSimbolos();
+        static int verificarTipo = 0;
+        static Stack <String> listaIdentificadores = new Stack <String>();
+	public static void main(String args[]) throws Exception{
+		//new parser(new Yylex(new FileInputStream(args[0]))).parse();
+		new Sintax(new LexerCup(System.in)).parse();
+	}
+	/*public void syntax_error(Symbol s){
+		report_error("Error de sintaxis. Linea: " + (s.right + 1) +
+		" Columna: " + s.left + ". Texto: \"" + s.value + "\"", null);
+	}*/
     private Symbol s;
     
     public void syntax_error(Symbol s){
@@ -38,42 +52,36 @@ parser code
     }   
 :};
    
+terminal String IDENTIFICADOR;
+terminal Integer NUMERO;
+terminal Double NUMERO_DECIMAL, NUMERO_EXPONENTE;
+terminal String CADENA_TEXTO;
+terminal String RESERVADA_BOOLEANO,RESERVADA_CADENA,RESERVADA_CORTO, RESERVADA_ENTERO, RESERVADA_DECIMAL;
+terminal Boolean RESERVADA_VERDADERO,RESERVADA_FALSO;
 terminal ASIGNACION,
-        CADENA_TEXTO,
         DOS_PUNTOS, 
-        ERROR, 
-        IDENTIFICADOR,       
-        NUMERO, 
-        NUMERO_DECIMAL,
-        NUMERO_EXPONENTE,
+        ERROR,          
         OP_ARITMETICO1,
         OP_ARITMETICO2,
         OP_LOGICO,
         OP_RELACIONAL,
         PARENTESIS_DER,
         PARENTESIS_IZQ,
-        PUNTO_COMA,
-        RESERVADA_BOOLEANO,          
-        RESERVADA_CADENA,          
-        RESERVADA_CORTO,          
-        RESERVADA_DECIMAL,   
-        RESERVADA_DECLARACION,       
-        RESERVADA_ENTERO,          
-        RESERVADA_FIN,          
-        RESERVADA_FALSO,
+        PUNTO_COMA,          
+        RESERVADA_DECLARACION,                         
+        RESERVADA_FIN,                  
         RESERVADA_INICIAR,    
         RESERVADA_MIENTRAS,
         RESERVADA_PRINCIPAL,
-        RESERVADA_SI,        
-        RESERVADA_VERDADERO;
+        RESERVADA_SI;   
 /* 
 
 */
 
 non terminal asignacion, inicio, declaracion ,parte_declaracion,  
-    expresion, factor, si, 
+    expresion, factor,  mientras, sentencia, si, 
    parte_principal,expresion_booleana,  termino;
-    /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no, sentencia */
+    /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
 start with inicio;
 
 inicio ::= 
@@ -83,6 +91,11 @@ inicio ::=
         RESERVADA_FIN
         RESERVADA_PRINCIPAL DOS_PUNTOS 
             parte_principal
+        RESERVADA_FIN
+    RESERVADA_FIN |
+    RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
+        RESERVADA_DECLARACION DOS_PUNTOS 
+            parte_declaracion 
         RESERVADA_FIN
     RESERVADA_FIN |
     RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
@@ -97,18 +110,148 @@ parte_declaracion ::=
     declaracion 
 ;
 declaracion ::=
-    RESERVADA_BOOLEANO IDENTIFICADOR ASIGNACION RESERVADA_FALSO     PUNTO_COMA |
-    RESERVADA_BOOLEANO IDENTIFICADOR ASIGNACION RESERVADA_VERDADERO PUNTO_COMA |
-    RESERVADA_CADENA   IDENTIFICADOR ASIGNACION CADENA_TEXTO        PUNTO_COMA |
-    RESERVADA_CORTO    IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA |
-    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA |
-    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO_DECIMAL      PUNTO_COMA |
-    RESERVADA_DECIMAL  IDENTIFICADOR ASIGNACION NUMERO_EXPONENTE    PUNTO_COMA |
-    RESERVADA_ENTERO   IDENTIFICADOR ASIGNACION NUMERO              PUNTO_COMA
+    RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_FALSO:valor PUNTO_COMA:coma 
+   /* {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}*/
+    |
+    RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_VERDADERO:valor PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :} 
+    | 
+    RESERVADA_CADENA:tipo   IDENTIFICADOR:nombre ASIGNACION CADENA_TEXTO:valor        PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_CORTO:tipo    IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO_DECIMAL:valor      PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO_EXPONENTE:valor    PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.insertar(nombre, valor);
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    
 ;
 
-parte_principal ::=
-    si 
+sentencia ::=
+    sentencia si |
+    si |
+    sentencia mientras |
+    mientras
+    sentencia asignacion |
+    asignacion
+;
+mientras ::=
+    RESERVADA_MIENTRAS PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
+        asignacion
+    RESERVADA_FIN
 ;
     
 si ::=    
@@ -131,7 +274,7 @@ termino ::=
 ;
 
 factor ::=
-    //expresion |
+    //expresion IDENTIFICADOR|
     IDENTIFICADOR |
     NUMERO |
     NUMERO_DECIMAL |
@@ -140,7 +283,7 @@ factor ::=
 /*
 */
 expresion_booleana ::=
-    OP_LOGICO |
+    //expresion_booleana OP_LOGICO expresion_booleana |
     IDENTIFICADOR OP_RELACIONAL OP_LOGICO |
     IDENTIFICADOR OP_RELACIONAL IDENTIFICADOR |
     IDENTIFICADOR OP_RELACIONAL NUMERO |

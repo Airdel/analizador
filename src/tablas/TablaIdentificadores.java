@@ -5,7 +5,10 @@
  */
 package tablas;
 
+import analizador.TablaSimbolos;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import modelos.Simbolos;
@@ -18,6 +21,9 @@ public class TablaIdentificadores extends javax.swing.JFrame {
     
     private static ArrayList<Simbolos> simbolos = new ArrayList<Simbolos>();
     private DefaultTableModel m = new DefaultTableModel();
+
+    static Map<String, TablaSimbolos> tablaSimbolos;
+    static Stack<String> lista;
     
     public TablaIdentificadores(ArrayList<Simbolos> simbolos) {
         this.simbolos = simbolos;

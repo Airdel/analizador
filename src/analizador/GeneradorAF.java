@@ -16,7 +16,6 @@ public class GeneradorAF {
         generar(lexer, cup, rutaS);
     }
 
-
     private static void generarLexer(String path) {
         File file = new File(path);
         JFlex.Main.generate(file);
@@ -45,6 +44,5 @@ public class GeneradorAF {
                 Paths.get("C:/analizador/Sintax.java"), 
                 Paths.get("C:/analizador/src/analizador/Sintax.java")
         );
-
     }
 }
