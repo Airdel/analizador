@@ -52,15 +52,17 @@ class Simbolo
 
 public class TablaSimbolos {
     static Map<String, Simbolo> tablaSimbolos;
-    static Stack<String> lista;
-    static ArrayList<Nodo> repeticiones;        
+    public static Stack<String> lista;
+    static ArrayList<Nodo> repeticiones; 
+    public static String errores;
     
     public static Logger log = Logger.getLogger(TablaSimbolos.class.getName());            
     
     public TablaSimbolos()
     {        
         tablaSimbolos = new HashMap<String, Simbolo>();                                   
-        lista = new Stack<String>();                
+        lista = new Stack<String>();
+        errores = "";
     }
     
     static public String verificarTipo(String nombre){
@@ -140,4 +142,22 @@ public class TablaSimbolos {
         System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
     
+    static public void mostrar(){
+        for (Simbolo s  : tablaSimbolos.values()) {
+            System.out.println("Tipo: "+s.tipo+" | Nombre: "+s.nombre+" | Valor: "+s.valor.toString());
+        }
+    }
+    public static Collection<Simbolo> enviarLista(){
+        return tablaSimbolos.values();
+    }
+    
+    public static void logErrores(String error){
+         errores += error;
+    }      
+    public static String getLogErrores(){
+        return errores;
+    }
+    public static Logger getLog(){
+        return log;
+    }
 }

@@ -1,5 +1,10 @@
 iniciar programa:
-	declaracion:
-		entero num = 3;
-	fin
+declaracion:
+booleano num = verdadero;
+fin
+principal:
+si (3==verdadero):
+num = 3 + 2;	
+fin
+fin
 fin

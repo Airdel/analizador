@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tablas;
+package analizador;
 
 import analizador.TablaSimbolos;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Stack;
 import javax.swing.ImageIcon;
@@ -36,7 +37,18 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         for (Simbolos sim : nuevo) {
             if(!sim.getComponente().equals("IDENTIFICADOR"))
                 continue;
-            m.addRow(new Object[]{sim.getLinea(), sim.getLexema(), "",""});
+            m.addRow(new Object[]{sim.getLinea(), "",sim.getLexema(), ""});
+        }
+        Collection<analizador.Simbolo> sim =  TablaSimbolos.enviarLista();
+        for (int i = 0; i < m.getRowCount(); i++) {
+            for (analizador.Simbolo simbolo : sim) {
+                //System.out.println(simbolo.nombre +"-"+m.getValueAt(i, 2).toString());
+                if(simbolo.nombre.equals(m.getValueAt(i, 2).toString())){
+                    m.setValueAt(simbolo.tipo, i, 1);
+                    m.setValueAt(simbolo.nombre, i, 2);
+                    m.setValueAt(simbolo.valor, i, 3);
+                }
+            }
         }
     }
 
@@ -63,7 +75,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Línea", "Lexema", "Tipo", "Valor", "Dirección"
+                "Línea", "Tipo", "Lexema", "Valor", "Dirección"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -180,4 +192,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_Icono;
     // End of variables declaration//GEN-END:variables
+
+      
 }
+

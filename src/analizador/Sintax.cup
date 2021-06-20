@@ -30,9 +30,9 @@ parser code
     }
 */
 
-        static TablaSimbolos tablaSimbolos = new TablaSimbolos();
-        static int verificarTipo = 0;
-        static Stack <String> listaIdentificadores = new Stack <String>();
+    static TablaSimbolos tablaSimbolos = new TablaSimbolos();
+    static int verificarTipo = 0;
+    static Stack <String> listaIdentificadores = new Stack <String>();
 	public static void main(String args[]) throws Exception{
 		//new parser(new Yylex(new FileInputStream(args[0]))).parse();
 		new Sintax(new LexerCup(System.in)).parse();
@@ -57,14 +57,15 @@ terminal Integer NUMERO;
 terminal Double NUMERO_DECIMAL, NUMERO_EXPONENTE;
 terminal String CADENA_TEXTO;
 terminal String RESERVADA_BOOLEANO,RESERVADA_CADENA,RESERVADA_CORTO, RESERVADA_ENTERO, RESERVADA_DECIMAL;
-terminal Boolean RESERVADA_VERDADERO,RESERVADA_FALSO;
+terminal String RESERVADA_VERDADERO,RESERVADA_FALSO;
 terminal ASIGNACION,
         DOS_PUNTOS, 
         ERROR,          
-        OP_ARITMETICO1,
         OP_ARITMETICO2,
         OP_LOGICO,
         OP_RELACIONAL,
+        OP_MAS,
+        OP_MENOS,
         PARENTESIS_DER,
         PARENTESIS_IZQ,
         PUNTO_COMA,          
@@ -78,26 +79,36 @@ terminal ASIGNACION,
 
 */
 
-non terminal asignacion, inicio, declaracion ,parte_declaracion,  
-    expresion, factor,  mientras, sentencia, si, 
-   parte_principal,expresion_booleana,  termino;
+non terminal asignacion, concatenacion, inicio, declaracion ,parte_declaracion,  
+    expresion, exp_bol, factor,  mientras, sentencia, si, 
+   parte_principal,expresion_booleana,  termino, termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
 start with inicio;
 
 inicio ::= 
-    RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
+    RESERVADA_INICIAR IDENTIFICADOR:nombre DOS_PUNTOS 
         RESERVADA_DECLARACION DOS_PUNTOS 
             parte_declaracion 
         RESERVADA_FIN
         RESERVADA_PRINCIPAL DOS_PUNTOS 
             parte_principal
         RESERVADA_FIN
-    RESERVADA_FIN |
-    RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
-        RESERVADA_DECLARACION DOS_PUNTOS 
-            parte_declaracion 
-        RESERVADA_FIN
-    RESERVADA_FIN |
+    RESERVADA_FIN 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, "--");
+            TablaSimbolos.insertar(nombre, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
     RESERVADA_INICIAR IDENTIFICADOR DOS_PUNTOS 
         RESERVADA_PRINCIPAL DOS_PUNTOS 
             parte_principal
@@ -111,30 +122,39 @@ parte_declaracion ::=
 ;
 declaracion ::=
     RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_FALSO:valor PUNTO_COMA:coma 
-   /* {:
-        try{
+   {:
+       try{
             TablaSimbolos.crear(nombre, tipo);
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
-
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(nombre);
             System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            System.out.println("CR7");
+          
+
         }
         catch(Exception e){                                    
             e.printStackTrace();
+            System.out.println("Cathc: Valor incompatible con variable 'booleana', linea:"+tipoleft);
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
-    :}*/
+    :}
     |
     RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_VERDADERO:valor PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
-            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+            if(String.valueOf(valor).equals("verdadero")){
+                TablaSimbolos.crear(nombre, tipo);
+                TablaSimbolos.insertar(nombre, String.valueOf(valor));
+                //Crear relacion ciclo PARA con su variable asociada
+                TablaSimbolos.lista.push(nombre);
+                System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............"); 
+            }
+            else{                
+                System.out.println("Cathc: Valor incompatible con variable 'booleana', linea:"+tipoleft);
+                TablaSimbolos.logErrores("Valor incompatible con variable 'booleana', linea:"+tipoleft);
+            }
 
-            //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -240,14 +260,19 @@ declaracion ::=
     
 ;
 
+parte_principal ::=
+    parte_principal sentencia |
+    sentencia
+;    
+
 sentencia ::=
-    sentencia si |
+    //sentencia si |
     si |
-    sentencia mientras |
-    mientras
-    sentencia asignacion |
+    //sentencia mientras |
+    mientras |
     asignacion
 ;
+
 mientras ::=
     RESERVADA_MIENTRAS PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
         asignacion
@@ -256,38 +281,124 @@ mientras ::=
     
 si ::=    
     RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-        asignacion
-    RESERVADA_FIN
+         sentencia
+    RESERVADA_FIN 
 ;
 
 asignacion ::=
-     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA
+     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA 
+     //|
+     //IDENTIFICADOR ASIGNACION concatenacion PUNTO_COMA
 ;
 expresion ::=
-    expresion OP_ARITMETICO1 termino | 
+    expresion:e OP_MAS termino:f
+    {: 
+        System.out.println(String.format("Suma de dos operandos: " + e.toString() + ", " + f.toString()));                                                
+            
+        /*
+        * Inicia verificación de tipos para la suma de operandos!!!!!!!!!!
+        */
+        
+        if (e instanceof Double){ //Verificación de tipos para variable de tipo DOBLE        
+            if (f instanceof Integer){
+                System.out.println("Decimal y entero se pueden sumar");
+            }
+            if (f instanceof String){
+                System.out.println("Decimal y String No se pueden sumar");
+            }
+            if (f instanceof Double){
+                System.out.println("Decimal y decimal se pueden sumar");
+            }
+        }
+        else if (e instanceof Integer){ //Verificación de tipos para variable de tipo DOBLE        
+            if (f instanceof Integer){
+                System.out.println("Entero y entero se pueden sumar");
+            }
+            if (f instanceof String){
+                System.out.println("Entero y String No se pueden sumar");
+            }
+            if (f instanceof Double){
+                System.out.println("Entero y decimal se pueden sumar");
+            }
+        }else {
+            if (f instanceof Integer){
+                System.out.println("String y entero No se pueden sumar");
+            }
+            if (f instanceof String){
+                System.out.println("String y String se pueden sumar");
+            }
+            if (f instanceof Double){
+                System.out.println("String y decimal NO se pueden sumar");
+            }
+        }
+    :}
+    | 
+    expresion OP_MENOS termino | 
     termino
 ;
 
 termino ::=
     factor OP_ARITMETICO2 factor | 
-    factor
+    factor:f 
+     {: 
+        RESULT = f; 
+    :}
 ;
 
 factor ::=
     //expresion IDENTIFICADOR|
-    IDENTIFICADOR |
-    NUMERO |
-    NUMERO_DECIMAL |
-    NUMERO_EXPONENTE 
+    IDENTIFICADOR:identificador
+            {:
+                //Buscar variable en la tabla de simbolos
+                Simbolo sim = TablaSimbolos.buscar(identificador);
+                //Si es nulo, devuelvo un error
+                if (sim == null)
+                {
+                    TablaSimbolos.log.log(Level.SEVERE, "La variable " + identificador + " no se ha declarado.");
+                    RESULT = 0;
+                }
+                else
+                {
+                    RESULT = sim.valor;
+                }
+            :} |
+    NUMERO:num
+            {: 
+                RESULT = num; 
+            :}  |
+    NUMERO_DECIMAL:dml
+            {: 
+                RESULT = dml; 
+            :}  |
+    NUMERO_EXPONENTE:ne
+            {: 
+                RESULT = ne; 
+            :}  |
+    CADENA_TEXTO:ct
+            {: 
+                RESULT = ct; 
+            :} 
 ;
-/*
-*/
+
 expresion_booleana ::=
-    //expresion_booleana OP_LOGICO expresion_booleana |
-    IDENTIFICADOR OP_RELACIONAL OP_LOGICO |
-    IDENTIFICADOR OP_RELACIONAL IDENTIFICADOR |
-    IDENTIFICADOR OP_RELACIONAL NUMERO |
-    NUMERO OP_RELACIONAL IDENTIFICADOR |
-    NUMERO OP_RELACIONAL NUMERO 
+    expresion_booleana OP_LOGICO exp_bol |
+    exp_bol
+;
+
+exp_bol::=
+    termino_bool OP_RELACIONAL termino_bool |
+    termino_bool
+;
+
+termino_bool::=
+    IDENTIFICADOR  |
+    NUMERO |
+    RESERVADA_FALSO |
+    RESERVADA_VERDADERO
+;
+
+concatenacion ::=
+    concatenacion OP_MAS CADENA_TEXTO |
+    CADENA_TEXTO 
 ;
 

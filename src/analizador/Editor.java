@@ -3,7 +3,6 @@ package analizador;
 import java.awt.Color;
 import java.awt.Toolkit;
 import modelos.InformacionLexema;
-import tablas.TablaIdentificadores;
 import tablas.TablaReservadas;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +15,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
@@ -1086,8 +1086,14 @@ public class Editor extends javax.swing.JFrame {
            // System.out.println(s.getLexer().yytext()+"");
             txtErrores.setText("Analisis realizado correctamente");
             txtErrores.setForeground(new Color(25, 111, 61));
+            System.out.println(TablaSimbolos.getLogErrores());
+            System.out.println(TablaSimbolos.errores);
         } catch (Exception ex) {
-            Symbol sym = s.getS();
+            String err = (TablaSimbolos.getLogErrores());
+            Logger l = TablaSimbolos.getLog();
+            System.out.println(TablaSimbolos.getLogErrores());
+            System.out.println(TablaSimbolos.errores);
+            Symbol sym = s.getS();            
             txtErrores.setText("Error de sintaxis. Linea: " +
                     (sym.right + 1) + " Columna: " 
                     + (sym.left + 1) + ", Texto: \"" 

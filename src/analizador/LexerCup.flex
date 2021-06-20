@@ -50,7 +50,8 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("=")            {return new Symbol(sym.ASIGNACION,         yychar, yyline, yytext());}
 (">" | "<" | ">="| "<="| "<>" | "==")
                  {return new Symbol(sym.OP_RELACIONAL,     yychar, yyline, yytext());}
-("+" | "-" )     {return new Symbol(sym.OP_ARITMETICO1,  yychar, yyline, yytext());}
+("+")     {return new Symbol(sym.OP_MAS,  yychar, yyline, yytext());}
+("-" )     {return new Symbol(sym.OP_MENOS,  yychar, yyline, yytext());}
 ("*" | "/" | "%" )
                  {return new Symbol(sym.OP_ARITMETICO2,  yychar, yyline, yytext());}
 ("&" | "|" | "^" | "!" | "&" )
@@ -71,11 +72,11 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 (";")            {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
 ("(")            {return new Symbol(sym.PARENTESIS_IZQ, yychar, yyline, yytext());}
 (")")            {return new Symbol(sym.PARENTESIS_DER, yychar, yyline, yytext());}
-({enteros})      {return new Symbol(sym.NUMERO,            yychar, yyline, yytext());}
+({enteros})      {return new Symbol(sym.NUMERO,            yychar, yyline, new Integer(yytext()));}
 ({cadena})       {return new Symbol(sym.CADENA_TEXTO,      yychar, yyline, yytext());}
-({iden})         {return new Symbol(sym.IDENTIFICADOR,     yychar, yyline, yytext());}
-({numDec})       {return new Symbol(sym.NUMERO_DECIMAL, yychar, yyline, yytext());}
-({numExp})       {return new Symbol(sym.NUMERO_EXPONENTE, yychar, yyline, yytext());}
+({iden})         {return new Symbol(sym.IDENTIFICADOR,     yychar, yyline, new String(yytext()));}
+({numDec})       {return new Symbol(sym.NUMERO_DECIMAL, yychar, yyline, new Double(yytext()));}
+({numExp})       {return new Symbol(sym.NUMERO_EXPONENTE, yychar, yyline, new Double(yytext()));}
 
 /*("==") {return new Symbol(sym.OPERADOR_IGUALDAD, yychar, yyline, yytext());}
 ("-") {return new Symbol(sym.OPERADOR_MENOS, yychar, yyline, yytext());}

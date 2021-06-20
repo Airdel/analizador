@@ -23,7 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import modelos.ModeloEditor;
 import modelos.Simbolos;
-import tablas.TablaIdentificadores;
+import analizador.TablaIdentificadores;
 import tablas.TablaOperadores;
 import tablas.TablaReservadas;
 
