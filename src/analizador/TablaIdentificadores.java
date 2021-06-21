@@ -39,10 +39,12 @@ public class TablaIdentificadores extends javax.swing.JFrame {
                 continue;
             m.addRow(new Object[]{sim.getLinea(), "",sim.getLexema(), ""});
         }
+        String mezcla = "";
+        int suma = 0;
         Collection<analizador.Simbolo> sim =  TablaSimbolos.enviarLista();
         for (int i = 0; i < m.getRowCount(); i++) {
             for (analizador.Simbolo simbolo : sim) {
-                //System.out.println(simbolo.nombre +"-"+m.getValueAt(i, 2).toString());
+                         
                 if(simbolo.nombre.equals(m.getValueAt(i, 2).toString())){
                     m.setValueAt(simbolo.tipo, i, 1);
                     m.setValueAt(simbolo.nombre, i, 2);
@@ -50,6 +52,13 @@ public class TablaIdentificadores extends javax.swing.JFrame {
                 }
             }
         }
+        for (Simbolo simbolo : sim) {
+            if(simbolo.tipo.equals("cadena"))
+                    mezcla += simbolo.valor.toString();                
+                if(simbolo.tipo.equals("entero"))
+                    suma += Integer.parseInt(simbolo.valor.toString());       
+        }
+        System.out.println("Mezcla: "+mezcla+", Suma: "+suma);
     }
 
     /**

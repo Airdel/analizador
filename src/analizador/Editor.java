@@ -1077,7 +1077,7 @@ public class Editor extends javax.swing.JFrame {
     }
 
     private void analisisSintactico() {
-       reacomodar();
+        reacomodar();
         String ST = txtEditor.getText();
         Sintax s = new Sintax(new analizador.LexerCup(new StringReader(ST)));
         
@@ -1089,8 +1089,6 @@ public class Editor extends javax.swing.JFrame {
             System.out.println(TablaSimbolos.getLogErrores());
             System.out.println(TablaSimbolos.errores);
         } catch (Exception ex) {
-            String err = (TablaSimbolos.getLogErrores());
-            Logger l = TablaSimbolos.getLog();
             System.out.println(TablaSimbolos.getLogErrores());
             System.out.println(TablaSimbolos.errores);
             Symbol sym = s.getS();            

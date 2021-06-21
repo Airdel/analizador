@@ -105,6 +105,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "@izquierda" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_IZQUIERDA;}
 <YYINITIAL> "@largo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_LARGO;}
 <YYINITIAL> "@leer" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_LEER;}
+<YYINITIAL> "llamar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_LLAMAR;}
 <YYINITIAL> "nulo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_NULO;}
 <YYINITIAL> "@parav" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PARAV;}
 <YYINITIAL> "@pin" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PIN;}

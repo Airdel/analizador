@@ -1,10 +1,37 @@
-iniciar programa:
-declaracion:
-booleano num = verdadero;
-fin
-principal:
-si (3==verdadero):
-num = 3 + 2;	
-fin
-fin
+iniciar ejemplo3:
+	declaracion:
+		entero direccion=0;
+		entero vueltas=0;
+	fin	
+	principal:
+		@encender;
+		@calibrar;
+		mientras(vueltas <= 100):
+			llamar direccionamiento;
+		fin
+		@detener;
+		@apagar;
+	fin
+	funcion elegir direccionamiento:
+		si(direccion==1):
+			@direccionar @arriba 10;
+			vueltas = vueltas + 1;
+		si no:
+			si(direccion==2):
+				@direccionar @derecha 10;
+				vueltas = vueltas + 1
+			si no:
+				si(direccion==3):
+					@direccionar @abajo 10;
+					vueltas= vueltas + 1
+				si no:
+					si(direccion==4):
+						@direccionar @izquierda 10;
+					si no:
+						@fijo;
+						vueltas = vueltas + 1
+				fin
+			fin
+		fin
+	fin
 fin

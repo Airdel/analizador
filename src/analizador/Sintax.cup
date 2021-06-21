@@ -69,10 +69,14 @@ terminal ASIGNACION,
         PARENTESIS_DER,
         PARENTESIS_IZQ,
         PUNTO_COMA,          
-        RESERVADA_DECLARACION,                         
+        RESERVADA_DECLARACION,
+        RESERVADA_ESPECIAL1,                         
+        RESERVADA_ESPECIAL2,                         
+        RESERVADA_ESPECIAL3,                         
         RESERVADA_FIN,                  
         RESERVADA_INICIAR,    
         RESERVADA_MIENTRAS,
+        RESERVADA_LLAMAR,
         RESERVADA_PRINCIPAL,
         RESERVADA_SI;   
 /* 
@@ -80,7 +84,7 @@ terminal ASIGNACION,
 */
 
 non terminal asignacion, concatenacion, inicio, declaracion ,parte_declaracion,  
-    expresion, exp_bol, factor,  mientras, sentencia, si, 
+    expresion, exp_bol, factor,  mientras, llamar_funcion, reservada_esp, sentencia, si, 
    parte_principal,expresion_booleana,  termino, termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
 start with inicio;
@@ -129,13 +133,10 @@ declaracion ::=
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(nombre);
             System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
-            System.out.println("CR7");
-          
-
+       
         }
         catch(Exception e){                                    
             e.printStackTrace();
-            System.out.println("Cathc: Valor incompatible con variable 'booleana', linea:"+tipoleft);
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}
@@ -269,36 +270,46 @@ sentencia ::=
     //sentencia si |
     si |
     //sentencia mientras |
+    asignacion |
     mientras |
-    asignacion
+    reservada_esp  |
+    llamar_funcion
+;
+
+llamar_funcion ::=
+    RESERVADA_LLAMAR IDENTIFICADOR PUNTO_COMA
+;
+
+reservada_esp ::=
+    RESERVADA_ESPECIAL1 PUNTO_COMA |
+    RESERVADA_ESPECIAL2 PUNTO_COMA |
+    RESERVADA_ESPECIAL3 PUNTO_COMA 
 ;
 
 mientras ::=
     RESERVADA_MIENTRAS PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-        asignacion
+        sentencia
     RESERVADA_FIN
 ;
     
 si ::=    
     RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-         sentencia
-    RESERVADA_FIN 
+        sentencia
+    RESERVADA_FIN
 ;
 
-asignacion ::=
-     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA 
-     //|
-     //IDENTIFICADOR ASIGNACION concatenacion PUNTO_COMA
+asignacion ::= /* Epsilon */
+    IDENTIFICADOR ASIGNACION expresion PUNTO_COMA    
 ;
 expresion ::=
-    expresion:e OP_MAS termino:f
-    {: 
+    /* expresion:e OP_MAS termino:f
+    /*     {: 
         System.out.println(String.format("Suma de dos operandos: " + e.toString() + ", " + f.toString()));                                                
             
         /*
         * Inicia verificación de tipos para la suma de operandos!!!!!!!!!!
         */
-        
+        /* 
         if (e instanceof Double){ //Verificación de tipos para variable de tipo DOBLE        
             if (f instanceof Integer){
                 System.out.println("Decimal y entero se pueden sumar");
@@ -331,24 +342,28 @@ expresion ::=
                 System.out.println("String y decimal NO se pueden sumar");
             }
         }
-    :}
+    :}  */
     | 
-    expresion OP_MENOS termino | 
+   /* expresion OP_MENOS termino | 
+    //expresion OP_ARITMETICO2 termino | 
+    termino */
+    termino OP_MAS expresion |
+    termino OP_MENOS expresion |
     termino
 ;
 
 termino ::=
     factor OP_ARITMETICO2 factor | 
     factor:f 
-     {: 
+  /*    {: 
         RESULT = f; 
-    :}
+    :} */
 ;
 
 factor ::=
     //expresion IDENTIFICADOR|
-    IDENTIFICADOR:identificador
-            {:
+    IDENTIFICADOR:identificador|
+            /* {:
                 //Buscar variable en la tabla de simbolos
                 Simbolo sim = TablaSimbolos.buscar(identificador);
                 //Si es nulo, devuelvo un error
@@ -361,23 +376,23 @@ factor ::=
                 {
                     RESULT = sim.valor;
                 }
-            :} |
+            :} | */
     NUMERO:num
-            {: 
+          /*   {: 
                 RESULT = num; 
-            :}  |
+            :}  */ |
     NUMERO_DECIMAL:dml
-            {: 
+           /*  {: 
                 RESULT = dml; 
-            :}  |
+            :}  */ |
     NUMERO_EXPONENTE:ne
-            {: 
+           /*  {: 
                 RESULT = ne; 
-            :}  |
+            :} */  |
     CADENA_TEXTO:ct
-            {: 
+           /*  {: 
                 RESULT = ct; 
-            :} 
+            :}  */
 ;
 
 expresion_booleana ::=
@@ -397,8 +412,8 @@ termino_bool::=
     RESERVADA_VERDADERO
 ;
 
-concatenacion ::=
+/* concatenacion ::=
     concatenacion OP_MAS CADENA_TEXTO |
     CADENA_TEXTO 
 ;
-
+ */

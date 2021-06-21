@@ -50,7 +50,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("=")            {return new Symbol(sym.ASIGNACION,         yychar, yyline, yytext());}
 (">" | "<" | ">="| "<="| "<>" | "==")
                  {return new Symbol(sym.OP_RELACIONAL,     yychar, yyline, yytext());}
-("+")     {return new Symbol(sym.OP_MAS,  yychar, yyline, yytext());}
+("+")            {return new Symbol(sym.OP_MAS,  yychar, yyline, yytext());}
 ("-" )     {return new Symbol(sym.OP_MENOS,  yychar, yyline, yytext());}
 ("*" | "/" | "%" )
                  {return new Symbol(sym.OP_ARITMETICO2,  yychar, yyline, yytext());}
@@ -65,9 +65,16 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("si")           {return new Symbol(sym.RESERVADA_SI,     yychar, yyline, yytext());}
 ("principal")    {return new Symbol(sym.RESERVADA_PRINCIPAL, yychar, yyline, yytext());}
 ("mientras")     {return new Symbol(sym.RESERVADA_MIENTRAS,     yychar, yyline, yytext());}
+("llamar")       {return new Symbol(sym.RESERVADA_LLAMAR,     yychar, yyline, yytext());}
 ("declaracion")  {return new Symbol(sym.RESERVADA_DECLARACION, yychar, yyline, yytext());}
 ("falso")        {return new Symbol(sym.RESERVADA_FALSO, yychar, yyline, yytext());}
 ("verdadero")    {return new Symbol(sym.RESERVADA_VERDADERO, yychar, yyline, yytext());}
+("@abajo" | "@acelerar" | "@adelante" | "@apagar" | "@arriba" | "@atras" | "@calibrar" | "@captura" | "@cargar")
+                 {return new Symbol(sym.RESERVADA_ESPECIAL3, yychar, yyline, yytext());}
+( "@derecha" | "@detener" | "@direccionar" | "@encender" | "@esperar" | "@fijo" | "@girar" | "@haz" | "@imprimir") 
+                 {return new Symbol(sym.RESERVADA_ESPECIAL2, yychar, yyline, yytext());}
+( "@izquierda" | "@largo" | "@leer" | "@parav" | "@pin" | "@regresa" | "@retorno" | "@ruta" | "@seguir" | "@video") 
+                 {return new Symbol(sym.RESERVADA_ESPECIAL1, yychar, yyline, yytext());}
 (":")            {return new Symbol(sym.DOS_PUNTOS,        yychar, yyline, yytext());}
 (";")            {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
 ("(")            {return new Symbol(sym.PARENTESIS_IZQ, yychar, yyline, yytext());}

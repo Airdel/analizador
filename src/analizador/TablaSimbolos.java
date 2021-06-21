@@ -109,7 +109,7 @@ public class TablaSimbolos {
         
     static public Simbolo insertar(String nombre, Object valor)            
     {
-        System.out.println("\nIngreso a insertar valor a variable.");
+//        System.out.println("\nIngreso a insertar valor a variable.");
         Simbolo simbolo = buscar(nombre);
         if(simbolo != null) //La variable existe
         {
@@ -118,9 +118,9 @@ public class TablaSimbolos {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            System.out.println("Variable actualizada");
-            imprimir();
-            System.out.println("Saliendo de insertar de TablaSimbolos\n");
+//            System.out.println("Variable actualizada");
+//            imprimir();
+//            System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;
         }
         else
@@ -134,12 +134,12 @@ public class TablaSimbolos {
     
     static public void imprimir()
     {
-        System.out.println("\nIngresando a imprimir de TablaSimbolos");
-        System.out.println("    Valores de la tabla de simbolos:");
+//        System.out.println("\nIngresando a imprimir de TablaSimbolos");
+//        System.out.println("    Valores de la tabla de simbolos:");
         for (Simbolo s : tablaSimbolos.values())
             System.out.println(String.format("      "
                     + "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
-        System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
+//        System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
     
     static public void mostrar(){
@@ -159,5 +159,8 @@ public class TablaSimbolos {
     }
     public static Logger getLog(){
         return log;
+    }
+    public static int limpiar(){
+        return tablaSimbolos.size();
     }
 }
