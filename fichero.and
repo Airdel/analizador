@@ -4,7 +4,10 @@ iniciar programa:
 	fin
 	principal:
 		si (3==3):
-			@leer 'Automatas';	
+			si (3==3):
+				@leer 'Automatas';	
+				ler = 2+ 'Automatas';	
+			fin
 		si no:
 			@ruta(3 , 4,4,5) ; 
 		fin

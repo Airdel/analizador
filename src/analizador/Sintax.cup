@@ -89,7 +89,7 @@ terminal ASIGNACION,
 */
 
 non terminal asignacion, concatenacion, inicio, declaracion ,parte_declaracion,  
-    expresion, exp_bol, factor,  mientras, llamar_funcion, reservada_esp, sentencia, si, si_no, 
+    expresion, exp_bol, factor,  mientras, llamar_funcion, reservada_esp, sentencia, sentencia_prima, si, si_no, 
    parte_principal,expresion_booleana, ruta, termino, termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
 start with inicio;
@@ -267,20 +267,28 @@ declaracion ::=
 ;
 
 parte_principal ::=
-    parte_principal sentencia |
-    sentencia
+    parte_principal si |
+    si |
+    parte_principal si_no |
+    si_no |
+    parte_principal mientras |
+    mientras | 
+    parte_principal reservada_esp |
+    reservada_esp |
+    parte_principal asignacion |
+    asignacion
 ;    
 
-sentencia ::=
-    asignacion sentencia|
-    //sentencia si |
+/* sentencia ::=
+    sentencia asignacion |
+    asignacion |
     si |
     si_no |
-    //sentencia mientras |
     mientras |
     reservada_esp |
-    llamar_funcion
-;
+   // reservada_esp |
+    llamar_funcion 
+; */
 
 llamar_funcion ::=
     RESERVADA_LLAMAR IDENTIFICADOR PUNTO_COMA
@@ -288,6 +296,7 @@ llamar_funcion ::=
 
 reservada_esp ::=
     ESPECIALES_SOLAS PUNTO_COMA |
+    //reservada_esp ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
     ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
     ESPECIALES_ID IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID NUMERO PUNTO_COMA |
@@ -299,24 +308,25 @@ reservada_esp ::=
 
 mientras ::=
     RESERVADA_MIENTRAS PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-        sentencia
+        parte_principal
     RESERVADA_FIN
 ;
     
 si ::=    
     RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-        sentencia
+        parte_principal
     RESERVADA_FIN
 ;
 si_no ::=    
     RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
-        sentencia
+        parte_principal
     RESERVADA_SI RESERVADA_NO DOS_PUNTOS
-        sentencia
+        parte_principal
     RESERVADA_FIN
 ;
 
 asignacion ::= /* Epsilon */
+   // asignacion IDENTIFICADOR ASIGNACION expresion PUNTO_COMA   |
     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA    
 ;
 expresion ::=
