@@ -56,6 +56,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
                  {return new Symbol(sym.OP_ARITMETICO2,  yychar, yyline, yytext());}
 ("&" | "|" | "^" | "!" | "&" )
                  {return new Symbol(sym.OP_LOGICO,         yychar, yyline, yytext());}
+(",") {return new Symbol(sym.COMA, yychar, yyline, yytext());}
 ("cadena")       {return new Symbol(sym.RESERVADA_CADENA,  yychar, yyline, yytext());}
 ("corto")        {return new Symbol(sym.RESERVADA_CORTO,   yychar, yyline, yytext());}
 ("decimal")      {return new Symbol(sym.RESERVADA_DECIMAL, yychar, yyline, yytext());}
@@ -63,18 +64,30 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("iniciar")      {return new Symbol(sym.RESERVADA_INICIAR, yychar, yyline, yytext());}
 ("fin")          {return new Symbol(sym.RESERVADA_FIN,     yychar, yyline, yytext());}
 ("si")           {return new Symbol(sym.RESERVADA_SI,     yychar, yyline, yytext());}
+("no")           {return new Symbol(sym.RESERVADA_NO, yychar, yyline, yytext());}
 ("principal")    {return new Symbol(sym.RESERVADA_PRINCIPAL, yychar, yyline, yytext());}
 ("mientras")     {return new Symbol(sym.RESERVADA_MIENTRAS,     yychar, yyline, yytext());}
 ("llamar")       {return new Symbol(sym.RESERVADA_LLAMAR,     yychar, yyline, yytext());}
 ("declaracion")  {return new Symbol(sym.RESERVADA_DECLARACION, yychar, yyline, yytext());}
 ("falso")        {return new Symbol(sym.RESERVADA_FALSO, yychar, yyline, yytext());}
 ("verdadero")    {return new Symbol(sym.RESERVADA_VERDADERO, yychar, yyline, yytext());}
-("@abajo" | "@acelerar" | "@adelante" | "@apagar" | "@arriba" | "@atras" | "@calibrar" | "@captura" | "@cargar")
-                 {return new Symbol(sym.RESERVADA_ESPECIAL3, yychar, yyline, yytext());}
-( "@derecha" | "@detener" | "@direccionar" | "@encender" | "@esperar" | "@fijo" | "@girar" | "@haz" | "@imprimir") 
-                 {return new Symbol(sym.RESERVADA_ESPECIAL2, yychar, yyline, yytext());}
-( "@izquierda" | "@largo" | "@leer" | "@parav" | "@pin" | "@regresa" | "@retorno" | "@ruta" | "@seguir" | "@video") 
-                 {return new Symbol(sym.RESERVADA_ESPECIAL1, yychar, yyline, yytext());}
+/*Solas*/
+("@apagar" | "@encender" | "@calibrar" | "@detener" | "@captura" | "@video" | "@parav")
+                 {return new Symbol(sym.ESPECIALES_SOLAS , yychar, yyline, yytext());}
+/*@esp @esp */
+("@direccionar") 
+                 {return new Symbol(sym.ESPECIALES_DOS , yychar, yyline, yytext());}
+/*PARAMETEO*/
+( "@arriba" | "@abajo" | "@atras" | "@adelante" | "@izquierda" | "@derecga")
+                 {return new Symbol(sym.ESPECIALES_PARAMETRO , yychar, yyline, yytext());}
+/*ESP ID*/
+ ("@girar" | "@acelerar" | "@esperar" | "@seguir" | "@esperar")
+                 {return new Symbol(sym.ESPECIALES_ID , yychar, yyline, yytext());}
+/*ESP CT*/
+( "@leer" | "@imprimir") 
+                 {return new Symbol(sym.ESPECIALES_CT , yychar, yyline, yytext());}
+/*ESP CT*/
+("@ruta")        {return new Symbol(sym.ESPECIALES_RUTA , yychar, yyline, yytext());}
 (":")            {return new Symbol(sym.DOS_PUNTOS,        yychar, yyline, yytext());}
 (";")            {return new Symbol(sym.PUNTO_COMA,        yychar, yyline, yytext());}
 ("(")            {return new Symbol(sym.PARENTESIS_IZQ, yychar, yyline, yytext());}
