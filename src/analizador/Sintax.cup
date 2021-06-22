@@ -45,6 +45,8 @@ parser code
     
     public void syntax_error(Symbol s){
         this.s = s;
+        Editor.erroresSintacticos +=("Error de sintaxis. Linea: " + (s.right + 1) +
+		" Columna: " + s.left + ". Texto: \"" + s.value + "\" \n");
     }
 
     public Symbol getS(){
@@ -92,7 +94,7 @@ terminal ASIGNACION,
 
 */
 
-non terminal asignacion, concatenacion, ciclo, inicio, declaracion ,parte_declaracion,  
+non terminal asignacion, concatenacion, ciclo, inicio, declaracion ,parte_declaracion, declaracion_ciclo,  
     expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia, sentencia_prima, si, si_no, 
    parte_principal,expresion_booleana, parametros, parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
@@ -129,6 +131,8 @@ inicio ::=
         RESERVADA_FIN
         parte_funciones
     RESERVADA_FIN
+    | error RESERVADA_FIN
+    | error DOS_PUNTOS
 ;
 
 parte_declaracion ::=
@@ -269,6 +273,44 @@ declaracion ::=
             TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
         }                           
     :}
+    | error PUNTO_COMA
+    | error ASIGNACION
+
+;
+
+declaracion_ciclo ::=  
+    RESERVADA_CORTO:tipo    IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"variable en ciclo");
+            TablaSimbolos.insertar(nombre, String.valueOf(valor));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    {:
+        try{
+            TablaSimbolos.crear(nombre, tipo,"variable en ciclo");
+            TablaSimbolos.insertar(nombre, valor);
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(nombre);
+            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    | error PUNTO_COMA
     
 ;
 
@@ -289,6 +331,9 @@ parte_principal ::=
     haz   |
     parte_principal llamar_funcion |
     llamar_funcion
+    | error DOS_PUNTOS
+    | error PARENTESIS_IZQ
+    | error PARENTESIS_DER
 ;    
 
 parte_funciones ::=
@@ -385,7 +430,7 @@ si_no ::=
     RESERVADA_FIN
 ;
 ciclo ::=
-        RESERVADA_CICLO PARENTESIS_IZQ declaracion expresion_booleana PUNTO_COMA IDENTIFICADOR OP_MAS OP_MAS PARENTESIS_DER DOS_PUNTOS
+        RESERVADA_CICLO PARENTESIS_IZQ declaracion_ciclo expresion_booleana PUNTO_COMA IDENTIFICADOR OP_MAS OP_MAS PARENTESIS_DER DOS_PUNTOS
             parte_principal
         RESERVADA_FIN
 ;

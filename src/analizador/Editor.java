@@ -43,6 +43,7 @@ public class Editor extends javax.swing.JFrame {
 
     private boolean errores_lexicos;
     private DefaultTableModel m = new DefaultTableModel();
+    public static String erroresSintacticos;
 
     public Editor() {
         initComponents();
@@ -52,6 +53,7 @@ public class Editor extends javax.swing.JFrame {
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
+        erroresSintacticos = "";
     }
 
     /**
@@ -1081,19 +1083,25 @@ public class Editor extends javax.swing.JFrame {
         try {
             s.parse();
            // System.out.println(s.getLexer().yytext()+"");
-            txtErrores.setText("Analisis realizado correctamente");
-            txtErrores.setForeground(new Color(25, 111, 61));
-            System.out.println(TablaSimbolos.getLogErrores());
-            System.out.println(TablaSimbolos.errores);
+            if(erroresSintacticos.equals("")){
+                txtErrores.setText("Analisis realizado correctamente");
+                txtErrores.setForeground(new Color(25, 111, 61));
+            }
+            else{
+                txtErrores.setText("En try: "+erroresSintacticos);  
+                txtErrores.setForeground(Color.red);                
+            }
         } catch (Exception ex) {
             System.out.println(TablaSimbolos.getLogErrores());
             System.out.println(TablaSimbolos.errores);
             Symbol sym = s.getS();            
-            txtErrores.setText("Error de sintaxis. Linea: " +
-                    (sym.right + 1) + " Columna: " 
-                    + (sym.left + 1) + ", Texto: \"" 
-                    + sym.value + "\"");
+//            txtErrores.setText("Error de sintaxis. Linea: " +
+//                    (sym.right + 1) + " Columna: " 
+//                    + (sym.left + 1) + ", Texto: \"" 
+//                    + sym.value + "\"");
+            txtErrores.setText("En catch: "+erroresSintacticos);
             txtErrores.setForeground(Color.red);
         }
+        erroresSintacticos = "";
     }
 }
