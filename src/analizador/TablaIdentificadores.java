@@ -28,6 +28,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
     
     public TablaIdentificadores(ArrayList<Simbolos> simbolos) {
         this.simbolos = simbolos;
+        limpiar();
         initComponents();
         setIconImage(new ImageIcon("C:\\analizador\\src\\img\\icono.png").getImage());
         setLocationRelativeTo(null);
@@ -80,6 +81,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tabla de Identificadores");
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -88,6 +90,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
                 "Línea", "Tipo", "Lexema", "Valor", "Clase"
             }
         ));
+        jTable1.setRowHeight(25);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -203,6 +206,11 @@ public class TablaIdentificadores extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_Icono;
     // End of variables declaration//GEN-END:variables
 
-      
+    private void limpiar(){
+        int r = m.getRowCount();
+        for (int i = 0; i < r; i++) {
+            m.removeRow(r);            
+        }
+    }      
 }
 

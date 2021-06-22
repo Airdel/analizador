@@ -43,7 +43,8 @@ public class Editor extends javax.swing.JFrame {
 
     private boolean errores_lexicos;
     private DefaultTableModel m = new DefaultTableModel();
-    public static String erroresSintacticos;
+    public static String erroresSintacticos = "";
+    private String erroresLexicos = "";
 
     public Editor() {
         initComponents();
@@ -86,7 +87,6 @@ public class Editor extends javax.swing.JFrame {
         icon_lexico = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        icon_sintactico = new javax.swing.JLabel();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -228,16 +228,6 @@ public class Editor extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 14, 20, -1));
-
-        icon_sintactico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
-        icon_sintactico.setToolTipText("Corre Léxico");
-        icon_sintactico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        icon_sintactico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                icon_sintacticoMouseClicked(evt);
-            }
-        });
-        jPanel1.add(icon_sintactico, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
 
@@ -385,7 +375,7 @@ public class Editor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
-
+        TablaSimbolos.tablaSimbolos.clear();
         scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
         txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
         int rowCount = m.getRowCount();
@@ -546,6 +536,8 @@ public class Editor extends javax.swing.JFrame {
         txtErrores.setText("");
         identificadores.removeAll(identificadores);
         probarLexer();
+        if(erroresLexicos.equals(""))
+            analisisSintactico();
     }//GEN-LAST:event_icon_lexicoMouseClicked
 
     private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
@@ -649,11 +641,6 @@ public class Editor extends javax.swing.JFrame {
         ta.setVisible(true);
     }//GEN-LAST:event_miAlfabetoActionPerformed
 
-    private void icon_sintacticoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_sintacticoMouseClicked
-        // TODO add your handling code here:
-       analisisSintactico();
-    }//GEN-LAST:event_icon_sintacticoMouseClicked
-
     private void limpiar() {
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
@@ -723,7 +710,6 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JLabel icon_new;
     public javax.swing.JLabel icon_open;
     public javax.swing.JLabel icon_save;
-    private javax.swing.JLabel icon_sintactico;
     public javax.swing.JLabel icon_tabla;
     public javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
@@ -772,23 +758,22 @@ public class Editor extends javax.swing.JFrame {
         try {
             reader = new BufferedReader(new FileReader("fichero.and"));
             Lexer lexer = new Lexer(reader);
-            String errores = "";
+            erroresLexicos = "";
             while (true) {
                 Tokens tokens = lexer.yylex();
                 if (tokens == null) {
 //                    for (Simbolos sim : simbolos) {
 //                        m.addRow(new Object[]{sim.getComponente(), sim.getLexema(), sim.getLinea()});
 //                    }
-                    txtErrores.setText(errores);
+                    txtErrores.setText(erroresLexicos);
                     return;
                 }
 
                 switch (tokens) {
                     case ARROBA:
-                        errores = errores + "Cadena no válida. "
+                        erroresLexicos = erroresLexicos + "Cadena no válida. "
                                 + "Linea: " + (c.linea + 1)
                                 + ". El arroba '@' no puede estár solo\n";
-                        errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no valida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ASIGNACION:
@@ -909,52 +894,47 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Arreglo.", lexer.lexema, (c.linea) + 1});
                         break;
                     case ID_CON_SIMBOLOS:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". El identificador contiene un símbolo que no pertenece al lenguaje '"
                                 +lexer.lexema+ "'\n";
-                        errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case SNP:
                     case ERROR:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
-                        errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". " + lexer.lexema
                                 + ". Indentificador no puede comenzar con un dígito\n";
-                        errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". El punto esta mal posicionado '"+lexer.lexema+"'\n";
-                        errores_lexicos = true;
+                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
+                                + ". El punto esta mal posicionado '"+lexer.lexema+"'\n";                        
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ARROBA:
-                        errores = errores + "Cadena no válida. Linea: " + (c.linea + 1)
+                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
                                 + ". La cadena '" + lexer.lexema + "' no está definida\n";
-                        errores_lexicos = true;
+                        
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
-                        errores = errores + "Cadena no válida. "
+                        erroresLexicos = erroresLexicos + "Cadena no válida. "
                                 + "Linea: " + (c.linea + 1)
                                 + ". Las mayúsculas no están permitidas '"
                                 + lexer.lexema + "'.\n";
-                        errores_lexicos = true;
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     default:
                         simbolos.add(new Simbolos(tokens.toString(), (c.linea) + 1, lexer.lexema, "", ""));
                         identificadores.add(lexer.lexema);
-//                        errores = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
+//                        erroresLexicos = errores + "Componente Lexico: " + tokens + " Lexema : " + lexer.lexema + "\n";
                         m.addRow(new Object[]{tokens.toString(), lexer.lexema, (c.linea) + 1});
                         break;
                 }
@@ -1084,7 +1064,7 @@ public class Editor extends javax.swing.JFrame {
             s.parse();
            // System.out.println(s.getLexer().yytext()+"");
             if(erroresSintacticos.equals("")){
-                txtErrores.setText("Analisis realizado correctamente");
+                txtErrores.append("Analisis realizado correctamente");
                 txtErrores.setForeground(new Color(25, 111, 61));
             }
             else{
@@ -1092,9 +1072,6 @@ public class Editor extends javax.swing.JFrame {
                 txtErrores.setForeground(Color.red);                
             }
         } catch (Exception ex) {
-            System.out.println(TablaSimbolos.getLogErrores());
-            System.out.println(TablaSimbolos.errores);
-            Symbol sym = s.getS();            
 //            txtErrores.setText("Error de sintaxis. Linea: " +
 //                    (sym.right + 1) + " Columna: " 
 //                    + (sym.left + 1) + ", Texto: \"" 

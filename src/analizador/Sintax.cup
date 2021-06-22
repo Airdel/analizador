@@ -374,7 +374,11 @@ parametros ::=
     RESERVADA_CORTO IDENTIFICADOR 
 ;
 tipo_retorno ::=
-    RESERVADA_CADENA | RESERVADA_ENTERO | RESERVADA_CORTO | RESERVADA_DECIMAL | RESERVADA_BOOLEANO
+    RESERVADA_CADENA {: RESULT = "cadena"; :} 
+    | RESERVADA_ENTERO  {: RESULT = "entero"; :} 
+    | RESERVADA_CORTO  {: RESULT = "corto"; :} 
+    | RESERVADA_DECIMAL {: RESULT = "decimal"; :} 
+    | RESERVADA_BOOLEANO {: RESULT = "booleano"; :} 
 ;
 retorno ::=
     IDENTIFICADOR | CADENA_TEXTO | NUMERO | NUMERO_DECIMAL | NUMERO_EXPONENTE | RESERVADA_VERDADERO | RESERVADA_FALSO 
@@ -439,52 +443,48 @@ asignacion ::= /* Epsilon */
     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA    
 ;
 expresion ::=
-    /* expresion:e OP_MAS termino:f
-    /*     {: 
-        System.out.println(String.format("Suma de dos operandos: " + e.toString() + ", " + f.toString()));                                                
-            
-        /*
-        * Inicia verificación de tipos para la suma de operandos!!!!!!!!!!
-        */
-        /* 
+    termino:t OP_MAS expresion:e 
+         {: 
+            Editor.erroresSintacticos += ("Error de sintaxis. Suma de dos operandos: " + e.toString() + ", " + t.toString());                                                
+        
         if (e instanceof Double){ //Verificación de tipos para variable de tipo DOBLE        
-            if (f instanceof Integer){
-                System.out.println("Decimal y entero se pueden sumar");
+            if (t instanceof Integer){
+                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y entero se pueden sumar");
             }
-            if (f instanceof String){
-                System.out.println("Decimal y String No se pueden sumar");
+            if (t instanceof String){
+                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y String No se pueden sumar");
             }
-            if (f instanceof Double){
-                System.out.println("Decimal y decimal se pueden sumar");
+            if (t instanceof Double){
+                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y decimal se pueden sumar");
             }
         }
         else if (e instanceof Integer){ //Verificación de tipos para variable de tipo DOBLE        
-            if (f instanceof Integer){
-                System.out.println("Entero y entero se pueden sumar");
+            if (t instanceof Integer){
+                Editor.erroresSintacticos += ("Error de sintaxis. Entero y entero se pueden sumar");
             }
-            if (f instanceof String){
-                System.out.println("Entero y String No se pueden sumar");
+            if (t instanceof String){
+                Editor.erroresSintacticos += ("Error de sintaxis. Entero y String No se pueden sumar");
             }
-            if (f instanceof Double){
-                System.out.println("Entero y decimal se pueden sumar");
+            if (t instanceof Double){
+                Editor.erroresSintacticos += ("Error de sintaxis. Entero y decimal se pueden sumar");
             }
         }else {
-            if (f instanceof Integer){
-                System.out.println("String y entero No se pueden sumar");
+            if (t instanceof Integer){
+                Editor.erroresSintacticos += ("Error de sintaxis. String y entero No se pueden sumar");
             }
-            if (f instanceof String){
-                System.out.println("String y String se pueden sumar");
+            if (t instanceof String){
+                Editor.erroresSintacticos += ("Error de sintaxis. String y String se pueden sumar");
             }
-            if (f instanceof Double){
-                System.out.println("String y decimal NO se pueden sumar");
+            if (t instanceof Double){
+                Editor.erroresSintacticos += ("Error de sintaxis. String y decimal NO se pueden sumar");
             }
         }
-    :}  */
+    :}  
     | 
    /* expresion OP_MENOS termino | 
     //expresion OP_ARITMETICO2 termino | 
     termino */
-    termino OP_MAS expresion |
+    
     termino OP_MENOS expresion |
     termino
 ;
@@ -492,44 +492,44 @@ expresion ::=
 termino ::=
     factor OP_ARITMETICO2 factor | 
     factor:f 
-  /*    {: 
+    {: 
         RESULT = f; 
-    :} */
+    :} 
 ;
 
 factor ::=
     //expresion IDENTIFICADOR|
-    IDENTIFICADOR:identificador|
-            /* {:
+    IDENTIFICADOR:identificador
+            {:
                 //Buscar variable en la tabla de simbolos
                 Simbolo sim = TablaSimbolos.buscar(identificador);
                 //Si es nulo, devuelvo un error
                 if (sim == null)
                 {
-                    TablaSimbolos.log.log(Level.SEVERE, "La variable " + identificador + " no se ha declarado.");
+                    Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
                     RESULT = 0;
                 }
                 else
                 {
                     RESULT = sim.valor;
                 }
-            :} | */
+            :} | 
     NUMERO:num
-          /*   {: 
+            {: 
                 RESULT = num; 
-            :}  */ |
+            :}  |
     NUMERO_DECIMAL:dml
-           /*  {: 
+            {: 
                 RESULT = dml; 
-            :}  */ |
+            :}  |
     NUMERO_EXPONENTE:ne
-           /*  {: 
+           {: 
                 RESULT = ne; 
-            :} */  |
+            :}  |
     CADENA_TEXTO:ct
-           /*  {: 
+              {: 
                 RESULT = ct; 
-            :}  */
+            :}  
 ;
 
 expresion_booleana ::=

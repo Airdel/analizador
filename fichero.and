@@ -2,13 +2,13 @@ iniciar programa:
 	declaracion:
 		cadena num  = 'Lenguajes';
 		cadena num2  = 'Lenguajes';
+		cadena eer = 'y';
 	fin
 	principal:
-		si (3==3
+		si (3==3):
 			ciclo (entero id = 9;  9<8; id++):
 				@leer 'Automatas';	
 				haz:
-					@leer 'Automatas;	
 					@leer 'Automatas';	
 					mientras ( 9<8);						
 				fin

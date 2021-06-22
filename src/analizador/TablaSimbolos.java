@@ -62,6 +62,9 @@ public class TablaSimbolos {
     
     public TablaSimbolos()
     {        
+//        for (Simbolo s : tablaSimbolos.values()) {
+//             tablaSimbolos.remove(s.nombre);
+//        }
         tablaSimbolos = new HashMap<String, Simbolo>();                                   
         lista = new Stack<String>();
         errores = "";
