@@ -65,12 +65,16 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("fin")          {return new Symbol(sym.RESERVADA_FIN,     yychar, yyline, yytext());}
 ("si")           {return new Symbol(sym.RESERVADA_SI,     yychar, yyline, yytext());}
 ("no")           {return new Symbol(sym.RESERVADA_NO, yychar, yyline, yytext());}
+("ciclo")        {return new Symbol(sym.RESERVADA_CICLO, yychar, yyline, yytext());}
+("haz")          {return new Symbol(sym.RESERVADA_HAZ, yychar, yyline, yytext());}
 ("principal")    {return new Symbol(sym.RESERVADA_PRINCIPAL, yychar, yyline, yytext());}
 ("mientras")     {return new Symbol(sym.RESERVADA_MIENTRAS,     yychar, yyline, yytext());}
 ("llamar")       {return new Symbol(sym.RESERVADA_LLAMAR,     yychar, yyline, yytext());}
 ("declaracion")  {return new Symbol(sym.RESERVADA_DECLARACION, yychar, yyline, yytext());}
 ("falso")        {return new Symbol(sym.RESERVADA_FALSO, yychar, yyline, yytext());}
 ("verdadero")    {return new Symbol(sym.RESERVADA_VERDADERO, yychar, yyline, yytext());}
+("funcion")      {return new Symbol(sym.RESERVADA_FUNCION, yychar, yyline, yytext());}
+("retorno")      {return new Symbol(sym.RESERVADA_RETORNO, yychar, yyline, yytext());}
 /*Solas*/
 ("@apagar" | "@encender" | "@calibrar" | "@detener" | "@captura" | "@video" | "@parav")
                  {return new Symbol(sym.ESPECIALES_SOLAS , yychar, yyline, yytext());}
@@ -160,7 +164,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("@parav") {return new Symbol(sym.RESERVADA_PARAV, yychar, yyline, yytext());}
 ("@pin") {return new Symbol(sym.RESERVADA_PIN, yychar, yyline, yytext());}
 ("@regresa") {return new Symbol(sym.RESERVADA_REGRESA, yychar, yyline, yytext());}
-("@retorno") {return new Symbol(sym.RESERVADA_RETORNO, yychar, yyline, yytext());}
+("retorno") {return new Symbol(sym.RESERVADA_RETORNO, yychar, yyline, yytext());}
 ("@ruta") {return new Symbol(sym.RESERVADA_RUTA, yychar, yyline, yytext());}
 ("@seguir") {return new Symbol(sym.RESERVADA_SEGUIR, yychar, yyline, yytext());}
 ("@video") {return new Symbol(sym.RESERVADA_VIDEO, yychar, yyline, yytext());}

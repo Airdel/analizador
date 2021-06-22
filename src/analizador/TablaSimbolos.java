@@ -41,12 +41,14 @@ class Simbolo
     String nombre;
     String tipo;
     Object valor;
+    String clase;
     
-    public Simbolo(String nombre, String tipo ,Object valor)
+    public Simbolo(String nombre, String tipo ,Object valor, String clase)
     {
         this.nombre = nombre;       
         this.tipo = tipo;
         this.valor = valor;
+        this.clase = clase;
     }
 }
 
@@ -86,12 +88,12 @@ public class TablaSimbolos {
         }                
     }
             
-    static public Simbolo crear(String nombre, String tipo)
-    {        
+    static public Simbolo crear(String nombre, String tipo, String clase)
+    {         
         Simbolo simbolo = buscar(nombre);                            
         if(simbolo == null) // La variable no existe
         {
-            simbolo = new Simbolo(nombre, tipo, null);
+            simbolo = new Simbolo(nombre, tipo, null, clase);
             System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);            
             //System.out.println("Variable creada exitosamente!!!");

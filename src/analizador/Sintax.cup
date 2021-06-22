@@ -75,22 +75,26 @@ terminal ASIGNACION,
         OP_MENOS,
         PARENTESIS_DER,
         PARENTESIS_IZQ,
-        PUNTO_COMA,          
-        RESERVADA_DECLARACION,                      
-        RESERVADA_FIN,                  
+        PUNTO_COMA,         
+        RESERVADA_CICLO,
+        RESERVADA_DECLARACION,  
+        RESERVADA_FIN,   
+        RESERVADA_FUNCION,                    
+        RESERVADA_HAZ,               
         RESERVADA_INICIAR,    
         RESERVADA_LLAMAR,
         RESERVADA_MIENTRAS,
         RESERVADA_NO,
         RESERVADA_PRINCIPAL,
+        RESERVADA_RETORNO,
         RESERVADA_SI;   
 /* 
 
 */
 
-non terminal asignacion, concatenacion, inicio, declaracion ,parte_declaracion,  
-    expresion, exp_bol, factor,  mientras, llamar_funcion, reservada_esp, sentencia, sentencia_prima, si, si_no, 
-   parte_principal,expresion_booleana, ruta, termino, termino_bool;
+non terminal asignacion, concatenacion, ciclo, inicio, declaracion ,parte_declaracion,  
+    expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia, sentencia_prima, si, si_no, 
+   parte_principal,expresion_booleana, parametros, parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
 start with inicio;
 
@@ -102,10 +106,11 @@ inicio ::=
         RESERVADA_PRINCIPAL DOS_PUNTOS 
             parte_principal
         RESERVADA_FIN
+        parte_funciones
     RESERVADA_FIN 
     {:
         try{
-            TablaSimbolos.crear(nombre, "--");
+            TablaSimbolos.crear(nombre, "--","nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -122,6 +127,7 @@ inicio ::=
         RESERVADA_PRINCIPAL DOS_PUNTOS 
             parte_principal
         RESERVADA_FIN
+        parte_funciones
     RESERVADA_FIN
 ;
 
@@ -133,7 +139,7 @@ declaracion ::=
     RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_FALSO:valor PUNTO_COMA:coma 
    {:
        try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(nombre);
@@ -150,7 +156,7 @@ declaracion ::=
     {:
         try{
             if(String.valueOf(valor).equals("verdadero")){
-                TablaSimbolos.crear(nombre, tipo);
+                TablaSimbolos.crear(nombre, tipo,"variable");
                 TablaSimbolos.insertar(nombre, String.valueOf(valor));
                 //Crear relacion ciclo PARA con su variable asociada
                 TablaSimbolos.lista.push(nombre);
@@ -171,7 +177,7 @@ declaracion ::=
     RESERVADA_CADENA:tipo   IDENTIFICADOR:nombre ASIGNACION CADENA_TEXTO:valor        PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -187,7 +193,7 @@ declaracion ::=
     RESERVADA_CORTO:tipo    IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -203,7 +209,7 @@ declaracion ::=
     RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -219,7 +225,7 @@ declaracion ::=
     RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO_DECIMAL:valor      PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -235,7 +241,7 @@ declaracion ::=
     RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO_EXPONENTE:valor    PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -251,7 +257,7 @@ declaracion ::=
     RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo);
+            TablaSimbolos.crear(nombre, tipo,"variable");
             TablaSimbolos.insertar(nombre, valor);
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -276,9 +282,58 @@ parte_principal ::=
     parte_principal reservada_esp |
     reservada_esp |
     parte_principal asignacion |
-    asignacion
+    asignacion  |
+    parte_principal ciclo |
+    ciclo | 
+    parte_principal haz |
+    haz   |
+    parte_principal llamar_funcion |
+    llamar_funcion
 ;    
 
+parte_funciones ::=
+    parte_funciones  RESERVADA_FUNCION IDENTIFICADOR:id PARENTESIS_IZQ parametros PARENTESIS_DER tipo_retorno:tr DOS_PUNTOS  
+        parte_principal
+        RESERVADA_RETORNO retorno PUNTO_COMA
+    RESERVADA_FIN   
+    {:
+        try{
+            TablaSimbolos.crear(id, (String) tr,"funcion");
+            TablaSimbolos.insertar(id, String.valueOf("--"));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(id);
+            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
+    |
+    RESERVADA_FUNCION IDENTIFICADOR PARENTESIS_IZQ parametros PARENTESIS_DER tipo_retorno DOS_PUNTOS  
+        parte_principal
+        RESERVADA_RETORNO retorno PUNTO_COMA
+    RESERVADA_FIN      
+;
+parametros ::=
+    parametros RESERVADA_ENTERO IDENTIFICADOR COMA |
+    RESERVADA_ENTERO IDENTIFICADOR |
+    parametros RESERVADA_BOOLEANO IDENTIFICADOR COMA |
+    RESERVADA_BOOLEANO IDENTIFICADOR |
+    parametros RESERVADA_CADENA IDENTIFICADOR COMA |
+    RESERVADA_CADENA IDENTIFICADOR |
+    parametros RESERVADA_DECIMAL IDENTIFICADOR COMA |
+    RESERVADA_DECIMAL IDENTIFICADOR |
+    parametros RESERVADA_CORTO IDENTIFICADOR COMA |
+    RESERVADA_CORTO IDENTIFICADOR 
+;
+tipo_retorno ::=
+    RESERVADA_CADENA | RESERVADA_ENTERO | RESERVADA_CORTO | RESERVADA_DECIMAL | RESERVADA_BOOLEANO
+;
+retorno ::=
+    IDENTIFICADOR | CADENA_TEXTO | NUMERO | NUMERO_DECIMAL | NUMERO_EXPONENTE | RESERVADA_VERDADERO | RESERVADA_FALSO 
+;
 /* sentencia ::=
     sentencia asignacion |
     asignacion |
@@ -311,7 +366,12 @@ mientras ::=
         parte_principal
     RESERVADA_FIN
 ;
-    
+haz ::=
+    RESERVADA_HAZ DOS_PUNTOS 
+        parte_principal
+        RESERVADA_MIENTRAS PARENTESIS_IZQ expresion_booleana PARENTESIS_DER PUNTO_COMA
+    RESERVADA_FIN
+;
 si ::=    
     RESERVADA_SI PARENTESIS_IZQ expresion_booleana PARENTESIS_DER DOS_PUNTOS 
         parte_principal
@@ -324,7 +384,11 @@ si_no ::=
         parte_principal
     RESERVADA_FIN
 ;
-
+ciclo ::=
+        RESERVADA_CICLO PARENTESIS_IZQ declaracion expresion_booleana PUNTO_COMA IDENTIFICADOR OP_MAS OP_MAS PARENTESIS_DER DOS_PUNTOS
+            parte_principal
+        RESERVADA_FIN
+;
 asignacion ::= /* Epsilon */
    // asignacion IDENTIFICADOR ASIGNACION expresion PUNTO_COMA   |
     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA    

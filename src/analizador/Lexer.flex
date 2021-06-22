@@ -74,7 +74,6 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "si" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_SI;}
 <YYINITIAL> "no" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_NO;}
 <YYINITIAL> "mientras" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_MIENTRAS;}
-<YYINITIAL> "para" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PARA;}
 <YYINITIAL> "booleano" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_BOOLEANO;}
 <YYINITIAL> "principal" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PRINCIPAL;}
 <YYINITIAL> "@abajo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ABAJO;}
@@ -100,7 +99,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "@esperar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_ESPERAR;}
 <YYINITIAL> "@fijo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_FIJO;}
 <YYINITIAL> "@girar" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_GIRAR;}
-<YYINITIAL> "@haz" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_HAZ;}
+<YYINITIAL> "haz" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_HAZ;}
 <YYINITIAL> "@imprimir" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_IMPRIMIR;}
 <YYINITIAL> "@izquierda" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_IZQUIERDA;}
 <YYINITIAL> "@largo" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_LARGO;}
@@ -110,7 +109,7 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 <YYINITIAL> "@parav" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PARAV;}
 <YYINITIAL> "@pin" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_PIN;}
 <YYINITIAL> "@regresa" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_REGRESA;}
-<YYINITIAL> "@retorno" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_RETORNO;}
+<YYINITIAL> "retorno" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_RETORNO;}
 <YYINITIAL> "@ruta" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_RUTA;}
 <YYINITIAL> "@seguir" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_SEGUIR;}
 <YYINITIAL> "@video" {c.linea=yyline;c.columna=yycolumn; lexema=yytext(); return RESERVADA_VIDEO;}

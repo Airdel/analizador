@@ -49,16 +49,17 @@ public class TablaIdentificadores extends javax.swing.JFrame {
                     m.setValueAt(simbolo.tipo, i, 1);
                     m.setValueAt(simbolo.nombre, i, 2);
                     m.setValueAt(simbolo.valor, i, 3);
+                    m.setValueAt(simbolo.clase, i, 4);
                 }
             }
         }
-        for (Simbolo simbolo : sim) {
-            if(simbolo.tipo.equals("cadena"))
-                    mezcla += simbolo.valor.toString();                
-                if(simbolo.tipo.equals("entero"))
-                    suma += Integer.parseInt(simbolo.valor.toString());       
-        }
-        System.out.println("Mezcla: "+mezcla+", Suma: "+suma);
+//        for (Simbolo simbolo : sim) {
+//            if(simbolo.tipo.equals("cadena"))
+//                    mezcla += simbolo.valor.toString();                
+//                if(simbolo.tipo.equals("entero"))
+//                    suma += Integer.parseInt(simbolo.valor.toString());       
+//        }
+//        System.out.println("Mezcla: "+mezcla+", Suma: "+suma);
     }
 
     /**
@@ -84,7 +85,7 @@ public class TablaIdentificadores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Línea", "Tipo", "Lexema", "Valor", "Dirección"
+                "Línea", "Tipo", "Lexema", "Valor", "Clase"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

@@ -129,7 +129,7 @@ public class Editor extends javax.swing.JFrame {
         txtEditor.setColumns(20);
         txtEditor.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         txtEditor.setRows(2);
-        txtEditor.setTabSize(3);
+        txtEditor.setTabSize(2);
         txtEditor.setMaximumSize(new java.awt.Dimension(220, 38));
         txtEditor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -875,9 +875,6 @@ public class Editor extends javax.swing.JFrame {
                         break;
                     case RESERVADA_NO:
                         m.addRow(new Object[]{"RESERVADA. Empieza condicional no", lexer.lexema, (c.linea) + 1});
-                        break;
-                    case RESERVADA_PARA:
-                        m.addRow(new Object[]{"RESERVADA. Empieza ciclo para", lexer.lexema, (c.linea) + 1});
                         break;
                     case RESERVADA_LARGO:
                         m.addRow(new Object[]{"RESERVADA. Declara variable tipo largo", lexer.lexema, (c.linea) + 1});
