@@ -1072,10 +1072,11 @@ public class Editor extends javax.swing.JFrame {
                 txtErrores.setForeground(Color.red);                
             }
         } catch (Exception ex) {
-//            txtErrores.setText("Error de sintaxis. Linea: " +
-//                    (sym.right + 1) + " Columna: " 
-//                    + (sym.left + 1) + ", Texto: \"" 
-//                    + sym.value + "\"");
+            Symbol sym = s.getS();  
+            txtErrores.setText("Desde Cup. Error de sintaxis. Linea: " +
+                    (sym.right + 1) + " Columna: " 
+                    + (sym.left + 1) + ", Texto: \"" 
+                    + sym.value + "\"");
             txtErrores.setText("En catch: "+erroresSintacticos);
             txtErrores.setForeground(Color.red);
         }

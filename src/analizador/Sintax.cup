@@ -443,54 +443,128 @@ asignacion ::= /* Epsilon */
     IDENTIFICADOR ASIGNACION expresion PUNTO_COMA    
 ;
 expresion ::=
-    termino:t OP_MAS expresion:e 
-         {: 
-            Editor.erroresSintacticos += ("Error de sintaxis. Suma de dos operandos: " + e.toString() + ", " + t.toString());                                                
-        
-        if (e instanceof Double){ //Verificación de tipos para variable de tipo DOBLE        
-            if (t instanceof Integer){
-                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y entero se pueden sumar");
+    termino:f1 OP_MAS expresion:f2 
+   {:        
+        Editor.erroresSintacticos += ("Termino: "+f1.toString()+"\n");
+        Editor.erroresSintacticos += ("Expresion: "+f2.toString()+"\n");
+     :}/*     if (f1 instanceof Integer){
+            if (f2 instanceof String){
+                Editor.erroresSintacticos += ("'"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
             }
-            if (t instanceof String){
-                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y String No se pueden sumar");
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                        
+                tmp = tmp + Double.parseDouble(f2.toString());
+                Editor.erroresSintacticos += ("Resultados"+f1.toString()+", "+f2.toString()+"= "+tmp+"\n");
+                RESULT = tmp;                
             }
-            if (t instanceof Double){
-                Editor.erroresSintacticos += ("Error de sintaxis. Decimal y decimal se pueden sumar");
-            }
-        }
-        else if (e instanceof Integer){ //Verificación de tipos para variable de tipo DOBLE        
-            if (t instanceof Integer){
-                Editor.erroresSintacticos += ("Error de sintaxis. Entero y entero se pueden sumar");
-            }
-            if (t instanceof String){
-                Editor.erroresSintacticos += ("Error de sintaxis. Entero y String No se pueden sumar");
-            }
-            if (t instanceof Double){
-                Editor.erroresSintacticos += ("Error de sintaxis. Entero y decimal se pueden sumar");
-            }
-        }else {
-            if (t instanceof Integer){
-                Editor.erroresSintacticos += ("Error de sintaxis. String y entero No se pueden sumar");
-            }
-            if (t instanceof String){
-                Editor.erroresSintacticos += ("Error de sintaxis. String y String se pueden sumar");
-            }
-            if (t instanceof Double){
-                Editor.erroresSintacticos += ("Error de sintaxis. String y decimal NO se pueden sumar");
+            if (f2 instanceof Integer){
+                Integer tmp = Integer.parseInt(f1.toString());
+                tmp = tmp + Integer.parseInt(f2.toString());
+                Editor.erroresSintacticos += ("Resultados"+f1.toString()+", "+f2.toString()+"= "+tmp+"\n");
+                RESULT = tmp;
             }
         }
-    :}  
+    :} */
     | 
    /* expresion OP_MENOS termino | 
     //expresion OP_ARITMETICO2 termino | 
     termino */
     
-    termino OP_MENOS expresion |
-    termino
+    termino:f1 OP_MENOS expresion:f2  {:        
+        Editor.erroresSintacticos += ("Termino: "+f1.toString()+"\n");
+        Editor.erroresSintacticos += ("Expresion: "+f2.toString()+"\n");
+     :}
+  /*   {:        
+        Editor.erroresSintacticos += ("EXP: "+f2.toString()+"\n");
+        if (f1 instanceof Integer){
+            if (f2 instanceof String){
+                Editor.erroresSintacticos += ("'"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+            }
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                        
+                tmp = tmp - Double.parseDouble(f2.toString());
+                Editor.erroresSintacticos += ("Resultados"+f1.toString()+", "+f2.toString()+"= "+tmp+"\n");
+                RESULT = tmp;                
+            }
+            if (f2 instanceof Integer){
+                Integer tmp = Integer.parseInt(f1.toString());
+                tmp = tmp - Integer.parseInt(f2.toString());
+                Editor.erroresSintacticos += ("Resultados"+f1.toString()+", "+f2.toString()+"= "+tmp+"\n");
+                RESULT = tmp;
+            }
+        }
+    :} */
+    |
+    termino:t{:
+        //Editor.erroresSintacticos += ("Termino: "+t.toString()+"\n");
+        RESULT = t;
+    :}
 ;
 
 termino ::=
-    factor OP_ARITMETICO2 factor | 
+    factor:f1 OP_ARITMETICO2:op factor:f2 
+    {:
+        if (f1 instanceof Integer){
+            if(f2 instanceof String){
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+            }
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                if(op.toString().equals("*"))
+                    tmp = tmp * Double.parseDouble(f2.toString());
+                else                    
+                    tmp = tmp / Double.parseDouble(f2.toString());
+                RESULT = tmp;                
+            }
+            if (f2 instanceof Integer){
+                Integer tmp = Integer.parseInt(f1.toString());
+                if(op.toString().equals("*"))
+                    tmp = tmp * Integer.parseInt(f2.toString());
+                else                    
+                    tmp = tmp /  Integer.parseInt(f2.toString());
+                RESULT = tmp;
+            }
+        }
+        if (f1 instanceof String){
+            if(f2 instanceof String){
+                if(op.toString().equals("*"))
+                    Editor.erroresSintacticos += ("Error sintáctico: Dos cadenas no se pueden multiplicar\n");
+                else
+                    Editor.erroresSintacticos += ("Error sintáctico: Dos cadenas no se pueden dividir\n");                    
+            }
+            if (f2 instanceof Double){
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");             
+            }
+            if (f2 instanceof Integer){
+                Double tmp = Double.parseDouble(f1.toString());
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+            }
+        }
+        if (f1 instanceof Double){
+            if(f2 instanceof String){
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+            }
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                if(op.toString().equals("*"))
+                    tmp = tmp * Double.parseDouble(f2.toString());
+                else                    
+                    tmp = tmp / Double.parseDouble(f2.toString());
+                RESULT = tmp;                
+            }
+            if (f2 instanceof Integer){
+                Double tmp = Double.parseDouble(f1.toString());
+                if(op.toString().equals("*"))
+                    tmp = tmp * Double.parseDouble(f2.toString());
+                else                    
+                    tmp = tmp /  Double.parseDouble(f2.toString());
+                RESULT = tmp;
+            }
+        }
+    :} 
+    | 
     factor:f 
     {: 
         RESULT = f; 

@@ -7,11 +7,10 @@ iniciar programa:
 	principal:
 		si (3==3):
 			ciclo (entero id = 9;  9<8; id++):
-				@leer 'Automatas';	
-				haz:
-					@leer 'Automatas';	
-					mientras ( 9<8);						
-				fin
+				eer = 1 * 'LA'	;
+				eer = 3 - 8		;
+				eer = 10 / 8		;
+				eer = 9 * 8		;
 			fin
 		si no:
 			@ruta(3 , 4,4,5) ; 
