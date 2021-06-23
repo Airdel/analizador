@@ -15,6 +15,7 @@ package analizador;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 class Nodo
 {
@@ -166,6 +167,9 @@ public class TablaSimbolos {
         return log;
     }
     public static int limpiar(){
-        return tablaSimbolos.size();
+        if(tablaSimbolos != null)            
+            tablaSimbolos.clear();
+                  
+        return 0;
     }
 }

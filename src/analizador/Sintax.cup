@@ -62,14 +62,14 @@ terminal String RESERVADA_BOOLEANO,RESERVADA_CADENA,RESERVADA_CORTO, RESERVADA_E
 terminal String RESERVADA_VERDADERO,RESERVADA_FALSO;
 terminal ASIGNACION,
         COMA,
-        DOS_PUNTOS, 
-        ERROR,          
+        DOS_PUNTOS,    
         ESPECIALES_SOLAS,
         ESPECIALES_ID,
         ESPECIALES_CT,
         ESPECIALES_DOS,
         ESPECIALES_PARAMETRO,
         ESPECIALES_RUTA,
+        ERROR,
         OP_ARITMETICO2,
         OP_LOGICO,
         OP_RELACIONAL,
@@ -94,7 +94,7 @@ terminal ASIGNACION,
 
 */
 
-non terminal asignacion, concatenacion, ciclo, inicio, declaracion ,parte_declaracion, declaracion_ciclo,  
+non terminal asignacion, ciclo, inicio, declaracion ,parte_declaracion, declaracion_ciclo,  
     expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia, sentencia_prima, si, si_no, 
    parte_principal,expresion_booleana, parametros, parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
     /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
@@ -112,7 +112,7 @@ inicio ::=
     RESERVADA_FIN 
     {:
         try{
-            TablaSimbolos.crear(nombre, "--","nombre");
+            TablaSimbolos.crear(nombre, "--","Nombre");
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -143,7 +143,7 @@ declaracion ::=
     RESERVADA_BOOLEANO:tipo IDENTIFICADOR:nombre ASIGNACION RESERVADA_FALSO:valor PUNTO_COMA:coma 
    {:
        try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(nombre);
@@ -183,7 +183,7 @@ declaracion ::=
     RESERVADA_CADENA:tipo   IDENTIFICADOR:nombre ASIGNACION CADENA_TEXTO:valor        PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             String cad = String.valueOf(valor);
             String s = cad.replace("'","");
             TablaSimbolos.insertar(nombre, s);
@@ -201,7 +201,7 @@ declaracion ::=
     RESERVADA_CORTO:tipo    IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -217,7 +217,7 @@ declaracion ::=
     RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -233,7 +233,7 @@ declaracion ::=
     RESERVADA_DECIMAL:tipo  IDENTIFICADOR:nombre ASIGNACION NUMERO_DECIMAL:valor      PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -265,7 +265,7 @@ declaracion ::=
     RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable");
+            TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, valor);
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -286,7 +286,7 @@ declaracion_ciclo ::=
     RESERVADA_CORTO:tipo    IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable en ciclo");
+            TablaSimbolos.crear(nombre, tipo,"Variable en ciclo");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -302,7 +302,7 @@ declaracion_ciclo ::=
     RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
     {:
         try{
-            TablaSimbolos.crear(nombre, tipo,"variable en ciclo");
+            TablaSimbolos.crear(nombre, tipo,"Variable en ciclo");
             TablaSimbolos.insertar(nombre, valor);
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -347,7 +347,7 @@ parte_funciones ::=
     RESERVADA_FIN   
     {:
         try{
-            TablaSimbolos.crear(id, (String) tr,"funcion");
+            TablaSimbolos.crear(id, (String) tr,"Función");
             TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -384,7 +384,7 @@ parte_funciones ::=
     RESERVADA_FIN   
     {:
         try{
-            TablaSimbolos.crear(id, (String) tr,"funcion");
+            TablaSimbolos.crear(id, (String) tr,"Función");
             TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
@@ -522,22 +522,21 @@ expresion ::=
    {:     
         if (f1 instanceof Integer){
             if(f2 instanceof String){
+                
                 String s = f2.toString().replace("'","");
                 s = f1.toString() + s ;
                 RESULT = s;
-            }else{
-                if (f2 instanceof Double){
-                    Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-                    tmp = tmp + Double.parseDouble(f2.toString());
-                    RESULT = tmp;                
-                }else{
-                    if (f2 instanceof Integer){
-                        Integer tmp = Integer.parseInt(f1.toString());
-                        tmp = tmp +  Integer.parseInt(f2.toString());
-                        RESULT = tmp;
-                    }
-                }
             }
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                tmp = tmp + Double.parseDouble(f2.toString());
+                RESULT = tmp;                
+            }
+            if (f2 instanceof Integer){
+                Integer tmp = Integer.parseInt(f1.toString());
+                tmp = tmp +  Integer.parseInt(f2.toString());
+                RESULT = tmp;
+            }               
         }
         if (f1 instanceof Double){
             if(f2 instanceof String){
@@ -625,9 +624,6 @@ expresion ::=
 termino ::=
     factor:f1 OP_ARITMETICO2:op factor:f2 
     {:
-        if(f2 instanceof String){
-            Editor.erroresSintacticos += ("F2: "+f2.toString()+", es cadena\n");
-        }
         if (f1 instanceof Integer){
             if(f2 instanceof String){
                 Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
@@ -710,6 +706,7 @@ factor ::=
                 }
                 else
                 {
+                    
                     RESULT = sim.valor;
                 }
             :} | 
@@ -750,7 +747,21 @@ exp_bol::=
 ;
 
 termino_bool::=
-    IDENTIFICADOR  |
+    IDENTIFICADOR:identificador
+    {:
+        //Buscar variable en la tabla de simbolos
+        Simbolo sim = TablaSimbolos.buscar(identificador);
+        //Si es nulo, devuelvo un error
+        if (sim == null)
+        {
+            Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+            RESULT = 0;
+        }
+        else
+        {
+            RESULT = sim.valor;
+        }
+    :}  |
     NUMERO |
     RESERVADA_FALSO |
     RESERVADA_VERDADERO

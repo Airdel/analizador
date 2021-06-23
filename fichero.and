@@ -1,8 +1,8 @@
 iniciar programa:
 	declaracion:
-		cadena _num  = 'Lenguajes';
-		cadena nWum2  = 'Lenguajes';
-		cadena 2eer = 'y';
+		cadena num  = 'Lenguajes';
+		cadena um2  = 'Lenguajes';
+		cadena eer = 'y';
 	fin
 	principal:
 		si (3==3):

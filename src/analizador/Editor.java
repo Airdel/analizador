@@ -380,21 +380,8 @@ public class Editor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
-        int rowCount = m.getRowCount();
-        //Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-            m.removeRow(i);
-        }
-        simbolos.clear();
-        txtErrores.setText("");
-        identificadores.removeAll(identificadores);
-        probarLexer();
-        if(erroresLexicos.equals(""))
-            analisisSintactico();
-        else
-            log_sistema.setText("Se ha ejecuatado el programa con errores");
+        correr();
+        correr();
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -533,21 +520,8 @@ public class Editor extends javax.swing.JFrame {
 
     private void icon_lexicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_lexicoMouseClicked
         // TODO add your handling code here:
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
-        int rowCount = m.getRowCount();
-        //Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-            m.removeRow(i);
-        }
-        simbolos.clear();
-        txtErrores.setText("");
-        identificadores.removeAll(identificadores);
-        probarLexer();
-        if(erroresLexicos.equals(""))
-            analisisSintactico();
-        else            
-            log_sistema.setText("Se ha ejecuatado el programa con errores");
+        correr();
+        correr();
     }//GEN-LAST:event_icon_lexicoMouseClicked
 
     private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
@@ -1110,5 +1084,22 @@ public class Editor extends javax.swing.JFrame {
             txtErrores.setForeground(Color.red);
         }
         erroresSintacticos = "";
+    }
+
+    private void correr() {
+        TablaSimbolos.limpiar();
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+        simbolos.clear();
+        txtErrores.setText("");
+        identificadores.removeAll(identificadores);
+        probarLexer();
+        analisisSintactico();
+        
     }
 }
