@@ -46,7 +46,7 @@ parser code
     public void syntax_error(Symbol s){
         this.s = s;
         Editor.erroresSintacticos +=("Error de sintaxis. Linea: " + (s.right + 1) +
-		" Columna: " + s.left + ". Texto: \"" + s.value + "\" \n");
+		". Texto: \"" + s.value + "\" \n");
     }
 
     public Symbol getS(){
