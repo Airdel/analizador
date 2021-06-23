@@ -133,6 +133,7 @@ inicio ::=
     RESERVADA_FIN
     | error RESERVADA_FIN
     | error DOS_PUNTOS
+    
 ;
 
 parte_declaracion ::=
@@ -437,6 +438,7 @@ tipo_retorno ::=
     | RESERVADA_BOOLEANO {: RESULT = "booleano"; :} 
 ;
 retorno ::=
+   
     IDENTIFICADOR:r {:RESULT = r;:}| 
     CADENA_TEXTO:r {:RESULT = r;:} | 
     NUMERO:r {:RESULT = r;:} | 
@@ -522,7 +524,6 @@ expresion ::=
    {:     
         if (f1 instanceof Integer){
             if(f2 instanceof String){
-                
                 String s = f2.toString().replace("'","");
                 s = f1.toString() + s ;
                 RESULT = s;
@@ -569,6 +570,57 @@ expresion ::=
         }
      :}
     |     
+    /* PARENTESIS_IZQ termino:f1 PARENTESIS_DER OP_MAS PARENTESIS_IZQ expresion:f2 PARENTESIS_DER  
+    {:     
+        if (f1 instanceof Integer){
+            if(f2 instanceof String){
+                
+                String s = f2.toString().replace("'","");
+                s = f1.toString() + s ;
+                RESULT = s;
+            }
+            if (f2 instanceof Double){
+                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                tmp = tmp + Double.parseDouble(f2.toString());
+                RESULT = tmp;                
+            }
+            if (f2 instanceof Integer){
+                Integer tmp = Integer.parseInt(f1.toString());
+                tmp = tmp +  Integer.parseInt(f2.toString());
+                RESULT = tmp;
+            }               
+        }
+        if (f1 instanceof Double){
+            if(f2 instanceof String){
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+            }else{
+                if (f2 instanceof Double){
+                    Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                    tmp = tmp + Double.parseDouble(f2.toString());
+                    RESULT = tmp;                
+                }else{
+                    if (f2 instanceof Integer){
+                        Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+                        tmp = tmp + Double.parseDouble(f2.toString());
+                        RESULT = tmp;
+                    }
+                }
+            }
+        }
+        if (f1 instanceof String){
+            if(f2 instanceof String){
+                RESULT = f1.toString() + f2.toString();          
+            }else{
+                if (f2 instanceof Double){
+                    Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");             
+                }else{
+                    if (f2 instanceof Integer)
+                        RESULT = f1.toString() + f2.toString(); 
+                }    
+            }
+        }
+     :}
+    |     */
     termino:f1 OP_MENOS expresion:f2  
      {:     
         Editor.erroresSintacticos += ("F1"+f1.toString());
@@ -615,9 +667,53 @@ expresion ::=
         }
      :}
     |
-    termino:t{:
-        RESULT = t;
-    :}
+ /*    PARENTESIS_IZQ termino:f1 PARENTESIS_DER OP_MENOS PARENTESIS_IZQ expresion:f2 PARENTESIS_DER  
+    {:     
+       Editor.erroresSintacticos += ("F1"+f1.toString());
+       if (f1 instanceof Integer){
+           if(f2 instanceof String){
+               Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+           }
+           if (f2 instanceof Double){
+               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+               tmp = tmp - Double.parseDouble(f2.toString());
+               RESULT = tmp;                
+           }
+           if (f2 instanceof Integer){
+               Integer tmp = Integer.parseInt(f1.toString());
+               tmp = tmp -  Integer.parseInt(f2.toString());
+               RESULT = tmp;
+           }
+       }
+       if (f1 instanceof Double){
+           if(f2 instanceof String){
+               Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+           }
+           if (f2 instanceof Double){
+               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+               tmp = tmp - Double.parseDouble(f2.toString());
+               RESULT = tmp;                
+           }
+           if (f2 instanceof Integer){
+               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
+               tmp = tmp - Double.parseDouble(f2.toString());
+               RESULT = tmp;
+           }
+       }
+       if (f1 instanceof String | f2 instanceof String) {
+           Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
+            if(f2 instanceof String){
+           }
+           if (f2 instanceof Double){
+               Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");                
+           }
+           if (f2 instanceof Integer){
+               Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
+           
+       }
+    :} 
+    | */
+    termino:t{:RESULT = t;:}
 
 ;
 
@@ -683,17 +779,31 @@ termino ::=
         }
     :} 
     | 
-    factor:f 
-    {: 
-        RESULT = f; 
-    :} 
+    factor:f {: RESULT = f; :} | 
+    PARENTESIS_IZQ  factor:f PARENTESIS_DER {: RESULT = f; :} 
 ;
 
 factor ::=
-   /*  expresion:e
+ /*    PARENTESIS_IZQ IDENTIFICADOR:r PARENTESIS_DER 
     {:
-        RESULT = e;
-    :}| */
+        //Buscar variable en la tabla de simbolos
+        Simbolo sim = TablaSimbolos.buscar(r);
+        //Si es nulo, devuelvo un error
+        if (sim == null){      
+            Editor.erroresSintacticos += ("Error de sintaxis. Identificador: '"+r+"' no existe.\n");
+            RESULT = 0;
+        }
+        else{
+            
+            RESULT = sim.valor;
+        }
+    :} | 
+    PARENTESIS_IZQ CADENA_TEXTO:r PARENTESIS_DER {:RESULT = r;:} | 
+    PARENTESIS_IZQ NUMERO:r PARENTESIS_DER {:RESULT = r;:} | 
+    PARENTESIS_IZQ NUMERO_DECIMAL:r PARENTESIS_DER {:RESULT = r;:} | 
+    PARENTESIS_IZQ NUMERO_EXPONENTE:r PARENTESIS_DER {:RESULT = r;:} | 
+    PARENTESIS_IZQ RESERVADA_VERDADERO:r PARENTESIS_DER {:RESULT = r;:} | 
+    PARENTESIS_IZQ RESERVADA_FALSO:r PARENTESIS_DER {:RESULT = r;:} | */
     IDENTIFICADOR:identificador
             {:
                 //Buscar variable en la tabla de simbolos
@@ -710,30 +820,15 @@ factor ::=
                     RESULT = sim.valor;
                 }
             :} | 
-    NUMERO:num
-            {: 
-                RESULT = num; 
-            :}  |
-    NUMERO_DECIMAL:dml
-            {: 
-                RESULT = dml; 
-            :}  |
-    NUMERO_EXPONENTE:ne
-           {: 
-                RESULT = ne; 
-            :}  |
-    CADENA_TEXTO:ct
-              {: 
-                RESULT = ct; 
-            :}  
+    NUMERO:num  {:RESULT = num; :}  |
+    NUMERO_DECIMAL:dml {: RESULT = dml; :}  |
+    NUMERO_EXPONENTE:ne {: RESULT = ne; :}  |
+    CADENA_TEXTO:ct {: RESULT = ct; :}  
     /* PARENTESIS_IZQ expresion:e PARENTESIS_DER
     {:
         RESULT = e;
     :}| */
-    /* expresion:e
-    {:
-        RESULT = e;
-    :} */
+    
 ;
 
 expresion_booleana ::=

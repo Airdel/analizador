@@ -144,7 +144,7 @@ public class Editor extends javax.swing.JFrame {
         });
         scrollEditor.setViewportView(txtEditor);
 
-        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1200, 530));
+        jPanel1.add(scrollEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1190, 350));
 
         tablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,7 +159,7 @@ public class Editor extends javax.swing.JFrame {
             tablaMensajes.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 630, 350));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 620, 350));
 
         txtErrores.setEditable(false);
         txtErrores.setColumns(20);
@@ -230,12 +230,12 @@ public class Editor extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 14, 20, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 580));
 
         log_sistema.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         log_sistema.setForeground(new java.awt.Color(0, 158, 58));
         log_sistema.setText("---");
-        getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 590, 430, -1));
+        getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 580, 430, -1));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
@@ -990,7 +990,7 @@ public class Editor extends javax.swing.JFrame {
             lbPalabras.setText(contarPal() + "");
             guardarComo = false;
             log_sistema.setText("Se ha abierto un archivo");
-            log_sistema.setForeground(Color.green);
+            log_sistema.setForeground(new java.awt.Color(0, 158, 58));
         }
     }
 
@@ -1019,7 +1019,7 @@ public class Editor extends javax.swing.JFrame {
             save.write(txtEditor.getText());
             save.close();
             log_sistema.setText("Se ha guardado un archivo");
-            log_sistema.setForeground(Color.green);
+            log_sistema.setForeground(new java.awt.Color(0, 158, 58));
         } catch (IOException ex) {
             Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -1044,7 +1044,7 @@ public class Editor extends javax.swing.JFrame {
                     save.close();
                     guardarComo = false;                    
                     log_sistema.setText("Se ha guardado un archivo");
-                    log_sistema.setForeground(Color.green);
+                    log_sistema.setForeground(new java.awt.Color(0, 158, 58));
                 }
             }
         } catch (IOException ex) {
@@ -1066,7 +1066,7 @@ public class Editor extends javax.swing.JFrame {
                 txtErrores.append("Analisis realizado correctamente");
                 txtErrores.setForeground(new Color(25, 111, 61));
                 log_sistema.setText("Se ha ejecutado el programa");
-                log_sistema.setForeground(Color.green);
+                log_sistema.setForeground(new java.awt.Color(0, 158, 58));
             }
             else{
                 txtErrores.setText("En try: "+erroresSintacticos);  
