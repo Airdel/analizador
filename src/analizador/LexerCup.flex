@@ -76,13 +76,13 @@ errorPuntos = (\.)*{num}?((\.*)|({num}))*
 ("funcion")      {return new Symbol(sym.RESERVADA_FUNCION, yychar, yyline, yytext());}
 ("retorno")      {return new Symbol(sym.RESERVADA_RETORNO, yychar, yyline, yytext());}
 /*Solas*/
-("@apagar" | "@encender" | "@calibrar" | "@detener" | "@captura" | "@video" | "@parav")
+("@apagar" | "@encender" | "@calibrar" | "@detener" | "@captura" | "@fijo" | "@video" | "@parav")
                  {return new Symbol(sym.ESPECIALES_SOLAS , yychar, yyline, yytext());}
 /*@esp @esp */
 ("@direccionar") 
                  {return new Symbol(sym.ESPECIALES_DOS , yychar, yyline, yytext());}
 /*PARAMETEO*/
-( "@arriba" | "@abajo" | "@atras" | "@adelante" | "@izquierda" | "@derecga")
+( "@arriba" | "@abajo" | "@atras" | "@adelante" | "@izquierda" | "@derecha")
                  {return new Symbol(sym.ESPECIALES_PARAMETRO , yychar, yyline, yytext());}
 /*ESP ID*/
  ("@girar" | "@acelerar" | "@esperar" | "@seguir" | "@esperar")

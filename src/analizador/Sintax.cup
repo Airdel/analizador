@@ -343,12 +343,12 @@ parte_principal ::=
 parte_funciones ::=
     parte_funciones  RESERVADA_FUNCION IDENTIFICADOR:id PARENTESIS_IZQ parametros PARENTESIS_DER tipo_retorno:tr DOS_PUNTOS  
         parte_principal
-        RESERVADA_RETORNO retorno PUNTO_COMA
+        RESERVADA_RETORNO retorno:r PUNTO_COMA
     RESERVADA_FIN   
     {:
         try{
             TablaSimbolos.crear(id, (String) tr,"funcion");
-            TablaSimbolos.insertar(id, String.valueOf("--"));
+            TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
             TablaSimbolos.lista.push(id);
@@ -360,22 +360,74 @@ parte_funciones ::=
         }                           
     :}
     |
-    RESERVADA_FUNCION IDENTIFICADOR PARENTESIS_IZQ parametros PARENTESIS_DER tipo_retorno DOS_PUNTOS  
+    RESERVADA_FUNCION IDENTIFICADOR:id PARENTESIS_IZQ parametros PARENTESIS_DER tipo_retorno:tr DOS_PUNTOS  
         parte_principal
-        RESERVADA_RETORNO retorno PUNTO_COMA
-    RESERVADA_FIN      
+        RESERVADA_RETORNO retorno:r PUNTO_COMA
+    RESERVADA_FIN   
+    {:
+        try{
+            TablaSimbolos.crear(id, (String) tr,"funcion");
+            TablaSimbolos.insertar(id, String.valueOf(r));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(id);
+            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}|
+    RESERVADA_FUNCION IDENTIFICADOR:id PARENTESIS_IZQ  PARENTESIS_DER tipo_retorno:tr DOS_PUNTOS  
+        parte_principal
+        RESERVADA_RETORNO retorno:r PUNTO_COMA
+    RESERVADA_FIN   
+    {:
+        try{
+            TablaSimbolos.crear(id, (String) tr,"funcion");
+            TablaSimbolos.insertar(id, String.valueOf(r));
+
+            //Crear relacion ciclo PARA con su variable asociada
+            TablaSimbolos.lista.push(id);
+            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+        }
+        catch(Exception e){                                    
+            e.printStackTrace();
+            TablaSimbolos.log.log(Level.SEVERE, "Error al agregar la variable::: " + e.getMessage());
+        }                           
+    :}
 ;
 parametros ::=
-    parametros RESERVADA_ENTERO IDENTIFICADOR COMA |
-    RESERVADA_ENTERO IDENTIFICADOR |
-    parametros RESERVADA_BOOLEANO IDENTIFICADOR COMA |
-    RESERVADA_BOOLEANO IDENTIFICADOR |
-    parametros RESERVADA_CADENA IDENTIFICADOR COMA |
-    RESERVADA_CADENA IDENTIFICADOR |
-    parametros RESERVADA_DECIMAL IDENTIFICADOR COMA |
-    RESERVADA_DECIMAL IDENTIFICADOR |
-    parametros RESERVADA_CORTO IDENTIFICADOR COMA |
-    RESERVADA_CORTO IDENTIFICADOR 
+    parametros RESERVADA_ENTERO:td IDENTIFICADOR:id COMA {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    RESERVADA_ENTERO:td IDENTIFICADOR:id {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    parametros RESERVADA_BOOLEANO:td IDENTIFICADOR:id COMA {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    RESERVADA_BOOLEANO:td IDENTIFICADOR:id {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    parametros RESERVADA_CADENA:td IDENTIFICADOR:id COMA {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    RESERVADA_CADENA:td IDENTIFICADOR:id {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    parametros RESERVADA_DECIMAL:td IDENTIFICADOR:id COMA {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    RESERVADA_DECIMAL:td IDENTIFICADOR:id {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    parametros RESERVADA_CORTO:td IDENTIFICADOR:id COMA {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} |
+    RESERVADA_CORTO:td IDENTIFICADOR:id {:
+        TablaSimbolos.crear(id, (String) td,"Variabe en función");
+        :} 
 ;
 tipo_retorno ::=
     RESERVADA_CADENA {: RESULT = "cadena"; :} 
@@ -385,7 +437,13 @@ tipo_retorno ::=
     | RESERVADA_BOOLEANO {: RESULT = "booleano"; :} 
 ;
 retorno ::=
-    IDENTIFICADOR | CADENA_TEXTO | NUMERO | NUMERO_DECIMAL | NUMERO_EXPONENTE | RESERVADA_VERDADERO | RESERVADA_FALSO 
+    IDENTIFICADOR:r {:RESULT = r;:}| 
+    CADENA_TEXTO:r {:RESULT = r;:} | 
+    NUMERO:r {:RESULT = r;:} | 
+    NUMERO_DECIMAL:r {:RESULT = r;:} | 
+    NUMERO_EXPONENTE:r {:RESULT = r;:} | 
+    RESERVADA_VERDADERO:r {:RESULT = r;:} | 
+    RESERVADA_FALSO:r {:RESULT = r;:} 
 ;
 /* sentencia ::=
     sentencia asignacion |
@@ -409,6 +467,8 @@ reservada_esp ::=
     ESPECIALES_ID IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID NUMERO PUNTO_COMA |
     ESPECIALES_DOS ESPECIALES_PARAMETRO PUNTO_COMA |
+    ESPECIALES_DOS ESPECIALES_PARAMETRO IDENTIFICADOR PUNTO_COMA |
+    ESPECIALES_DOS ESPECIALES_PARAMETRO NUMERO PUNTO_COMA |
     ESPECIALES_RUTA PARENTESIS_IZQ NUMERO COMA NUMERO PARENTESIS_DER PUNTO_COMA |
     ESPECIALES_RUTA PARENTESIS_IZQ NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_DER PUNTO_COMA |
     ESPECIALES_RUTA PARENTESIS_IZQ NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO COMA NUMERO PARENTESIS_DER PUNTO_COMA 
@@ -565,6 +625,9 @@ expresion ::=
 termino ::=
     factor:f1 OP_ARITMETICO2:op factor:f2 
     {:
+        if(f2 instanceof String){
+            Editor.erroresSintacticos += ("F2: "+f2.toString()+", es cadena\n");
+        }
         if (f1 instanceof Integer){
             if(f2 instanceof String){
                 Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
@@ -631,7 +694,10 @@ termino ::=
 ;
 
 factor ::=
-    //expresion IDENTIFICADOR|
+   /*  expresion:e
+    {:
+        RESULT = e;
+    :}| */
     IDENTIFICADOR:identificador
             {:
                 //Buscar variable en la tabla de simbolos
@@ -663,6 +729,14 @@ factor ::=
               {: 
                 RESULT = ct; 
             :}  
+    /* PARENTESIS_IZQ expresion:e PARENTESIS_DER
+    {:
+        RESULT = e;
+    :}| */
+    /* expresion:e
+    {:
+        RESULT = e;
+    :} */
 ;
 
 expresion_booleana ::=

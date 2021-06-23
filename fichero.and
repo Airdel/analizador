@@ -1,25 +1,39 @@
-iniciar programa:
+iniciar ejemplo3:
 	declaracion:
-		cadena num  = 'Lenguajes';
-		cadena num2  = 'Lenguajes';
-		decimal eer = 3.4;
-	fin
+		entero direccion=0;
+		entero vueltas=0;
+	fin	
 	principal:
-		si (3==3):
-			ciclo (entero id = 9;  9<8; id++):
-				eer = 8 * 8 * 8 * 9 * 4;
-			fin
-		si no:
-			@ruta(3 , 4,4,5) ; 
+		@encender;
+		@calibrar;
+		mientras(vueltas <= 100):
+			llamar elegir_direccionamiento;
 		fin
+		@detener;
+		@apagar;
 	fin
-	funcion fun(entero id) entero:
-		@leer 'Lenguajes';
-		retorno 9;
-	fin
-	funcion fun(entero id) entero:
-		@leer 'Lenguajes';
-		llamar id;
-		retorno 9;
+	funcion elegir_direccionamiento() entero:
+		si(direccion==1):
+			@direccionar @arriba 10;
+			vueltas = vueltas + 1;
+		si no:
+			si(direccion==2):
+				@direccionar @derecha 10;
+				vueltas = vueltas + 1;
+			si no:
+				si(direccion==3):
+					@direccionar @abajo 10;
+					vueltas= vueltas + 1;
+				si no:
+					si(direccion==4):
+						@direccionar @izquierda 10;
+					si no:
+						@fijo;
+						vueltas = vueltas + 1;
+					fin
+				fin
+			fin
+		fin
+		retorno 0;
 	fin
 fin
