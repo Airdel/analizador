@@ -87,6 +87,7 @@ public class Editor extends javax.swing.JFrame {
         icon_lexico = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        log_sistema = new javax.swing.JLabel();
         JM_Principal = new javax.swing.JMenuBar();
         JM_Archivo = new javax.swing.JMenu();
         miNuevo = new javax.swing.JMenuItem();
@@ -109,6 +110,7 @@ public class Editor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LYADRONE");
+        setPreferredSize(new java.awt.Dimension(1200, 680));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Palabras: ");
@@ -214,7 +216,7 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(icon_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 30, 30));
 
         icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
-        icon_lexico.setToolTipText("Corre Léxico");
+        icon_lexico.setToolTipText("Ejecutar");
         icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -230,6 +232,10 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 14, 20, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
+
+        log_sistema.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        log_sistema.setText("---");
+        getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 590, 430, -1));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));
@@ -319,7 +325,7 @@ public class Editor extends javax.swing.JFrame {
 
         JM_Principal.add(JM_Tablas);
 
-        JM_Lexico.setText("Lexico");
+        JM_Lexico.setText("Ejecujar");
 
         miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
         miLexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
@@ -371,11 +377,9 @@ public class Editor extends javax.swing.JFrame {
         JM_Principal.getAccessibleContext().setAccessibleName("");
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
-        TablaSimbolos.tablaSimbolos.clear();
         scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
         txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
         int rowCount = m.getRowCount();
@@ -389,6 +393,8 @@ public class Editor extends javax.swing.JFrame {
         probarLexer();
         if(erroresLexicos.equals(""))
             analisisSintactico();
+        else
+            log_sistema.setText("Se ha ejecuatado el programa con errores");
     }//GEN-LAST:event_miLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -402,6 +408,7 @@ public class Editor extends javax.swing.JFrame {
         Collections.sort(simbolos);
         TablaIdentificadores ts = new TablaIdentificadores(simbolos);
         ts.setVisible(true);
+        log_sistema.setText("Se ha abierto tabla de identificadores");
     }//GEN-LAST:event_miIdenActionPerformed
 
     private void rbtn_ClaroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_ClaroActionPerformed
@@ -539,6 +546,8 @@ public class Editor extends javax.swing.JFrame {
         probarLexer();
         if(erroresLexicos.equals(""))
             analisisSintactico();
+        else            
+            log_sistema.setText("Se ha ejecuatado el programa con errores");
     }//GEN-LAST:event_icon_lexicoMouseClicked
 
     private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
@@ -550,12 +559,15 @@ public class Editor extends javax.swing.JFrame {
             limpiar();
             abrirArchivo();
             reacomodar();
+            log_sistema.setText("Se ha abierto un archivo");
         }
         if (resp == 1) {
             limpiar();
             abrirArchivo();
             reacomodar();
+            log_sistema.setText("Se ha abierto un archivo");
         }
+        
     }//GEN-LAST:event_icon_openMouseClicked
 
     private void icon_newMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_newMouseClicked
@@ -565,17 +577,21 @@ public class Editor extends javax.swing.JFrame {
         if (resp == 0) {
             miGuardar.doClick();
             limpiar();
+            log_sistema.setText("Se ha creado un archivo");
         }
         if (resp == 1) {
             limpiar();
+            log_sistema.setText("Se ha creado un archivo");
         }
     }//GEN-LAST:event_icon_newMouseClicked
 
     private void icon_saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_saveMouseClicked
         if (guardarComo) {
             guardarComo();
+            log_sistema.setText("Se ha guardado un archivo");
         } else {
             guardar();
+            log_sistema.setText("Se ha guardado un archivo");
         }
     }//GEN-LAST:event_icon_saveMouseClicked
 
@@ -590,9 +606,11 @@ public class Editor extends javax.swing.JFrame {
         if (resp == 0) {
             miGuardar.doClick();
             limpiar();
+            log_sistema.setText("Se ha creado un archivo");
         }
         if (resp == 1) {
             limpiar();
+            log_sistema.setText("Se ha creado un archivo");
         }
     }//GEN-LAST:event_miNuevoActionPerformed
 
@@ -605,24 +623,29 @@ public class Editor extends javax.swing.JFrame {
             limpiar();
             abrirArchivo();
             reacomodar();
+            log_sistema.setText("Se ha abierto un archivo");
         }
         if (resp == 1) {
             limpiar();
             abrirArchivo();
             reacomodar();
+            log_sistema.setText("Se ha abierto un archivo");
         }
     }//GEN-LAST:event_miAbrirActionPerformed
 
     private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
         if (guardarComo) {
             guardarComo();
+            log_sistema.setText("Se ha guardado un archivo");
         } else {
             guardar();
+            log_sistema.setText("Se ha guardado un archivo");
         }
     }//GEN-LAST:event_miGuardarActionPerformed
 
     private void miGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarComoActionPerformed
         guardarComo();
+        log_sistema.setText("Se ha guardado un archivo");
     }//GEN-LAST:event_miGuardarComoActionPerformed
 
     private void miReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miReservadasActionPerformed
@@ -724,6 +747,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JLabel lbCaracteres;
     public javax.swing.JLabel lbPalabras;
+    private javax.swing.JLabel log_sistema;
     public javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miAlfabeto;
     public javax.swing.JMenuItem miGuardar;
@@ -772,9 +796,8 @@ public class Editor extends javax.swing.JFrame {
 
                 switch (tokens) {
                     case ARROBA:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. "
-                                + "Linea: " + (c.linea + 1)
-                                + ". El arroba '@' no puede estár solo\n";
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";
                         m.addRow(new Object[]{"Cadena no valida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ASIGNACION:
@@ -895,41 +918,36 @@ public class Editor extends javax.swing.JFrame {
                         m.addRow(new Object[]{"Arreglo.", lexer.lexema, (c.linea) + 1});
                         break;
                     case ID_CON_SIMBOLOS:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". El identificador contiene un símbolo que no pertenece al lenguaje '"
-                                +lexer.lexema+ "'\n";
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case SNP:
                     case ERROR:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". El símbolo ' " + lexer.lexema + " ' no pertenece al lenguaje\n";
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ID_NUM:
                     case ERROR_ARROBA_NUM:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". " + lexer.lexema
-                                + ". Indentificador no puede comenzar con un dígito\n";
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_PUNTOS:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". El punto esta mal posicionado '"+lexer.lexema+"'\n";                        
+                       erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";          
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_ARROBA:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. Linea: " + (c.linea + 1)
-                                + ". La cadena '" + lexer.lexema + "' no está definida\n";
-                        
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";                     
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     case ERROR_MAYUS:
                     case ERROR_ARROBA_MAYUS:
-                        erroresLexicos = erroresLexicos + "Cadena no válida. "
-                                + "Linea: " + (c.linea + 1)
-                                + ". Las mayúsculas no están permitidas '"
-                                + lexer.lexema + "'.\n";
+                        erroresLexicos = erroresLexicos + "Error léxico. Linea "+
+                                (c.linea+1)+". Cadena no válida: '"+lexer.lexema+"'.\n";
                         m.addRow(new Object[]{"Cadena no válida", lexer.lexema, (c.linea) + 1});
                         break;
                     default:
@@ -997,6 +1015,8 @@ public class Editor extends javax.swing.JFrame {
             lbCaracteres.setText(contarCar() + "");
             lbPalabras.setText(contarPal() + "");
             guardarComo = false;
+            log_sistema.setText("Se ha abierto un archivo");
+            log_sistema.setForeground(Color.green);
         }
     }
 
@@ -1024,6 +1044,8 @@ public class Editor extends javax.swing.JFrame {
             save = new FileWriter(archivo.getAbsolutePath());
             save.write(txtEditor.getText());
             save.close();
+            log_sistema.setText("Se ha guardado un archivo");
+            log_sistema.setForeground(Color.green);
         } catch (IOException ex) {
             Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -1046,7 +1068,9 @@ public class Editor extends javax.swing.JFrame {
                     setTitle(nombre);
                     save.write(txtEditor.getText());
                     save.close();
-                    guardarComo = false;
+                    guardarComo = false;                    
+                    log_sistema.setText("Se ha guardado un archivo");
+                    log_sistema.setForeground(Color.green);
                 }
             }
         } catch (IOException ex) {
@@ -1067,18 +1091,22 @@ public class Editor extends javax.swing.JFrame {
             if(erroresSintacticos.equals("")){
                 txtErrores.append("Analisis realizado correctamente");
                 txtErrores.setForeground(new Color(25, 111, 61));
+                log_sistema.setText("Se ha ejecutado el programa");
+                log_sistema.setForeground(Color.green);
             }
             else{
                 txtErrores.setText("En try: "+erroresSintacticos);  
-                txtErrores.setForeground(Color.red);                
+                txtErrores.setForeground(Color.red);      
+                log_sistema.setText("Se ha ejecutado el programa con errores");
+                log_sistema.setForeground(Color.red);
             }
         } catch (Exception ex) {
             Symbol sym = s.getS();  
-            txtErrores.setText("Desde Cup. Error de sintaxis. Linea: " +
+            txtErrores.setText("Error de sintaxis. Linea: " +
                     (sym.right + 1) + " Columna: " 
                     + (sym.left + 1) + ", Texto: \"" 
                     + sym.value + "\"");
-            txtErrores.setText("En catch: "+erroresSintacticos);
+            txtErrores.setText(erroresSintacticos);
             txtErrores.setForeground(Color.red);
         }
         erroresSintacticos = "";
