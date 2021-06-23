@@ -54,7 +54,6 @@ public class Editor extends javax.swing.JFrame {
         numeroLinea = new NumeroLinea(txtEditor);
         scrollEditor.setRowHeaderView(numeroLinea);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/icono.png")));
-        erroresSintacticos = "";
     }
 
     /**
@@ -233,7 +232,8 @@ public class Editor extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 580));
 
-        log_sistema.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        log_sistema.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        log_sistema.setForeground(new java.awt.Color(0, 158, 58));
         log_sistema.setText("---");
         getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 590, 430, -1));
 

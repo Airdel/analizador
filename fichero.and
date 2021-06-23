@@ -17,8 +17,7 @@ iniciar programa:
 		@leer 'Lenguajes';
 		retorno 9;
 	fin
-	funcion fun(entero par) entero:
-		
+	funcion fun(entero par) entero:		
 		par =  'Lenguajes';
 		llamar id;
 		retorno par;
