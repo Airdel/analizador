@@ -1,5 +1,5 @@
 iniciar ejemplo3:
-	declaracion:
+	declaracion: 
 		cadena  direccion='cadena';
 		entero vueltas=0;
 	fin	

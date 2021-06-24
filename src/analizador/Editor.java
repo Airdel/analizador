@@ -83,7 +83,7 @@ public class Editor extends javax.swing.JFrame {
         icon_tabla = new javax.swing.JLabel();
         icon_new = new javax.swing.JLabel();
         icon_save = new javax.swing.JLabel();
-        icon_lexico = new javax.swing.JLabel();
+        btnAnalisis = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         log_sistema = new javax.swing.JLabel();
@@ -99,7 +99,8 @@ public class Editor extends javax.swing.JFrame {
         miSimbolo = new javax.swing.JMenuItem();
         miAlfabeto = new javax.swing.JMenuItem();
         JM_Lexico = new javax.swing.JMenu();
-        miLexico = new javax.swing.JMenuItem();
+        btnLexico = new javax.swing.JMenuItem();
+        btnSintactico = new javax.swing.JMenuItem();
         JM_Vista = new javax.swing.JMenu();
         JM_Tema = new javax.swing.JMenu();
         rbtn_Claro = new javax.swing.JRadioButtonMenuItem();
@@ -214,15 +215,15 @@ public class Editor extends javax.swing.JFrame {
         });
         jPanel1.add(icon_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 30, 30));
 
-        icon_lexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
-        icon_lexico.setToolTipText("Ejecutar");
-        icon_lexico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        icon_lexico.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAnalisis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        btnAnalisis.setToolTipText("Ejecutar");
+        btnAnalisis.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAnalisis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                icon_lexicoMouseClicked(evt);
+                btnAnalisisMouseClicked(evt);
             }
         });
-        jPanel1.add(icon_lexico, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, 30));
+        jPanel1.add(btnAnalisis, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/split.png"))); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 14, 20, -1));
@@ -328,15 +329,25 @@ public class Editor extends javax.swing.JFrame {
 
         JM_Lexico.setText("Ejecujar");
 
-        miLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        miLexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
-        miLexico.setText("Analizar");
-        miLexico.addActionListener(new java.awt.event.ActionListener() {
+        btnLexico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        btnLexico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        btnLexico.setText("Léxico");
+        btnLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miLexicoActionPerformed(evt);
+                btnLexicoActionPerformed(evt);
             }
         });
-        JM_Lexico.add(miLexico);
+        JM_Lexico.add(btnLexico);
+
+        btnSintactico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        btnSintactico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        btnSintactico.setText("Sintáctico");
+        btnSintactico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSintacticoActionPerformed(evt);
+            }
+        });
+        JM_Lexico.add(btnSintactico);
 
         JM_Principal.add(JM_Lexico);
 
@@ -380,10 +391,16 @@ public class Editor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void miLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLexicoActionPerformed
-        correr();
-        correr();
-    }//GEN-LAST:event_miLexicoActionPerformed
+    private void btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLexicoActionPerformed
+        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
+        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
+        int rowCount = m.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }        
+        probarLexer();
+    }//GEN-LAST:event_btnLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
         lbCaracteres.setText(contarCar() + "");
@@ -432,8 +449,8 @@ public class Editor extends javax.swing.JFrame {
             miGuardarComo.setForeground(Color.black);
             miIden.setBackground(Color.white);
             miIden.setForeground(Color.black);
-            miLexico.setBackground(Color.white);
-            miLexico.setForeground(Color.black);
+            btnLexico.setBackground(Color.white);
+            btnLexico.setForeground(Color.black);
             miNuevo.setBackground(Color.white);
             miNuevo.setForeground(Color.black);
             miReservadas.setBackground(Color.white);
@@ -493,8 +510,8 @@ public class Editor extends javax.swing.JFrame {
             miGuardarComo.setForeground(Color.white);
             miIden.setBackground(Color.black);
             miIden.setForeground(Color.white);
-            miLexico.setBackground(Color.black);
-            miLexico.setForeground(Color.white);
+            btnLexico.setBackground(Color.black);
+            btnLexico.setForeground(Color.white);
             miNuevo.setBackground(Color.black);
             miNuevo.setForeground(Color.white);
             miReservadas.setBackground(Color.black);
@@ -519,11 +536,11 @@ public class Editor extends javax.swing.JFrame {
 //        System.out.println(txtEditor.getSize().width+"-"+txtEditor.getSize().height);
     }//GEN-LAST:event_txtEditorKeyTyped
 
-    private void icon_lexicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_lexicoMouseClicked
+    private void btnAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalisisMouseClicked
         // TODO add your handling code here:
         correr();
         correr();
-    }//GEN-LAST:event_icon_lexicoMouseClicked
+    }//GEN-LAST:event_btnAnalisisMouseClicked
 
     private void icon_openMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon_openMouseClicked
         int resp = JOptionPane.showConfirmDialog(null,
@@ -640,6 +657,12 @@ public class Editor extends javax.swing.JFrame {
         ta.setVisible(true);
     }//GEN-LAST:event_miAlfabetoActionPerformed
 
+    private void btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSintacticoActionPerformed
+        // TODO add your handling code here:
+        correr();
+        correr();
+    }//GEN-LAST:event_btnSintacticoActionPerformed
+
     private void limpiar() {
         int rowCount = m.getRowCount();
         //Remove rows one by one from the end of the table
@@ -705,7 +728,9 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu JM_Tablas;
     private javax.swing.JMenu JM_Tema;
     private javax.swing.JMenu JM_Vista;
-    private javax.swing.JLabel icon_lexico;
+    private javax.swing.JLabel btnAnalisis;
+    private javax.swing.JMenuItem btnLexico;
+    private javax.swing.JMenuItem btnSintactico;
     public javax.swing.JLabel icon_new;
     public javax.swing.JLabel icon_open;
     public javax.swing.JLabel icon_save;
@@ -728,7 +753,6 @@ public class Editor extends javax.swing.JFrame {
     public javax.swing.JMenuItem miGuardar;
     public javax.swing.JMenuItem miGuardarComo;
     public javax.swing.JMenuItem miIden;
-    private javax.swing.JMenuItem miLexico;
     public javax.swing.JMenuItem miNuevo;
     public javax.swing.JMenuItem miReservadas;
     public javax.swing.JMenuItem miSimbolo;
@@ -1056,7 +1080,6 @@ public class Editor extends javax.swing.JFrame {
     }
 
     private void analisisSintactico() {
-        reacomodar();
         String ST = txtEditor.getText();
         Sintax s = new Sintax(new analizador.LexerCup(new StringReader(ST)));
         
@@ -1088,14 +1111,7 @@ public class Editor extends javax.swing.JFrame {
     }
 
     private void correr() {
-        TablaSimbolos.limpiar();
-        scrollEditor.setBounds(scrollEditor.getX(), scrollEditor.getY(), 570, 350);
-        txtEditor.setBounds(txtEditor.getX(), txtEditor.getY(), 570, 350);
-        int rowCount = m.getRowCount();
-        //Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-            m.removeRow(i);
-        }
+        TablaSimbolos.limpiar();        
         simbolos.clear();
         txtErrores.setText("");
         identificadores.removeAll(identificadores);

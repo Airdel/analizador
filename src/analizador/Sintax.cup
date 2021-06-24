@@ -69,10 +69,11 @@ terminal ASIGNACION,
         RESERVADA_SI;   
 
 non terminal asignacion, ciclo, inicio, declaracion ,parte_declaracion, declaracion_ciclo,  
-    expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia, sentencia_prima, si, si_no, 
-   parte_principal,expresion_booleana, parametros, parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
+    expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia,
+    sentencia_prima, si, si_no, parte_principal,expresion_booleana, parametros, 
+    parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
 
-   start with inicio;
+start with inicio;
 
 inicio ::= 
     RESERVADA_INICIAR IDENTIFICADOR:nombre DOS_PUNTOS 
@@ -412,6 +413,7 @@ llamar_funcion ::=
 reservada_esp ::=
     ESPECIALES_SOLAS PUNTO_COMA |
     ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
+    ESPECIALES_CT IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID NUMERO PUNTO_COMA |
     ESPECIALES_DOS ESPECIALES_PARAMETRO PUNTO_COMA |
