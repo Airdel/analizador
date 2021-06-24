@@ -397,7 +397,19 @@ tipo_retorno ::=
 ;
 retorno ::=
    
-    IDENTIFICADOR:r {:RESULT = r;:}| 
+    IDENTIFICADOR:identificador
+    {:
+        //Buscar variable en la tabla de simbolos
+        Simbolo sim = TablaSimbolos.buscar(identificador);
+        //Si es nulo, devuelvo un error
+        if (sim == null){
+            Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador 
+            +"' no existe.\n";
+        }
+        else{                    
+            RESULT = sim.valor;
+        }
+    :} |
     CADENA_TEXTO:r {:RESULT = r;:} | 
     NUMERO:r {:RESULT = r;:} | 
     NUMERO_DECIMAL:r {:RESULT = r;:} | 
@@ -413,7 +425,19 @@ llamar_funcion ::=
 reservada_esp ::=
     ESPECIALES_SOLAS PUNTO_COMA |
     ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
-    ESPECIALES_CT IDENTIFICADOR PUNTO_COMA |
+    ESPECIALES_CT IDENTIFICADOR: identificador PUNTO_COMA
+    {:
+        //Buscar variable en la tabla de simbolos
+        Simbolo sim = TablaSimbolos.buscar(identificador);
+        //Si es nulo, devuelvo un error
+        if (sim == null){
+            Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador 
+            +"' no existe.\n";
+        }
+        else{                    
+            RESULT = sim.valor;
+        }
+    :}   |
     ESPECIALES_ID IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID NUMERO PUNTO_COMA |
     ESPECIALES_DOS ESPECIALES_PARAMETRO PUNTO_COMA |

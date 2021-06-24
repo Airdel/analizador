@@ -2,7 +2,7 @@ iniciar ejemplo1:
 	declaracion:
 		entero fotos=0;
 		entero fotos2=0;
-		cadena imprimir='Imprimiendo... ';
+		cadena imprim='Imprimiendo... ';
 	fin
 	principal:
 		@encender;
@@ -13,7 +13,7 @@ iniciar ejemplo1:
 		@detener;
 		@apagar;
 	fin
-	funcion capturas(booleano bandera) entero:
+	funcion capturas() entero:
 		mientras(fotos<10):
 			@captura;
 			fotos=fotos+ 1;	
@@ -22,7 +22,7 @@ iniciar ejemplo1:
 				@captura;
 				fotos2=fotos2+ 1;	
 			fin
-			@imprimir imprimi;
+			@imprimir impri;
 			@imprimir 'fotos capturada';
 		fin
 		retorno 0;
