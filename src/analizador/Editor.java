@@ -234,8 +234,9 @@ public class Editor extends javax.swing.JFrame {
 
         log_sistema.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         log_sistema.setForeground(new java.awt.Color(0, 158, 58));
+        log_sistema.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         log_sistema.setText("---");
-        getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 580, 430, -1));
+        getContentPane().add(log_sistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 580, 420, -1));
 
         JM_Principal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JM_Principal.setMaximumSize(new java.awt.Dimension(178, 21));

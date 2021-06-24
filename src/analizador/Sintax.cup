@@ -12,35 +12,12 @@ action code
     :};
 parser code
 {:
-   /* private Lexer lexer;
-    private File file;
-    public Sintax( File file ) {
-        this();
-        this.file = file;
-        try {
-            lexer = new Lexer( new FileReader( file ) );
-        }
-        catch ( IOException exception ) {
-            throw new Error( "Unable to open file \"" + file + "\"" );
-        }
-    }
-
-    public Lexer getLexer(){
-        return this.lexer;
-    }
-*/
-
     static TablaSimbolos tablaSimbolos = new TablaSimbolos();
     static int verificarTipo = 0;
     static Stack <String> listaIdentificadores = new Stack <String>();
 	public static void main(String args[]) throws Exception{
-		//new parser(new Yylex(new FileInputStream(args[0]))).parse();
 		new Sintax(new LexerCup(System.in)).parse();
 	}
-	/*public void syntax_error(Symbol s){
-		report_error("Error de sintaxis. Linea: " + (s.right + 1) +
-		" Columna: " + s.left + ". Texto: \"" + s.value + "\"", null);
-	}*/
     private Symbol s;
     
     public void syntax_error(Symbol s){
@@ -90,15 +67,12 @@ terminal ASIGNACION,
         RESERVADA_PRINCIPAL,
         RESERVADA_RETORNO,
         RESERVADA_SI;   
-/* 
-
-*/
 
 non terminal asignacion, ciclo, inicio, declaracion ,parte_declaracion, declaracion_ciclo,  
     expresion, exp_bol, factor,  mientras, llamar_funcion, haz, reservada_esp, sentencia, sentencia_prima, si, si_no, 
    parte_principal,expresion_booleana, parametros, parte_funciones, ruta, termino, tipo_retorno, retorno,  termino_bool;
-    /*declaracion, declaracion_para,sentencia_para, mientras, haz, para,si_no */
-start with inicio;
+
+   start with inicio;
 
 inicio ::= 
     RESERVADA_INICIAR IDENTIFICADOR:nombre DOS_PUNTOS 
@@ -116,8 +90,7 @@ inicio ::=
             TablaSimbolos.insertar(nombre, String.valueOf("--"));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);          
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -147,8 +120,7 @@ declaracion ::=
             TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);        
        
         }
         catch(Exception e){                                    
@@ -163,14 +135,11 @@ declaracion ::=
             if(String.valueOf(valor).equals("verdadero")){
                 TablaSimbolos.crear(nombre, tipo,"variable");
                 String cad = String.valueOf(valor);
-                String s = cad.substring(1,cad.length()-1);
-                TablaSimbolos.insertar(nombre, s);
+                TablaSimbolos.insertar(nombre, cad);
                 //Crear relacion ciclo PARA con su variable asociada
                 TablaSimbolos.lista.push(nombre);
-                System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............"); 
             }
             else{                
-                System.out.println("Cathc: Valor incompatible con variable 'booleana', linea:"+tipoleft);
                 TablaSimbolos.logErrores("Valor incompatible con variable 'booleana', linea:"+tipoleft);
             }
 
@@ -190,8 +159,7 @@ declaracion ::=
             TablaSimbolos.insertar(nombre, s);
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);           
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -206,8 +174,7 @@ declaracion ::=
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);           
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -222,8 +189,7 @@ declaracion ::=
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);         
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -238,8 +204,7 @@ declaracion ::=
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);        
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -254,8 +219,7 @@ declaracion ::=
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);          
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -263,15 +227,13 @@ declaracion ::=
         }                           
     :}
     |
-    RESERVADA_ENTERO:tipo   IDENTIFICADOR:nombre ASIGNACION NUMERO:valor              PUNTO_COMA 
+    RESERVADA_ENTERO:tipo IDENTIFICADOR:nombre ASIGNACION NUMERO:valor PUNTO_COMA 
     {:
         try{
             TablaSimbolos.crear(nombre, tipo,"Variable");
             TablaSimbolos.insertar(nombre, valor);
-
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);            
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -291,8 +253,7 @@ declaracion_ciclo ::=
             TablaSimbolos.insertar(nombre, String.valueOf(valor));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);         
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -307,8 +268,7 @@ declaracion_ciclo ::=
             TablaSimbolos.insertar(nombre, valor);
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(nombre);
-            System.out.println("............ Agregando a la pila el siguiente id: " + nombre + " ............");            
+            TablaSimbolos.lista.push(nombre);        
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -352,8 +312,7 @@ parte_funciones ::=
             TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(id);
-            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+            TablaSimbolos.lista.push(id);       
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -371,8 +330,7 @@ parte_funciones ::=
             TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(id);
-            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+            TablaSimbolos.lista.push(id);       
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -389,8 +347,7 @@ parte_funciones ::=
             TablaSimbolos.insertar(id, String.valueOf(r));
 
             //Crear relacion ciclo PARA con su variable asociada
-            TablaSimbolos.lista.push(id);
-            System.out.println("............ Agregando a la pila el siguiente id: " + id + " ............");            
+            TablaSimbolos.lista.push(id);           
         }
         catch(Exception e){                                    
             e.printStackTrace();
@@ -447,16 +404,6 @@ retorno ::=
     RESERVADA_VERDADERO:r {:RESULT = r;:} | 
     RESERVADA_FALSO:r {:RESULT = r;:} 
 ;
-/* sentencia ::=
-    sentencia asignacion |
-    asignacion |
-    si |
-    si_no |
-    mientras |
-    reservada_esp |
-   // reservada_esp |
-    llamar_funcion 
-; */
 
 llamar_funcion ::=
     RESERVADA_LLAMAR IDENTIFICADOR PUNTO_COMA
@@ -464,7 +411,6 @@ llamar_funcion ::=
 
 reservada_esp ::=
     ESPECIALES_SOLAS PUNTO_COMA |
-    //reservada_esp ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
     ESPECIALES_CT CADENA_TEXTO PUNTO_COMA |
     ESPECIALES_ID IDENTIFICADOR PUNTO_COMA |
     ESPECIALES_ID NUMERO PUNTO_COMA |
@@ -524,7 +470,8 @@ expresion ::=
    {:     
         if (f1 instanceof Integer){
             if(f2 instanceof String){
-                String s = f2.toString().replace("'","");
+                //String s = f2.toString().replace("'","");
+                String s = f2.toString();
                 s = f1.toString() + s ;
                 RESULT = s;
             }
@@ -541,7 +488,8 @@ expresion ::=
         }
         if (f1 instanceof Double){
             if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+
+                " y '"+f2.toString()+"' no compatibles\n");
             }else{
                 if (f2 instanceof Double){
                     Double tmp = Double.parseDouble(f1.toString()) * 1.0;
@@ -561,7 +509,8 @@ expresion ::=
                 RESULT = f1.toString() + f2.toString();          
             }else{
                 if (f2 instanceof Double){
-                    Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");             
+                    Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+
+                    " y '"+f2.toString()+"' no compatibles\n");             
                 }else{
                     if (f2 instanceof Integer)
                         RESULT = f1.toString() + f2.toString(); 
@@ -569,64 +518,13 @@ expresion ::=
             }
         }
      :}
-    |     
-    /* PARENTESIS_IZQ termino:f1 PARENTESIS_DER OP_MAS PARENTESIS_IZQ expresion:f2 PARENTESIS_DER  
-    {:     
-        if (f1 instanceof Integer){
-            if(f2 instanceof String){
-                
-                String s = f2.toString().replace("'","");
-                s = f1.toString() + s ;
-                RESULT = s;
-            }
-            if (f2 instanceof Double){
-                Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-                tmp = tmp + Double.parseDouble(f2.toString());
-                RESULT = tmp;                
-            }
-            if (f2 instanceof Integer){
-                Integer tmp = Integer.parseInt(f1.toString());
-                tmp = tmp +  Integer.parseInt(f2.toString());
-                RESULT = tmp;
-            }               
-        }
-        if (f1 instanceof Double){
-            if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
-            }else{
-                if (f2 instanceof Double){
-                    Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-                    tmp = tmp + Double.parseDouble(f2.toString());
-                    RESULT = tmp;                
-                }else{
-                    if (f2 instanceof Integer){
-                        Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-                        tmp = tmp + Double.parseDouble(f2.toString());
-                        RESULT = tmp;
-                    }
-                }
-            }
-        }
-        if (f1 instanceof String){
-            if(f2 instanceof String){
-                RESULT = f1.toString() + f2.toString();          
-            }else{
-                if (f2 instanceof Double){
-                    Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");             
-                }else{
-                    if (f2 instanceof Integer)
-                        RESULT = f1.toString() + f2.toString(); 
-                }    
-            }
-        }
-     :}
-    |     */
+    |   
     termino:f1 OP_MENOS expresion:f2  
      {:     
-        Editor.erroresSintacticos += ("F1"+f1.toString());
         if (f1 instanceof Integer){
             if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");
             }
             if (f2 instanceof Double){
                 Double tmp = Double.parseDouble(f1.toString()) * 1.0;
@@ -641,7 +539,8 @@ expresion ::=
         }
         if (f1 instanceof Double){
             if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");
             }
             if (f2 instanceof Double){
                 Double tmp = Double.parseDouble(f1.toString()) * 1.0;
@@ -656,63 +555,9 @@ expresion ::=
         }
         if (f1 instanceof String | f2 instanceof String) {
             Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
-           /*  if(f2 instanceof String){
-            }
-            if (f2 instanceof Double){
-                Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");                
-            }
-            if (f2 instanceof Integer){
-                Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
-            } */
         }
      :}
     |
- /*    PARENTESIS_IZQ termino:f1 PARENTESIS_DER OP_MENOS PARENTESIS_IZQ expresion:f2 PARENTESIS_DER  
-    {:     
-       Editor.erroresSintacticos += ("F1"+f1.toString());
-       if (f1 instanceof Integer){
-           if(f2 instanceof String){
-               Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
-           }
-           if (f2 instanceof Double){
-               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-               tmp = tmp - Double.parseDouble(f2.toString());
-               RESULT = tmp;                
-           }
-           if (f2 instanceof Integer){
-               Integer tmp = Integer.parseInt(f1.toString());
-               tmp = tmp -  Integer.parseInt(f2.toString());
-               RESULT = tmp;
-           }
-       }
-       if (f1 instanceof Double){
-           if(f2 instanceof String){
-               Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
-           }
-           if (f2 instanceof Double){
-               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-               tmp = tmp - Double.parseDouble(f2.toString());
-               RESULT = tmp;                
-           }
-           if (f2 instanceof Integer){
-               Double tmp = Double.parseDouble(f1.toString()) * 1.0;
-               tmp = tmp - Double.parseDouble(f2.toString());
-               RESULT = tmp;
-           }
-       }
-       if (f1 instanceof String | f2 instanceof String) {
-           Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
-            if(f2 instanceof String){
-           }
-           if (f2 instanceof Double){
-               Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");                
-           }
-           if (f2 instanceof Integer){
-               Editor.erroresSintacticos += ("Error sintáctico: las cadenas no se pueden restar\n");     
-           
-       }
-    :} 
-    | */
     termino:t{:RESULT = t;:}
 
 ;
@@ -722,7 +567,8 @@ termino ::=
     {:
         if (f1 instanceof Integer){
             if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");
             }
             if (f2 instanceof Double){
                 Double tmp = Double.parseDouble(f1.toString()) * 1.0;
@@ -736,6 +582,9 @@ termino ::=
                 Integer tmp = Integer.parseInt(f1.toString());
                 if(op.toString().equals("*"))
                     tmp = tmp * Integer.parseInt(f2.toString());
+                else                   
+                if(op.toString().equals("&"))
+                    tmp = tmp & Integer.parseInt(f2.toString());
                 else                    
                     tmp = tmp /  Integer.parseInt(f2.toString());
                 RESULT = tmp;
@@ -749,16 +598,19 @@ termino ::=
                     Editor.erroresSintacticos += ("Error sintáctico: Dos cadenas no se pueden dividir\n");                    
             }
             if (f2 instanceof Double){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");             
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");             
             }
             if (f2 instanceof Integer){
                 Double tmp = Double.parseDouble(f1.toString());
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");
             }
         }
         if (f1 instanceof Double){
             if(f2 instanceof String){
-                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"+f2.toString()+"' no compatibles\n");
+                Editor.erroresSintacticos += ("Error sintáctico: '"+f1.toString()+"'"+" y '"
+                +f2.toString()+"' no compatibles\n");
             }
             if (f2 instanceof Double){
                 Double tmp = Double.parseDouble(f1.toString()) * 1.0;
@@ -784,51 +636,24 @@ termino ::=
 ;
 
 factor ::=
- /*    PARENTESIS_IZQ IDENTIFICADOR:r PARENTESIS_DER 
-    {:
-        //Buscar variable en la tabla de simbolos
-        Simbolo sim = TablaSimbolos.buscar(r);
-        //Si es nulo, devuelvo un error
-        if (sim == null){      
-            Editor.erroresSintacticos += ("Error de sintaxis. Identificador: '"+r+"' no existe.\n");
-            RESULT = 0;
-        }
-        else{
-            
-            RESULT = sim.valor;
-        }
-    :} | 
-    PARENTESIS_IZQ CADENA_TEXTO:r PARENTESIS_DER {:RESULT = r;:} | 
-    PARENTESIS_IZQ NUMERO:r PARENTESIS_DER {:RESULT = r;:} | 
-    PARENTESIS_IZQ NUMERO_DECIMAL:r PARENTESIS_DER {:RESULT = r;:} | 
-    PARENTESIS_IZQ NUMERO_EXPONENTE:r PARENTESIS_DER {:RESULT = r;:} | 
-    PARENTESIS_IZQ RESERVADA_VERDADERO:r PARENTESIS_DER {:RESULT = r;:} | 
-    PARENTESIS_IZQ RESERVADA_FALSO:r PARENTESIS_DER {:RESULT = r;:} | */
     IDENTIFICADOR:identificador
             {:
                 //Buscar variable en la tabla de simbolos
                 Simbolo sim = TablaSimbolos.buscar(identificador);
                 //Si es nulo, devuelvo un error
-                if (sim == null)
-                {
-                    Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
+                if (sim == null){
+                    Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador 
+                    +"' no existe.\n";
                     RESULT = 0;
                 }
-                else
-                {
-                    
+                else{                    
                     RESULT = sim.valor;
                 }
             :} | 
     NUMERO:num  {:RESULT = num; :}  |
     NUMERO_DECIMAL:dml {: RESULT = dml; :}  |
     NUMERO_EXPONENTE:ne {: RESULT = ne; :}  |
-    CADENA_TEXTO:ct {: RESULT = ct; :}  
-    /* PARENTESIS_IZQ expresion:e PARENTESIS_DER
-    {:
-        RESULT = e;
-    :}| */
-    
+    CADENA_TEXTO:ct {: RESULT = ct; :}      
 ;
 
 expresion_booleana ::=
@@ -847,13 +672,11 @@ termino_bool::=
         //Buscar variable en la tabla de simbolos
         Simbolo sim = TablaSimbolos.buscar(identificador);
         //Si es nulo, devuelvo un error
-        if (sim == null)
-        {
+        if (sim == null) {
             Editor.erroresSintacticos += "Error de sintaxis. Identificador: '"+identificador +"' no existe.\n";
             RESULT = 0;
         }
-        else
-        {
+        else{
             RESULT = sim.valor;
         }
     :}  |
@@ -861,9 +684,3 @@ termino_bool::=
     RESERVADA_FALSO |
     RESERVADA_VERDADERO
 ;
-
-/* concatenacion ::=
-    concatenacion OP_MAS CADENA_TEXTO |
-    CADENA_TEXTO 
-;
- */
