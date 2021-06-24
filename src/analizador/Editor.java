@@ -400,6 +400,11 @@ public class Editor extends javax.swing.JFrame {
             m.removeRow(i);
         }        
         probarLexer();
+        if(!erroresLexicos.isEmpty()){
+            log_sistema.setText("Se ha ejecutado el programa con errores");
+                log_sistema.setForeground(Color.red);
+
+        }
     }//GEN-LAST:event_btnLexicoActionPerformed
 
     private void txtEditorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEditorKeyReleased
@@ -1093,7 +1098,7 @@ public class Editor extends javax.swing.JFrame {
                 log_sistema.setForeground(new java.awt.Color(0, 158, 58));
             }
             else{
-                txtErrores.setText("En try: "+erroresSintacticos);  
+                txtErrores.setText(erroresSintacticos);  
                 txtErrores.setForeground(Color.red);      
                 log_sistema.setText("Se ha ejecutado el programa con errores");
                 log_sistema.setForeground(Color.red);
@@ -1106,6 +1111,9 @@ public class Editor extends javax.swing.JFrame {
                     + sym.value + "\"");
             txtErrores.setText(erroresSintacticos);
             txtErrores.setForeground(Color.red);
+            log_sistema.setText("Se ha ejecutado el programa con errores");
+            log_sistema.setForeground(Color.red);
+
         }
         erroresSintacticos = "";
     }

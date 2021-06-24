@@ -1,6 +1,6 @@
 iniciar ejemplo3:
-	declaracion: 
-		cadena  direccion='cadena';
+	declaracion:
+		cadena direccion='cadena';
 		entero vueltas=0;
 	fin	
 	principal:
